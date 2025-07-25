@@ -104,7 +104,7 @@ layout 配置被移动到了 `app.ts` ，详见 [config/runtime-config > layout]
 ## index.html 去哪了，如何自定义 HTML 模板
 
 我们废弃了 `index.html`，提供了 Meta, Links, Scripts 等接口用于拼装 html。
-除了可以通过配置项注入外部 [script](http://172.27.24.2:7788/winjs-document/config/config#scripts) 、[css](http://172.27.24.2:7788/winjs-document/config/config#styles) 外，还可以使用项目级插件更灵活的修改 HTML 产物，参见如下：
+除了可以通过配置项注入外部 [script](https://winjs-dev.github.io/winjs-docs/config/config#scripts) 、[css](https://winjs-dev.github.io/winjs-docs/config/config#styles) 外，还可以使用项目级插件更灵活的修改 HTML 产物，参见如下：
 
 ```
 目前提供了大量的 html 快捷操作 api 来拼成最终 html 。
@@ -166,7 +166,7 @@ output:
 
 ## WinJS 我怎么分包
 
-WinJS 默认按页拆包，只有符合一定 size 大小的包才会被单独拆分，如果使用次数较多，则会被分配到公用 win.js 产物中，可以使用 [ANALYZE](http://172.27.24.2:7788/winjs-document/guides/env-variables.html#analyze) 进行产物分析。如果你觉得还需要优化（尤其对于特别大的组件和依赖部分），可以使用分包策略或手动拆包，详见：[代码拆分指南](./code-splitting)
+WinJS 默认按页拆包，只有符合一定 size 大小的包才会被单独拆分，如果使用次数较多，则会被分配到公用 win.js 产物中，可以使用 [ANALYZE](https://winjs-dev.github.io/winjs-docs/guides/env-variables.html#analyze) 进行产物分析。如果你觉得还需要优化（尤其对于特别大的组件和依赖部分），可以使用分包策略或手动拆包，详见：[代码拆分指南](./code-splitting)
 
 如果你有将所有 js 产物打包成单 `win.js` 文件的需求，请关闭 [dynamicImport](#可以关闭-dynamicimport-吗) 。
 
@@ -379,7 +379,7 @@ WinJS 与 webpack 相比增加了运行时相关的能力，我们在开发中�
 目前已知的信息：
 
 1. 尝试关闭 mfsu: false 看看热更新时间是否会减少。
-2. 尝试手动分包，分包方式见：[code-splitting](http://172.27.24.2:7788/winjs-document/guides/code-splitting.html)，特别是对需要加载重依赖的组件部分拆分，比如编辑器等。
+2. 尝试手动分包，分包方式见：[code-splitting](https://winjs-dev.github.io/winjs-docs/guides/code-splitting.html)，特别是对需要加载重依赖的组件部分拆分，比如编辑器等。
 3. 若没有使用额外的 babel 插件，尝试使用 srcTranspiler: 'swc' 提升编译速度（ srcTranspiler ）。
 4. 升级 WinJS 版本到最新。
 
@@ -400,7 +400,7 @@ export default defineConfig({
 });
 ```
 
-注意这个方法只能查看 webpack 配置而不能修改，修改需要通过 `webpack chain` 的方式对相应的规则修改，但通常你不需要修改 `webpack chain` ，因为绝大部分配置已经有[独立的配置项](http://172.27.24.2:7788/winjs-document/config/config.html)了。
+注意这个方法只能查看 webpack 配置而不能修改，修改需要通过 `webpack chain` 的方式对相应的规则修改，但通常你不需要修改 `webpack chain` ，因为绝大部分配置已经有[独立的配置项](https://winjs-dev.github.io/winjs-docs/config/config.html)了。
 
 ## 打包时出现 `JavaScript heap out of memory`?
 
@@ -442,7 +442,7 @@ Node.js 官方文档中有对以下参数更详细的解释：
     "paths": {
       // 这里会根据具体项目路径自动生成
       "win": [
-        "/Volumes/liwb-ssd/hs_work/gitlab/winjs/packages/winjs"
+        "/Volumes/liwb-ssd/xxx/winjs"
       ],
       "winjs": [
         "src/.win/exports.ts"

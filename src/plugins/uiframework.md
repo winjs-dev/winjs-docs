@@ -2,8 +2,6 @@
 
 为了方便开发者快速集成常用的 UI 组件库，省略一些繁琐的配置，开发了配套的插件功能，支持的 UI 组件如 `vant`、`element-plus`、`element-ui`、`ant-design-vue`、`winUI` 等。
 
-使用示例可以参考：[winjs-plugins/examples]( https://gitlab.hundsun.com/WhaleFE/winjs-plugins/examples)
-
 ## Vant
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-vant?style=flat-square&colorB=646cff)
@@ -58,7 +56,7 @@ export default defineConfig({
   plugins: ['@winner-fed/plugin-vant'],
   /**
    * @name vant 插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/uiframework.html#vant
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#vant
    */
   vant: {
     // 使用 `Vant4.x` 无须配置该属性
@@ -147,7 +145,7 @@ export default defineConfig({
   plugins: ['@winner-fed/plugin-antdv'],
   /**
    * @name ant-design-vue 插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/uiframework.html#antdv
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#antdv
    */
   antdv: {}
 });
@@ -195,7 +193,7 @@ export default defineConfig({
   plugins: [require.resolve('@winner-fed/plugin-element-ui')],
   /**
    * @name element-ui 插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/uiframework.html#elementui
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#elementui
    */
   elementUI: {}
 });
@@ -243,7 +241,7 @@ export default defineConfig({
   plugins: ['@winner-fed/plugin-element-plus'],
   /**
    * @name element-plus 插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/uiframework.html#elementplus
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#elementplus
    */
   elementPlus: {}
 });
@@ -314,7 +312,7 @@ export default defineConfig({
   plugins: ['@winner-fed/plugin-winui'],
   /**
    * @name winUI 插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/uiframework.html#winui
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#winui
    */
   winUI: {
     // 使用 `WinUI 3.x` 无须配置该属性
@@ -348,149 +346,3 @@ Dialog.confirm({
 
 提示：在单个项目中不应该同时使用「全量引入」和「按需引入」，否则会导致代码重复、样式错乱等问题。
 :::  
-
-## HUI
-
-![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-hui?style=flat-square&colorB=646cff)
-
-适用于 Vue2
-
-### 开启方式
-
-1. 安装
-
-::: code-group
-
-```bash [NPM]
-$ npm add @winner-fed/plugin-hui -D
-$ npm add h_ui
-```
-
-```bash [YARN]
-$ yarn add @winner-fed/plugin-hui -D
-$ yarn add h_ui
-```
-
-```bash [PNPM]
-$ pnpm add @winner-fed/plugin-hui -D
-$ pnpm add h_ui
-```
-
-```bash [BUN]
-$ bun add @winner-fed/plugin-hui -D
-$ bun add h_ui
-```
-:::
-
-2. 在配置文件中 `.winrc` 中开启该功能
-
-```ts
-import { defineConfig } from 'win';
-
-export default defineConfig({
-  plugins: ['@winner-fed/plugin-hui'],
-  /**
-   * @name HUI 插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/uiframework.html#hui
-   */
-  hui: {
-    // 配置需要通过 Vue.use 安装的函数组件
-    legacyFunction: ['Message', 'Notice', 'LoadingBar', 'Spin', 'MsgBox', 'MsgBoxSafe', 'MessageSafe']
-  }
-});
-```
-
-3. 函数组件插件安装
-
-配置 `legacyFunction` 后，插件会自动生成运行时代码，使用 Vue.use 方式安装这些函数组件：
-
-```javascript
-// 自动生成的运行时代码
-import Vue from 'vue';
-import 'h_ui/dist/lib/theme-chalk/common/index.css';
-import Message from 'h_ui/dist/lib/Message';
-import Notice from 'h_ui/dist/lib/Notice';
-import LoadingBar from 'h_ui/dist/lib/LoadingBar';
-// ... 其他函数组件
-
-// 自动导入对应的样式文件
-import 'h_ui/dist/lib/theme-chalk/message.css';
-import 'h_ui/dist/lib/theme-chalk/notice.css';
-import 'h_ui/dist/lib/theme-chalk/loadingbar.css';
-// ... 其他样式文件
-
-// 使用 Vue.use 方式安装函数组件
-Vue.use(Message);
-Vue.use(Notice);
-Vue.use(LoadingBar);
-// ... 其他安装
-```
-
-然后在组件中可以直接使用（根据 h_ui 组件的具体 API）：
-
-```vue
-<script>
-export default {
-  methods: {
-    showMessage() {
-      this.$hMessage('这是一条消息');
-    },
-    showNotice() {
-      this.$hNotice({
-        title: '通知',
-        content: '这是一条通知'
-      });
-    }
-  }
-}
-</script>
-```
-
-::: warning 注意
-该插件的实现底层依赖于 `unplugin-vue-components`。而 `unplugin-vue-components` 插件主要是通过静态分析Vue文件中的模板语法来自动引入组件的。这意味着，如果组件是在运行时动态生成的，比如在渲染函数(render函数)中通过条件判断或循环动态创建的组件，该插件可能无法识别这些动态组件并自动导入它们，因为这些信息在静态分析阶段是不可见的。因此，请确保在 render 函数中使用静态的组件引入方式，例如直接导入组件并在 render 函数中使用。
-```js
-// 需要手动引入该组件
-import Button from 'h_ui/dist/lib/Button';
-
-export default {
-  data() {
-    return {
-      columns: [
-        {
-          title: '操作',
-          key: 'operation',
-          width: 100,
-          render: (h, params) => {
-            return h('div', [
-              h(Button, {
-                props: {
-                  type: 'text',
-                  size: 'small'
-                },
-                on: {
-                  click: (e) => {
-                    e.stopPropagation();
-                  }
-                }
-              }, '编辑'),
-              h(Button, {
-                props: {
-                  type: 'text',
-                  size: 'small'
-                },
-                on: {
-                  click: (e) => {
-                    e.stopPropagation();
-                  }
-                }
-              }, '删除')
-            ]);
-          }
-        }
-      ]
-    };
-  }
-};
-
-```
-:::

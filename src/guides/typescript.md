@@ -45,5 +45,3 @@ module.exports = {
 ```
 
 注意：`@winner-fed/f2elint` 版本需要 `>=2.1.0`。
- 
-也可以参考此[Demo 工程](https://gitlab.hundsun.com/WhaleFE/winner-others/blob/winjs-examples/with-h5-ts-lint/.eslintrc.js)

@@ -31,10 +31,6 @@ export default {
 ## 构建能力
 
 WinJS Builder 提供了丰富的构建能力，包括 JavaScript 编译、CSS 编译、静态资源处理、代码热更新、代码压缩、TS 类型检查等几十种能力。
-
-## 示例工程
-
-- [bundler-webpack-demo](https://gitlab.hundsun.com/WhaleFE/winner-others/tree/winjs-examples/bundler-webpack-demo)
  
 ## 扩展
 

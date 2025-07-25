@@ -47,7 +47,3 @@ export default defineConfig({
 - **默认值**：`[]`
 
 用于额外需要使用此方案解析的 svg 文件。注意需要使用**绝对路径**。
-
-
-## 示例
-可参考 [with-icons-legacy](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/-/tree/dev/examples/with-icons-legacy)

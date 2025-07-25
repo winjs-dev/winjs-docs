@@ -34,7 +34,7 @@ export default defineConfig({
   plugins: [require.resolve('@winner-fed/plugin-openapi')],
   /**
    * @name mobileLayout 插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/openapi.html
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/openapi.html
    */
   openAPI: {
     requestLibPath: "import { request } from 'winjs'",

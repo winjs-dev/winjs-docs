@@ -30,7 +30,6 @@ Commands:
     v         show win version
     plugin    inspect win plugins
     verify-commit verify the commit message, which is usually used with husky.
-    verify-commit-hs verify the commit message with the hs specification, which is usually used with husky.
     preview   locally preview production build
     zip       compress the package to zip package
     run       run the script commands, support for ts and zx
@@ -38,7 +37,7 @@ Commands:
     g         generate code snippets quickly
 
 Run `win help <command>` for more information of specific commands.
-Visit http://172.27.24.2:7788/winjs-document/ to learn more about WinJS.
+Visit https://winjs-dev.github.io/winjs-docs/ to learn more about WinJS.
 ```
 
 > 为方便查找，以下命令通过字母排序。
@@ -192,7 +191,7 @@ Commands:
     generate  generate code snippets quickly
 
 Run `win help <command>` for more information of specific commands.
-Visit http://172.27.24.2:7788/winjs-document/ to learn more about WinJS.
+Visit https://winjs-dev.github.io/winjs-docs/ to learn more about WinJS.
 ```
 
 也可指定命令，查看特定命令的详细帮助。
@@ -399,19 +398,6 @@ $ win run ./script.ts
 npx --no-install win verify-commit $1
 ```
 
-## verify-commit-hs
-
-验证 commit message 信息是否符合[公司的日志规范](https://iknow.hs.net/portal/docView/home/105115)，通常和 [husky](https://github.com/typicode/husky) 搭配使用。
-
-比如在 `.husky/commit-msg` 做如下配置，
-
-```bash
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-npx --no-install win verify-commit-hs $1
-```
-
 ## version
 
 查看 `win` 版本，等同于 `win -v`。
@@ -438,6 +424,6 @@ $ win zip
 
 info - Win v0.0.4
 Building examplesample-v1001687759573867.zip...
-info - Zip successfully! At /Users/liwenbo/Desktop/liwb_work/gitlab/winjs/examples/sample/dist-zip/examplesample-v1001687759573867.zip
+info - Zip successfully! At /Users/liwenbo/Desktop/xxx/winjs/examples/sample/dist-zip/examplesample-v1001687759573867.zip
 
 ```

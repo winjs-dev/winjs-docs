@@ -365,64 +365,6 @@ info  - Write commit-msg
 info  - Write pre-commit
 ```
 
-### Huipro1.0 配置生成器
-
-hui pro 1.0 是**财富中台**或**操作员中心**作为统一外框架，项目根据其打包规范集成至统一外框架中运行，通常是通过 see 平台进行部署，故而框架中默认集成 see 发布物打包格式，并提供两种打包命令如下：
-
-```bash
-"child": "node --max_old_space_size=4096 build/bundle/build.child.js",
-"build:see:child": "npm run child && win see --hui-pro"
-```
-
-- `npm run child` 命令可构建用于财富中台外框架执行的子系统包，需手动上传至服务器。
-- `npm run build:see:child` 命令可构建用于 see 平台发布的子系统包。
-
-同时，为防止样式冲突，项目会默认引入 `public/frame` 文件夹。该文件夹对应子系统运行所在主系统的样式文件，开发时，可根据主框架的不同，自行修改其文件内容。
-
-::: warning 注意
-
-- hui pro 1.0 打包入口为 `index.pro.js`，本地环境运行入口为 `app.t[j]s`，在修改 `app.t[j]s` 时，需检查是否在 `index.pro.js` 进行修改，防止本地和部署环境出现功能不一致的现象。
-:::
-
-```bash
-$ win g huipro
-info  - Update package.json for devDependencies
-info  - Update package.json for scripts
-info  - Update package.json for scripts
-info  - Update package.json for scripts
-info  - Update package.json for scripts
-Write: build/bundle/build.child.js
-Write: build/bundle/utils.js
-Write: build/bundle/webpack.child.conf.js
-Copy:  generatorHuiRouterFile.ts
-Copy:  generatorSysconfig.ts
-Copy:  utils.ts
-Write: public/app.css
-Write: public/vendors_frame/app.css
-Write: src/index.pro.js
-Copy:  appConfig.ts
-Copy:  config.ts
-Copy:  proxy.ts
-Copy:  routes.ts
-Write: src/components/FrameLayout/index.vue
-Write: src/components/QuickNavigation/index.vue
-Copy:  constant.js
-Copy:  layouts/index.vue
-Copy:  services/autoMatchBaseUrl.js
-Copy:  services/request.js
-Copy:  services/RESTFULURL.js
-Copy:  utils/autoLogin.js
-Copy:  utils/bizSecurity.js
-Copy:  utils/checkIsHwsContainer.js
-Copy:  utils/customRouter.js
-Copy:  utils/menuAuth.js
-warn  - 🚨 Note that some files may be overwritten.
-```
-
-::: warning 注意
-- 请注意备份文件，以上方式会覆盖项目已存在的文件，如 `src/constant.js` 、 `src/services/**`。
-:::
-
 ### Uno CSS 配置生成器 {#unocss}
 
 为项目开启 [UnoCSS](https://github.com/unocss/unocss) 配置，命令执行后，winJS 会生成 Uno CSS 和安装相应的的依赖。

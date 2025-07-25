@@ -25,7 +25,6 @@ pnpm create @winner-fed/win my-winjs-app
 - [Simple App](#simple)
 - [Hybrid App](#hybrid)
 - [PC Web](#pc)
-- [Hui pro 1.0](#huipro)
 - [H5 App](#app)
 - [Win Plugin](#plugin)
 
@@ -41,16 +40,8 @@ pnpm create @winner-fed/win my-winjs-app
 
 国内的开发者建议选「taobao」，否则选「npm」。选择 npm taobao 源在安装依赖时通常会更快一些。
 
-如果是公司内部的项目，选择 「winner」
-
 - [npm](https://www.npmjs.com/)
 - [taobao](https://npmmirror.com/)
-- [winner](公司内部镜像源)
-
-::: warning 注意
-Npm 源再选择 `winner` 时，用户如果没有默认镜像源的访问权限，可以自定义输入有权限的镜像源地址。
-默认内置为： `http://artifactory.hundsun.com/artifactory/api/npm/winnerproject-npm-virtual/`。 
-:::
 
 选择后会自动生成一个最基本的 WinJS 项目，并根据选中的客户端和镜像源安装依赖：
 
@@ -85,9 +76,6 @@ H5 开发的模板
 ### PC Web {#pc}
 PC Web 模板
 
-### Hui pro 1.0{#huipro}
-HUI pro 1.0 模板
-
 ### Win Plugin {#plugin}
 插件开发模板
 
@@ -105,14 +93,5 @@ yarn create @winner-fed/win --template taro
 
 不同技术框架的小程序模板，如下
 
-1. [taro-template](https://gitlab.hundsun.com/WhaleFE/winner-others/tree/taro-template)
-2. [uniapp-template](https://gitlab.hundsun.com/WhaleFE/winner-others/tree/uniapp-template)
-3. [hola-template](https://gitlab.hundsun.com/WhaleFE/winner-others/tree/hola-template)
-
-::: warning 注意
-Npm 源再选择 `winner` 时，需要输入公司效能平台对应的 「npm-api-key」。这样才可以下载公司内网的对应的模板工程。一定不要取错了，不然会下载失败。
-:::
-
-![效能平台1](/images/guide/devops2.png)
-![效能平台2](/images/guide/devops.png)
-![效能平台3](/images/guide/devops1.png)
+1. taro-template
+2. uniapp-template

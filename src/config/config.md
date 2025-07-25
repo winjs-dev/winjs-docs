@@ -891,7 +891,7 @@ export default {
 
 当项目中的`js`文件大小为超过了代码生成器 500KB 的限制，就会有如下警告：
 
-`[BABEL] Note: The code generator has deoptimised the styling of /Volumes/liwb-ssd/hs_work/gitlab/winjs/winjs-examples/with-vue2/src/assets/js/NIM_Web_SDK_v8.9.0.js as it exceeds the max of 500KB.
+`[BABEL] Note: The code generator has deoptimised the styling of /Volumes/liwb-ssd/xxx/with-vue2/src/assets/js/NIM_Web_SDK_v8.9.0.js as it exceeds the max of 500KB.
 `
 考虑到这种js文件其实也不需要经过 babel 编译，因此新增了此配置。用于不需要做 Babel 编译的 NPM 包或目录。
 

@@ -19,98 +19,12 @@ const nav = [
       {
         text: '前端领域模型',
         link:
-          'http://172.27.24.2:7788/domain-front-document/'
+          'https://github.com/cklwblove/domain-front'
       },
       {
-        text: '魔块编辑器',
+        text: 'CreateProject',
         link:
-          'http://172.27.24.2:7788/hmagic-editor-document/'
-      },
-      {
-        text: 'Nemo',
-        link:
-          'http://172.27.24.2:7788/nemo-document/'
-      },
-      {
-        text: '前端编码规范',
-        link:
-          'http://172.27.24.2/h5-linter-docs/'
-      },
-      {
-        text: 'UI 组件库 WinUI',
-        items: [
-          {
-            text: 'WinUI(Vue2)',
-            link:
-              'http://172.27.24.2/win-ui/#/zh-CN/'
-          },
-          {
-            text: 'WinUI(Vue3)',
-            link:
-              'http://172.27.24.2/win-ui-v3/#/zh-CN'
-          }
-        ]
-      },
-      {
-        text: '桥接接口 JSAPI',
-        items: [
-          {
-            text: 'Harmony JSAPI',
-            link:
-              'http://172.27.24.2:7788/harmony-jsapi/docs/'
-          },
-          {
-            text: 'Winner JSAPI(GMU)',
-            link:
-              'http://172.27.24.2:7788/winner-jsapi/'
-          },
-          {
-            text: 'mPaaS JSAPI(mPaaS)',
-            link:
-              'http://172.27.24.2/mpaas-jsapi/'
-          }
-        ]
-      },
-      {
-        text: '行情JS-SDK',
-        items: [
-          {
-            text: 'HTTP-JS-SDK',
-            link: 'http://172.27.24.2:7788/quote-js-sdk/http-start.html'
-          },
-          {
-            text: 'WEBSOCKET-JS-SDK',
-            link: 'http://172.27.24.2:7788/quote-js-sdk/websocket-start.html'
-          },
-          {
-            text: '行情指标公式解析引擎',
-            link: 'http://172.27.24.2:7788/quote-js-sdk/finindex-start.html'
-          },
-          {
-            text: '行情图表库',
-            link: 'http://172.27.24.2:7788/quote-graph/'
-          }
-        ]
-      },
-      {
-        text: '其他',
-        items: [
-          {
-            text: '远程调试工具',
-            link:
-              'http://172.27.24.2:6752/'
-          },
-          {
-            text: 'CreateProject',
-            link:
-              'https://cloud-templates.github.io/create-project/'
-          },
-          {
-            text: '团队知识库',
-            link:
-              'https://alidocs.dingtalk.com/i/spaces/o5WXMNJlaLDJ6mwO/overview/'
-          }
-        ]
+          'https://cloud-templates.github.io/create-project/'
       }
     ]
   }
@@ -239,13 +153,11 @@ export const sidebar = {
     {
       text: '其他',
       items: [
-        { text: '参与贡献', link: '/guides/contributing' },
         { text: '代码拆分指南', link: '/guides/code-splitting' },
         { text: '非现代浏览器兼容', link: '/guides/legacy-browser' },
         { text: '产物体积优化', link: '/guides/optimize-bundle' },
         { text: '构建模式', link: '/guides/build-mode' },
-        { text: '常见问题', link: '/guides/faq' },
-        { text: '更新日志', link: '/guides/changelog' }
+        { text: '常见问题', link: '/guides/faq' }
       ]
     }
   ],
@@ -330,14 +242,6 @@ export const sidebar = {
           link: '/plugins/wconsole'
         },
         {
-          text: 'BuildHuiPro',
-          link: '/plugins/buildhuipro'
-        },
-        {
-          text: 'HuiMicroApp HUI2.0',
-          link: '/plugins/huimicroapp'
-        },
-        {
           text: 'Qiankun 乾坤',
           link: '/plugins/qiankun'
         },
@@ -415,10 +319,6 @@ export const sidebar = {
         {
           text: '设计思路',
           link: 'cli/philosophy'
-        },
-        {
-          text: '参与贡献',
-          link: 'cli/contributing'
         },
         {
           text: 'FAQ',
@@ -502,13 +402,8 @@ export default defineConfig({
 
     lastUpdatedText: '上次更新',
 
-    editLink: {
-      pattern: 'https://gitlab.hundsun.com/WhaleFE/winjs/issues',
-      text: '发现文档错误？请反馈前端团队'
-    },
-
     footer: {
-      copyright: `Copyright © 2016-${new Date().getFullYear()} 投资赢家前端团队`
+      copyright: `Copyright © 2016-${new Date().getFullYear()} winjs-dev`
     },
 
     docFooter: {

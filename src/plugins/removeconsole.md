@@ -54,6 +54,3 @@ removeConsole({
   exclude: [/node_modules/, /\.git/],
 })
 ```
-
-## 示例
-可参考 [with-remove-console](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/-/tree/dev/examples/with-remove-console)

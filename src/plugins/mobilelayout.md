@@ -52,7 +52,7 @@ export default defineConfig({
   plugins: [require.resolve('@winner-fed/plugin-mobile-layout')],
   /**
    * @name mobileLayout 插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/mobilelayout.html
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/mobilelayout.html
    */
   mobileLayout: {}
 });
@@ -355,5 +355,3 @@ export interface MobileLayoutProps {
 }
 
 ```
-
-此外，也可以参考 [with-mobile-layout](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/-/tree/dev/examples/with-mobile-layout)

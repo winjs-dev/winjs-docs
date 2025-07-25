@@ -19,7 +19,7 @@ async function generateLLms() {
     if (!isEnUS) {
       const mdContent = fs.readFileSync(mdPath, 'utf-8');
       const mdName = markdown.replace(/\.md$/, '');
-      const url = `http://172.27.24.2:7788/winjs-document/${mdName}`;
+      const url = `https://winjs-dev.github.io/winjs-docs/${mdName}`;
       const regex = /^# (.+)$/m;
       let title = mdName;
       let contentFromHeading = '';

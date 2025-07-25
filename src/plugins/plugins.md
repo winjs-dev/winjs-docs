@@ -1,5 +1,7 @@
 # 开发插件 {#plugins}
 
+> 也可以参考 [UMI 插件机制](https://umijs.org/docs/guides/plugins)。    
+
 WinJS 的核心就在于它的插件机制。基于 WinJS 的插件机制，你可以获得扩展项目的编译时和运行时的能力。你可以利用我们提供的 [插件API](../api/plugin-api) 来自由编写插件，进而实现修改代码打包配置，修改启动代码，约定目录结构，修改 HTML 等丰富的功能。
 
 ## 核心概念
@@ -129,9 +131,7 @@ export default{
 
 为了避免不必要的麻烦，我们建议你为自己编写的插件显示地声明其 key。
 
-## WinJS 插件的机制及其生命周期
-
-![WinJS 插件机制](/images/guide/win.png)
+## WinJS 生命周期
 
 ### 生命周期
 
@@ -169,7 +169,7 @@ WinJS 为 PluginAPI 对象的 get() 方法进行了 proxy， 具体规则如下�
 因此，WinJS 提供给插件的 api 绝大多数都是依靠 `registerMethod()` 来实现的，你可以直接使用我们的这些 api 快速地在插件中注册 hook。这也是 WinJS 将框架和功能进行解耦的体现： WinJS 的 service 只提供插件的管理功能，而 api 都依靠插件来提供。
 
 ### preset-win
-`core` 提供了一套插件的注册及管理机制。而 WinJS 的核心功能都靠 [preset-win](https://gitlab.hundsun.com/WhaleFE/winjs/tree/dev/packages/preset-win) 来实现。
+`core` 提供了一套插件的注册及管理机制。而 WinJS 的核心功能都靠 preset-win 来实现。
 
 `preset-win` 其实就是内置的一个插件集，它提供的插件分为三大类：
 - registerMethods 这类插件注册了一些上述提到的"注册器"，以供开发者快速地注册 hook，这类方法也占据了 PluginAPI 中的大多数。

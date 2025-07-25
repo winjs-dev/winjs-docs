@@ -36,7 +36,7 @@ export default defineConfig({
   plugins: ['@winner-fed/plugin-assets-retry'],
   /**
    * @name assetsRetry插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/assetsretry.html
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/assetsretry.html
    */
   assetsRetry: {
     // domain list, only resources in the domain list will be retried.

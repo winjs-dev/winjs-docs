@@ -1,9 +1,7 @@
 # 状态管理 {#statemanagement}
 
 ::: warning 注意
-此插件只适用于 Vue3。Vue2 需要自定义引入，可以参考示例工程如下：
-- Vuex，可以参考 [with-vue2-vuex](https://gitlab.hundsun.com/WhaleFE/winner-others/tree/winjs-examples/with-vue2-vuex)。
-- Pinia，可以参考 [with-vue2-pinia](https://gitlab.hundsun.com/WhaleFE/winner-others/tree/winjs-examples/with-vue2-pinia)。
+此插件只适用于 Vue3。Vue2 需要自定义引入
 :::
 
 ## 介绍
@@ -70,13 +68,11 @@ export default defineConfig({
   /**
    * @name pinia
    * @description 开启 pinia
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/statemanagement.html#pinia
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/statemanagement.html#pinia
    */
   pinia: {}
 });
 ```
- 
-使用 Demo 示例可以参考：[with-pinia](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/-/tree/dev/examples/with-pinia)
 
 ## Vuex Plugin {#vuex}
 
@@ -127,7 +123,7 @@ export default defineConfig({
   /**
    * @name vuex
    * @description 开启 vuex
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/statemanagement.html#vuex
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/statemanagement.html#vuex
    */
   vuex: {}
 });
@@ -144,9 +140,6 @@ const store = useVuexStore();
 console.log('store', store.state);
 ```
 :::
-
-使用 Demo 示例可以参考：[with-vuex](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/-/tree/dev/examples/with-vuex)
-    
 
 ## 扩展
 

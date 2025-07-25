@@ -270,9 +270,3 @@ event - build index.html
     | Android | iOS |
     |---------------------------------------------------------------------------------------------------------------------| --------------- |
     | >= 6.0 | >= 10.0 |`
-
-  
-                         
-## 更多示例
-
-更多示例 demo，请查看 [winjs-examples](https://gitlab.hundsun.com/WhaleFE/winner-others/commits/winjs-examples)

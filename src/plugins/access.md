@@ -54,7 +54,7 @@ export default defineConfig({
   }],
   /**
    * @name 权限插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/access.html
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/access.html
    */
   access: {
     roles: {
@@ -384,7 +384,3 @@ export default {
 };
 </script>
 ```
-
-## 示例
-
-参考 [with-access](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/-/tree/dev/examples/with-access)

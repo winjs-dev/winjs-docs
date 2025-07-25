@@ -158,7 +158,7 @@ module.exports = {
 }
 ```
 
-目前，团队采用 [eslint-config-win](https://github.com/cloud-templates/eslint-config-win) 来检验 JavaScript/Vue 的代码，具体规则可以参考这个[linter-docs/javascript](http://172.27.24.2/h5-linter-docs/?rule=base)、 [linter-docs/vue](http://172.27.24.2/h5-linter-docs/?rule=vue)。
+目前，团队采用 [eslint-config-win](https://github.com/winjs-dev/eslint-config-win) 来检验 JavaScript/Vue 的代码。
 
 ### StyleLint
 StyleLint 是一个强大的、现代化的 CSS 检测工具, 与 ESLint 类似, 也是通过定义一系列的编码风格规则帮助我们避免在样式表中出现错误。支持最新的 CSS 语法、CSS-in-JS、以及其他类 CSS 语法(如SCSS、Less)。

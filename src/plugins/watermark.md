@@ -36,7 +36,7 @@ export default defineConfig({
   plugins: ['@winner-fed/plugin-watermark'],
   /**
    * @name 水印插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/watermark.html
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/watermark.html
    */
   watermark: {},
 });

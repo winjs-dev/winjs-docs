@@ -51,7 +51,7 @@ export default defineConfig({
   plugins: [require.resolve('@winner-fed/plugin-web-update-notification')],
   /**
    * @name web-update-notification 插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/webupdatenotification.html
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/webupdatenotification.html
    */
   webUpdateNotification: {
     logVersion: true,
@@ -68,10 +68,6 @@ export default defineConfig({
      
 ## 效果
 ![web-update.png](/images/plugins/web-update.png)
-
-## 示例
-
-参考 [with-web-update-notification](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/tree/dev/examples/with-web-update-notification)
   
 ## 插件配置说明
 

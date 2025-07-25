@@ -21,57 +21,6 @@ $ rm win.js
 
 以此类推即可调试其他的 JavaScript 文件。
 
-## XSwitch
-
-如果需要在特定的域名环境调试或者验证当前的修改的代码，推荐使用 Chrome 插件 [XSwitch](https://chrome.google.com/webstore/detail/xswitch/idkjhjggpffolpidfkikidcokdkdaogg)。
-
-
-![xswitch-logo](/images/guide/xswitch.png)
-
-
-假设我们想在线上项目地址 `https://www.myproject.com` 上调试本地代码。项目使用 `https://www.myproject.com/win.hash.js`，为了验证本地的项目，需要将它替换成本地开发环境的 `http://127.0.0.1:000/win.js`
-
-首先使用环境变量 `SOCKET_SERVER` 启动本地环境（防止因为连接不上 socket server 导致页面不断刷新）。
-```bash
-$SOCKET_SERVER=http://127.0.0.1:8000/ npx win dev
-```
-
-然后，在 XSwitch 中配置资源转发规则。
-```json
-{
-  "proxy": [
-    // 数组的第 0 项的资源会被第 1 项目替换
-    [
-      "https://www.myproject.com/win.2c8a01df.js",
-      "http://127.0.0.1:8000/win.js"
-    ],
-    // 使用正则可以方便处理分包情况下 js 资源的加载
-    [
-      "https://www.myproject.com/(.*\.js)",
-      "http://127.0.0.1:8000/$1",
-    ],
-    // 如果需要验证视觉表现，不要忘记替换 css 资源
-    [
-      "https://www.myproject.com/win.ae8b10e0.css",
-      "http://127.0.0.1:8000/win.css"
-    ]
-  ]
-}
-```
-
-刷新页面，正式域名下的内容就被替换了，这个时候就能方便的指定环境下调试了。
-
-如果要退出调试，关闭 XSwitch 插件功能即可。
-
-![turn-off-xswitch](/images/guide/turn-off-xswitch.png)
-
-::: tip 提示
-经常使用 XSwitch 的话，可新建一个规则保存。
-:::
-
-![xswitch1-new-rule](/images/guide/xswitch1.png)
-  
-
 ## bug 调试方法
 
 在我们的开发中，由于对底层的不理解或者兼容性的问题，很有可能会出现白屏或者 Out Of Memory 的问题，也有一些问题没有任何可以 debug 着手的方式。这时候就要用到一些 debug 的方案。

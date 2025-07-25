@@ -121,31 +121,3 @@ defaults                 | Object        | true     | `{ displaySize: 50, transp
 url                 | String        | true     | 'https://cdnjs.cloudflare.com/ajax/libs/eruda/3.0.1/eruda.min.js' | 加载的 edura 文件地址。
  
 可以参考[这里](https://github.com/liriliri/eruda/blob/master/doc/API.md)
-
-
-### pagespy
-```js
-import { defineConfig } from 'win';
-
-export default defineConfig({
-  plugins: [require.resolve('@winner-fed/plugin-wconsole')],
-  wconsole: {
-    pagespy: {
-      options: Object,
-      url: String
-    },
-  }
-});
-
-```
- 键名                  | 类型            | 可选     | 默认值                                                             | 描述
---------------------- |---------------| -------- |-----------------------------------------------------------------| -------------------
-options                 | Object        | true     | `{}`    | 默认设置
-url                 | String        | true     | 'http://172.27.24.2:6752/page-spy/index.min.js' | 加载的 pageSpy 文件地址。
-
-其中 `options` 参数配置可以参考[这里](https://github.com/HuolalaTech/page-spy/tree/main/packages/page-spy-browser)
-
-
-## 示例
-可参考 [with-wconsole](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/-/tree/dev/examples/with-wconsole)
-

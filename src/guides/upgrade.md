@@ -1,6 +1,6 @@
-## 版本升级
+# 版本升级 {#upgrade}
 
-### 官方包
+## 官方包
 
 WinJS 所有的官方包目前都使用统一版本号进行发布。
 
@@ -12,18 +12,6 @@ WinJS 所有的官方包目前都使用统一版本号进行发布。
 | @winner-fed/renderer-vue  | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Frenderer-vue?style=flat-square&colorB=646cff)  |
 | @winner-fed/renderer-vue2 | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Frenderer-vue2?style=flat-square&colorB=646cff) |
 | @winner-fed/winjs         | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fwinjs?style=flat-square&colorB=646cff)         |
-
-### 指定版本升级
-
-可以根据公司内网发布的 Release Note，开发者也可以手动将项目升级到想要的版本。具体步骤：
-
-1. 打开链接 http://artifactory.hundsun.com/ui/packages?name=%40winner-fed&type=packages
-2. 在「搜索栏」 里填写关键词 *@winner-fed*，点击搜索即可
-   ![upgrade.png](/images/guide/upgrade.png)
-
-::: tip 提示
-当升级时，需要对 WinJS 官方提供的所有包做统一升级，而不是升级单个依赖。
-:::
 
 ## 使用 Taze
 

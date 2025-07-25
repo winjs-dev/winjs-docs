@@ -19,7 +19,7 @@ export default {
 }
 ```
 
-MPA 的目录结构是 `src/pages/${dir}/index.[jt]sx` ，每个文件夹 `${dir}` 会生成一个页面，文件夹内的 `index.[jt]sx` 为页面的入口文件，示例见 [examples/mpa](https://gitlab.hundsun.com/WhaleFE/winjs/tree/dev/examples/mpa) 。
+MPA 的目录结构是 `src/pages/${dir}/index.[jt]sx` ，每个文件夹 `${dir}` 会生成一个页面，文件夹内的 `index.[jt]sx` 为页面的入口文件。
 
 配置项：
 

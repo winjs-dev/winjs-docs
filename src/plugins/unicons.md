@@ -62,6 +62,3 @@ export default defineConfig({
  
 ## 注意
 - 在使用本地图标时，根据[unplugin-icons](https://github.com/unplugin/unplugin-icons?tab=readme-ov-file#name-conversion)的命名规则，默认使用 `icon` 作为前缀(prefix)，`win` 作为集合（collection）。默认解析 `src/icons` 下的 svg 图标，如 `icon-win-dog`
-
-## 示例
-可参考 [with-unicons](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/-/tree/dev/examples/with-unicons)

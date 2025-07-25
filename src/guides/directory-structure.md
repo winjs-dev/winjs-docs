@@ -496,7 +496,7 @@ module.exports = {
 ```
 
 ### f2elint.config.js
-[F2ELint](./f2elint) 是《恒生前端规约》的配套 Lint 工具，可以为项目一键接入规约、一键扫描和修复规约问题，保障项目的编码规范和代码质量。
+[F2ELint](./f2elint) 是《前端规约》的配套 Lint 工具，可用于为项目一键接入规约、一键扫描和修复规约问题，保障项目的编码规范和代码质量。
 
 ```javascript
  module.exports = {

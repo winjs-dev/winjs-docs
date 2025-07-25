@@ -8,11 +8,11 @@
 
 ### 接口定义
 
-- 所有的接口名应定义在 `src/services/RESTFULURL.js` 文件里。如果接口使用了公司自研的接口管理平台 `hep`，则推荐使用**数据服务层的解决方案** [Nemo](http://172.27.24.2:7788/nemo-document/)，自动化生成请求的代码。
+- 所有的接口名应定义在 `src/services/RESTFULURL.js` 文件里。可以使用**数据服务层的解决方案** [Nemo](https://www.npmjs.com/package/@winner-fed/nemo-engine)，自动化生成请求的代码。
 
 ### 接口配置地址
 
-默认基础的请求地址在配置文件 `.winrc` 的 [`appConfig`](http://172.27.24.2:7788/winjs-document/config/config.html#appconfig) 属性里，字段名为 `API_HOME`。当然也可以根据不同的服务接口地址进行拓展字段，比如下面的 `API_UPLOAD`： 
+默认基础的请求地址在配置文件 `.winrc` 的 [`appConfig`](../config/config.html#appconfig) 属性里，字段名为 `API_HOME`。当然也可以根据不同的服务接口地址进行拓展字段，比如下面的 `API_UPLOAD`： 
 
 ```javascript
 // .winrc.ts
@@ -202,7 +202,7 @@ export default function (
 
 ```
 
-最后在 `src/app.t[j]s` 文件里添加以下代码即可。也可以参考示例工程 [with-request](https://gitlab.hundsun.com/WhaleFE/winner-others/tree/winjs-examples/with-request)
+最后在 `src/app.t[j]s` 文件里添加以下代码即可。
 
 ```js
 import { TIMEOUT } from '@/constant';

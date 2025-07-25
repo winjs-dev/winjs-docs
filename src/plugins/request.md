@@ -49,7 +49,7 @@ export default defineConfig({
   /**
    * @name 请求插件
    * @description 基于 axios 的请求插件
-   * @doc http://172.27.24.2:7788/winjs-document/plugins/request.html
+   * @doc https://winjs-dev.github.io/winjs-docs/plugins/request.html
    */
   request: {},
 });
@@ -387,9 +387,3 @@ export const request: RequestConfig = {
 ```
 
 你也可以通过写响应拦截器的方式来进行自己的错误处理，**不一定局限于 errorConfig**。
-
-## 示例 demo
-
-更多详见 demo
-
-- [with-request](https://gitlab.hundsun.com/WhaleFE/winjs-plugins/-/tree/dev/examples/with-request)
