@@ -8,7 +8,6 @@
     "dev": "vitepress",
     "build": "vitepress build && node scripts/generateLLms.cjs",
     "serve": "vitepress serve",
-    "deploy": "gh-pages -d .vitepress/dist",
     "zhlint": "zhlint 'src/{api,blog,cli,config,guide,plugins}/**/*.md'",
     "clean": "rm -rf .vitepress/dist",
     "preinstall": "npx only-allow pnpm"
@@ -32,7 +31,6 @@
     "vitepress-plugin-group-icons": "^1.0.4",
     "vitepress-plugin-pagefind": "^0.4.10",
     "terser": "^5.14.2",
-    "gh-pages": "^6.3.0",
     "zhlint": "^0.7.1"
   },
   "engines": {
