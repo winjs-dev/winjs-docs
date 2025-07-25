@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "WinJS 开发说明文档",
-  "packageManager": "pnpm@10.7.0",
+  "packageManager": "pnpm@10.13.1",
   "scripts": {
     "dev": "vitepress",
     "build": "vitepress build && node scripts/generateLLms.cjs",
@@ -30,7 +30,7 @@
     "glob": "^11.0.1",
     "vitepress-plugin-group-icons": "^1.6.1",
     "terser": "^5.14.2",
-    "zhlint": "^0.7.1"
+    "zhlint": "^0.8.0"
   },
   "engines": {
     "node": ">=22.0.0",
