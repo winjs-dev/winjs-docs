@@ -1,0 +1,35 @@
+@import "./pages.css";
+@import "./badges.css";
+@import "./options-boxes.css";
+@import "./inline-demo.css";
+@import "./utilities.css";
+@import "./style-guide.css";
+
+.VPHero .main {
+  padding: 60px 0;
+}
+
+/* pagefind */
+.blog-search .nav-search-btn-wait {
+  border: 1px solid transparent;
+  background-color: #f6f6f7;
+  border-radius: 6px;
+  height: 40px;
+  padding: 0 10px 0 12px !important;
+  transition: border-color .25s;
+}
+
+.dark .blog-search .nav-search-btn-wait {
+  background-color: #161618;
+}
+
+.docs-cn-github-release-tag {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 6px;
+  margin-left: 6px;
+  background: var(--vp-c-brand);
+  color: #fff;
+  border-radius: 10px;
+  vertical-align: middle;
+}
