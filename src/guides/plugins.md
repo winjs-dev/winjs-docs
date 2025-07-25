@@ -137,9 +137,7 @@ export default{
 
 为了避免不必要的麻烦，我们建议你为自己编写的插件显示地声明其 key。
 
-## WinJS 插件的机制及其生命周期
-
-![WinJS 插件机制](/images/guide/win.png)
+## WinJS 插件生命周期
 
 ### 生命周期
 
