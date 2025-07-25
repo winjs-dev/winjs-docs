@@ -424,6 +424,7 @@ export default defineConfig({
     },
 
     outline: 'deep'
+
   },
 
   markdown: {
@@ -462,6 +463,10 @@ export default defineConfig({
     plugins: [
       pagefindPlugin({
         forceLanguage: 'zh-cn',
+        btnPlaceholder: '搜索',
+        placeholder: '搜索文档',
+        emptyText: '空空如也',
+        heading: '共: {{searchResult}} 条结果',
         customSearchQuery: chineseSearchOptimize
       }),
       groupIconVitePlugin({
@@ -469,6 +474,9 @@ export default defineConfig({
           cloudflare: 'logos:cloudflare-workers-icon'
         }
       })
-    ]
+    ],
+    experimental: {
+      enableNativePlugin: true
+    }
   }
 });
