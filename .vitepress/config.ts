@@ -470,7 +470,12 @@ export default defineConfig({
           }
         }
       }
-    }
+    },
+
+    editLink: {
+      pattern: 'https://github.com/winjs-dev/winjs-docs/edit/main/src/:path',
+      text: '在 GitHub 上编辑此页面'
+    },
   },
 
   markdown: {
