@@ -9,7 +9,7 @@
     "build": "vitepress build && node scripts/generateLLms.cjs",
     "serve": "vitepress serve",
     "deploy": "gh-pages -d .vitepress/dist",
-    "zhlint": "zhlint 'src/{api,common-ui,guide,changelog}/**/*.md'",
+    "zhlint": "zhlint 'src/{api,blog,cli,config,guide,plugins}/**/*.md'",
     "clean": "rm -rf .vitepress/dist",
     "preinstall": "npx only-allow pnpm"
   },

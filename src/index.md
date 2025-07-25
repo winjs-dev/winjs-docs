@@ -34,7 +34,7 @@ features:
   - icon: 🚄
     title: 面向未来
     details: 在满足需求的同时，我们也不会停止对新技术的探索。已使用 Vue3.0 来提升应用性能。
-footer: MIT Licensed | Copyright © 2016-present 投资赢家前端团队
+footer: MIT Licensed | Copyright © 2016-present winjs-dev
 ---
 
 <script setup>
