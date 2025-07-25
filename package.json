@@ -1,9 +1,9 @@
 {
-  "name": "winjs_document",
+  "name": "winjs-docs",
   "version": "1.0.0",
   "type": "module",
-  "description": "winjs 开发说明文档",
-  "packageManager": "pnpm@7.13.0",
+  "description": "WinJS 开发说明文档",
+  "packageManager": "pnpm@10.7.0",
   "scripts": {
     "dev": "vitepress",
     "build": "vitepress build && node scripts/generateLLms.cjs",
