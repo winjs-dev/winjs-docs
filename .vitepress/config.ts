@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vitepress';
-import { chineseSearchOptimize, pagefindPlugin } from 'vitepress-plugin-pagefind';
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
 import { headerPlugin } from './headerMdPlugin';
 import { baseURL } from './meta';
@@ -423,8 +422,55 @@ export default defineConfig({
       next: '下一篇'
     },
 
-    outline: 'deep'
+    outline: 'deep',
 
+    search: {
+      provider: 'algolia',
+      options: {
+        appId: 'JBSB9TIB0G',
+        apiKey: '8ad55bcc96464cb6cef8d145cc0c1db8',
+        indexName: 'winjs-docs',
+        placeholder: '搜索文档',
+        translations: {
+          button: {
+            buttonText: '搜索',
+            buttonAriaLabel: '搜索'
+          },
+          modal: {
+            searchBox: {
+              resetButtonTitle: '清除查询条件',
+              resetButtonAriaLabel: '清除查询条件',
+              cancelButtonText: '取消',
+              cancelButtonAriaLabel: '取消'
+            },
+            startScreen: {
+              recentSearchesTitle: '搜索历史',
+              noRecentSearchesText: '没有搜索历史',
+              saveRecentSearchButtonTitle: '保存至搜索历史',
+              removeRecentSearchButtonTitle: '从搜索历史中移除',
+              favoriteSearchesTitle: '收藏',
+              removeFavoriteSearchButtonTitle: '从收藏中移除'
+            },
+            errorScreen: {
+              titleText: '无法获取结果',
+              helpText: '你可能需要检查你的网络连接'
+            },
+            footer: {
+              selectText: '选择',
+              navigateText: '切换',
+              closeText: '关闭',
+              searchByText: '搜索提供者'
+            },
+            noResultsScreen: {
+              noResultsText: '无法找到相关结果',
+              suggestedQueryText: '你可以尝试查询',
+              reportMissingResultsText: '你认为这个查询应该有结果？',
+              reportMissingResultsLinkText: '点击反馈'
+            }
+          }
+        }
+      }
+    }
   },
 
   markdown: {
@@ -461,14 +507,6 @@ export default defineConfig({
       stringify: true
     },
     plugins: [
-      pagefindPlugin({
-        forceLanguage: 'zh-cn',
-        btnPlaceholder: '搜索',
-        placeholder: '搜索文档',
-        emptyText: '空空如也',
-        heading: '共: {{searchResult}} 条结果',
-        customSearchQuery: chineseSearchOptimize
-      }),
       groupIconVitePlugin({
         customIcon: {
           cloudflare: 'logos:cloudflare-workers-icon'

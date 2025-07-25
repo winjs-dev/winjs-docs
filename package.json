@@ -29,7 +29,6 @@
     "@winner-fed/prettier-config-win": "^1.0.0",
     "glob": "^11.0.1",
     "vitepress-plugin-group-icons": "^1.6.1",
-    "vitepress-plugin-pagefind": "^0.4.10",
     "terser": "^5.14.2",
     "zhlint": "^0.7.1"
   },
