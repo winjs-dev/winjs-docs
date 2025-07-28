@@ -15,11 +15,15 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
   </a>
+  <a href="https://app.netlify.com/projects/winjs-docs/deploys">
+    <img src="https://api.netlify.com/api/v1/badges/1b9b4475-68fe-4125-a8ad-d93955df7ac4/deploy-status" alt="Netlify Status">
+  </a>
 </p>
 
 ## 📖 关于此项目
 
-这是 WinJS 框架的官方文档站点，使用 [VitePress](https://vitepress.dev/) 构建。文档涵盖了 WinJS 框架的完整使用指南、API 参考、插件开发等内容。
+这是 WinJS 框架的官方文档站点，使用 [VitePress](https://vitepress.dev/) 构建。文档涵盖了 WinJS 框架的完整使用指南、API
+参考、插件开发等内容。
 
 ## ✨ WinJS 简介
 
