@@ -9,6 +9,14 @@
   padding: 60px 0;
 }
 
+/* 英文语言下，首页标题字体大小 */
+
+@media (min-width: 960px) {
+  html[lang="en-US"] .VPHero.has-image .text {
+    font-size: 36px;
+  }
+}
+
 /* pagefind */
 .blog-search .nav-search-btn-wait {
   border: 1px solid transparent;
