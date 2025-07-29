@@ -166,11 +166,11 @@ export const sidebar = {
         items: [
           {
             text: 'API',
-            link: '/api/api'
+            link: 'api'
           },
           {
             text: '插件 API',
-            link: '/api/plugin-api'
+            link: 'plugin-api'
           }
         ]
       }
