@@ -1,24 +1,24 @@
-# 静态资源 {#assets}
+# Static Assets {#assets}
 
-本文介绍各种在 WinJS 项目中使用静态资源的方式。
+This guide covers various ways to use static assets in WinJS projects.
 
-WinJS 支持在代码中引用图片、字体、音频、视频等类型的静态资源。
+WinJS supports referencing static assets such as images, fonts, audio, videos, and other types in your code.
 
-:::tip 什么是静态资源
-静态资源是指 Web 应用中不会发生变化的文件。常见的静态资源包括图片、字体、视频、样式表和 JavaScript 文件。这些资源通常存储在服务器或 CDN 上，当用户访问 Web 应用时会被传送到用户的浏览器。由于它们不会发生变化，静态资源可以被浏览器缓存，从而提高 Web 应用的性能。
+:::tip What are Static Assets
+Static assets are files in web applications that don't change. Common static assets include images, fonts, videos, stylesheets, and JavaScript files. These resources are typically stored on servers or CDNs and are delivered to users' browsers when they access the web application. Since they don't change, static assets can be cached by browsers, thereby improving web application performance.
 :::
 
-WinJS 使用两个目录来处理样式表、字体或图片等资源。
-- `public/` 目录中的内容会按原样作为服务器根目录下的公共资源提供。
-- `src/assets/` 目录中的内容会被 WinJS 的 bundler 工具编译成静态资源。
+WinJS uses two directories to handle assets like stylesheets, fonts, or images:
+- Content in the `public/` directory is served as-is as public resources under the server root directory.
+- Content in the `src/assets/` directory is compiled into static assets by WinJS's bundler tools.
 
-## 使用图片资源
+## Using Image Assets
 
-在实际的开发中我们经常会用到一些静态文件，尤其是图片和一些图标。我们推荐大部分图片使用 cdn，但是有些时候为了加载速度可能也需要直接打包在 js 中。
+In real development, we frequently use static files, especially images and icons. We recommend using CDNs for most images, but sometimes you may need to bundle them directly into JavaScript for loading speed.
 
-我们可以直接在 ts 或者 js 中直接引用资源文件，大部分的资源文件引入之后都会转化为一个路径。我们可以将其设置为了图片的 src，或者是 window.open 的地址。
+You can directly reference asset files in TypeScript or JavaScript. Most asset files, when imported, are transformed into paths. You can set these as the src attribute for images or as URLs for window.open.
 
-WinJs 也支持直接导入获取资源路径。
+WinJS also supports directly importing asset paths.
 
 ```tsx
 import logo from '@/assets/img/logo.png';
@@ -28,13 +28,13 @@ console.log(logo); //logo.84287d09.png
 return <image src={logo} />;
 ```
 
-为了加快加载速度，并且减少网络请求，我们会把小于 1000k 的转化为 [base64](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs)，否则会被构建为独立的图片文件输出到构建目录的 `static` 目录中。
+To speed up loading and reduce network requests, files smaller than 1000k are converted to [base64](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs), otherwise they will be built as separate image files output to the `static` directory in the build directory.
 
-你可能注意到最后生成的 `logo.png` 会变成 `logo.84287d09.png` ，这个是为了保证每次发布版本都会更新图片，如果不改名字的话，会命中 `logo.png` 的缓存，你可以放心的使用 import 而不用担心缓存。
+You may notice that the final generated `logo.png` becomes `logo.84287d09.png`. This ensures that images are updated with each version release. Without renaming, the `logo.png` cache would be hit. You can safely use import without worrying about caching.
 
-WinJS 默认将 `@` 映射到项目的 `src` 目录中，所以你可以在项目的任意位置使用 `@/assets/` 或 `@/components` 之类的路径来引入静态资源和组件等。你将不再需要使用如 `../../components` 之类的相对路径了。
+WinJS maps `@` to the project's `src` directory by default, so you can use paths like `@/assets/` or `@/components` anywhere in your project to import static assets and components. You'll no longer need to use relative paths like `../../components`.
 
-在 CSS 中同样支持别名，只是别忘了在 CSS 中使用别名需要增加 `~` 前缀。
+Aliases are also supported in CSS, just remember to add the `~` prefix when using aliases in CSS.
 
 ```css
 .logo {
@@ -42,17 +42,16 @@ WinJS 默认将 `@` 映射到项目的 `src` 目录中，所以你可以在项�
 }
 ```
 
-如果想要使用缓存，可以把文件放到 `public/logo.png`，然后再代码中这样使用。
+If you want to use caching, you can place the file in `public/logo.png` and use it in your code like this:
 
 ```tsx
 return <image src="/logo.png" />;
 ```
 
-在编译的时候，public 会全部移动到 dist 中，不会进行任何处理。使用时一定要使用绝对路径。通常我们建议从 JavaScript 导入 stylesheets，图片和字体。 public 文件夹可用作许多不常见情况的变通方法.
+During compilation, everything in public will be moved to dist without any processing. When using them, make sure to use absolute paths. We generally recommend importing stylesheets, images, and fonts from JavaScript. The public folder can be used as a workaround for many uncommon situations.
 
-
-## 使用 SVG 资源
-WinJS 对于 svg 资源，支持 [icons](../config/config#icons) ，可以直接导入作为组件使用：
+## Using SVG Assets
+WinJS supports [icons](../config/config#icons) for SVG resources, which can be directly imported and used as components:
 
 ```vue
 <template>
@@ -62,28 +61,28 @@ WinJS 对于 svg 资源，支持 [icons](../config/config#icons) ，可以直接
 </template>
  ```
 
-## public 目录/公共目录
+## Public Directory
 
-项目根目录下的 public 目录可以用于存放在应用程序的指定URL下公开访问的静态资源，你可以通过应用程序的代码或浏览器的根URL `/` 获取 `public/` 目录中的文件。
+The public directory in the project root can be used to store static resources that are publicly accessible at specified URLs in your application. You can access files in the `public/` directory through your application code or browser root URL `/`.
 
-- 当你启动开发服务器时，这些资源会被托管在 `/` 根路径下。
-- 当你执行生产环境构建时，这些资源会被拷贝到 dist 目录。
+- When you start the development server, these resources are hosted under the `/` root path.
+- When you execute a production build, these resources are copied to the dist directory.
 
-比如，你可以在 public 目录下放置 `robots.txt`、`manifest.json` 或 `favicon.ico` 等文件。
+For example, you can place files like `robots.txt`, `manifest.json`, or `favicon.ico` in the public directory.
 
-## assets 目录/资源目录
+## Assets Directory
 
-按照约定，WinJS 使用 `src/assets/` 目录来存储这些资源，如样式表、图片、字体或SVG等。
+By convention, WinJS uses the `src/assets/` directory to store assets such as stylesheets, images, fonts, or SVGs.
 
-在应用程序的代码中，你可以通过使用 `~/assets/` 路径来引用位于 `src/assets/` 目录中的文件。     
+In your application code, you can reference files located in the `src/assets/` directory by using the `~/assets/` path.
 
-## 图片格式
+## Image Formats
 
-在使用图片资源时，你可以根据下方表格中图片的优缺点以及适用场景，来选择合适的图片格式。
+When using image assets, you can choose the appropriate image format based on the advantages, disadvantages, and applicable scenarios shown in the table below.
 
-| 格式 | 优点                                                             | 缺点                                   | 适用场景                                                                     |
-| ---- | ---------------------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------- |
-| PNG  | 无损压缩，不会丢失图片细节，不失真，支持半透明                   | 不适合色表复杂的图片                   | 适合颜色数量少，边界层次分明的图片，适合用在 logo、icon、透明图等场景        |
-| JPG  | 颜色丰富                                                         | 有损压缩，会导致图片失真，不支持透明度 | 适合颜色数量多，颜色带有渐变、过度复杂的图片，适合用在人像照片、风景图等场景 |
-| WebP | 同时支持有损压缩与无损压缩，支持透明度，体积比 PNG 和 JPG 小很多 | iOS 兼容性不好                         | 几乎任何场景的像素图片，支持 WebP 的宿主环境，都应该首选 WebP 图片格式       |
-| SVG  | 无损格式，不失真,支持透明度                                      | 不适合复杂图形                         | 适合矢量图,适合用于 icon                                                     |
+| Format | Advantages                                                                    | Disadvantages                                      | Use Cases                                                                                                          |
+| ------ | ----------------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| PNG    | Lossless compression, no loss of image detail, no distortion, supports alpha | Not suitable for images with complex color tables | Suitable for images with few colors and clear boundaries, ideal for logos, icons, and transparent images         |
+| JPG    | Rich colors                                                                   | Lossy compression causes distortion, no alpha     | Suitable for images with many colors, gradients, and complex transitions, ideal for portraits and landscape photos |
+| WebP   | Supports both lossy and lossless compression, alpha support, much smaller than PNG and JPG | Poor iOS compatibility                             | Almost any pixel image scenario, should be the first choice for WebP-supported host environments                  |
+| SVG    | Lossless format, no distortion, supports transparency                        | Not suitable for complex graphics                  | Suitable for vector graphics, ideal for icons                                                                     |
