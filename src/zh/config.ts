@@ -1,10 +1,4 @@
-import fs from 'fs';
-import path from 'path';
-import { defineConfig } from 'vitepress';
-import { chineseSearchOptimize, pagefindPlugin } from 'vitepress-plugin-pagefind';
-import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
-import { headerPlugin } from './headerMdPlugin';
-import { baseURL } from './meta';
+import { defineAdditionalConfig } from 'vitepress';
 
 const nav = [
   { text: '指南', link: '/guides/getting-started', activeMatch: `^/guides/` },
@@ -340,73 +334,11 @@ export const sidebar = {
   ]
 };
 
-export default defineConfig({
-  base: baseURL,
-
-  lang: 'zh-CN',
-  title: 'WinJS',
+export default defineAdditionalConfig({
+  lang: 'zh-Hans',
   description: '前端开发框架',
-  srcDir: 'src',
-  scrollOffset: 'header',
-
-  head: [
-    ['link', { rel: 'icon', type: 'images/png', href: `${baseURL}favicon.png` }],
-    [
-      'link',
-      {
-        rel: 'icon',
-        type: 'image/png',
-        sizes: '16x16',
-        href: `${baseURL}/images/icons/favicon-16x16.png`
-      }
-    ],
-    [
-      'link',
-      {
-        rel: 'icon',
-        type: 'image/png',
-        sizes: '32x32',
-        href: `${baseURL}/images/icons/favicon-32x32.png`
-      }
-    ],
-    ['meta', { name: 'application-name', content: 'WinJS 前端开发框架' }],
-    ['meta', { name: 'apple-mobile-web-app-title', content: 'WinJS 前端开发框架' }],
-    ['link', { rel: 'apple-touch-icon', href: `${baseURL}/images/icons/apple-touch-icon.png` }],
-    [
-      'link',
-      {
-        rel: 'mask-icon',
-        href: `${baseURL}/images/icons/safari-pinned-tab.svg`,
-        color: '#3eaf7c'
-      }
-    ],
-    ['meta', { name: 'msapplication-TileColor', content: '#3eaf7c' }],
-    ['meta', { name: 'theme-color', content: '#3eaf7c' }],
-    ['meta', { name: 'mobile-web-app-capable', content: 'yes' }],
-    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
-    ['script', {}, fs.readFileSync(path.resolve(__dirname, './inlined-scripts/restorePreference.js'), 'utf-8')],
-    [
-      'script',
-      { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-0Z8G2EZKXV' }
-    ],
-    [
-      'script',
-      {},
-      `window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-0Z8G2EZKXV');`
-    ]
-  ],
-
-  lastUpdated: true,
-
-  ignoreDeadLinks: true,
 
   themeConfig: {
-    siteTitle: 'WinJS',
-    logo: '/images/logo.png',
-
     outlineTitle: '本页目录',
 
     nav,
@@ -419,16 +351,23 @@ export default defineConfig({
       copyright: `Copyright © 2016-${new Date().getFullYear()} winjs-dev`
     },
 
+    editLink: {
+      pattern: 'https://github.com/winjs-dev/winjs-docs/edit/main/src/:path',
+      text: '在 GitHub 上编辑此页面'
+    },
+
     docFooter: {
       prev: '前一篇',
       next: '下一篇'
     },
 
-    outline: 'deep',
 
-    editLink: {
-      pattern: 'https://github.com/winjs-dev/winjs-docs/edit/main/src/:path',
-      text: '在 GitHub 上编辑此页面'
+    outline: {
+      label: '页面导航'
+    },
+
+    lastUpdated: {
+      text: '最后更新于'
     },
 
     notFound: {
@@ -439,64 +378,12 @@ export default defineConfig({
       linkText: '带我回首页'
     },
 
+    langMenuLabel: '多语言',
     returnToTopLabel: '回到顶部',
     sidebarMenuLabel: '菜单',
     darkModeSwitchLabel: '主题',
     lightModeSwitchTitle: '切换到浅色模式',
     darkModeSwitchTitle: '切换到深色模式',
     skipToContentLabel: '跳转到内容'
-  },
-
-  markdown: {
-    config(md) {
-      md.use(headerPlugin);
-      md.use(groupIconMdPlugin);
-    }
-  },
-
-  vite: {
-    define: {
-      __VUE_OPTIONS_API__: false
-    },
-    optimizeDeps: {
-      include: ['gsap', 'dynamics.js'],
-      exclude: ['@vue/repl']
-    },
-    // @ts-ignore
-    ssr: {
-      external: ['@vue/repl']
-    },
-    server: {
-      host: true,
-      fs: {
-        // for when developing with locally linked theme
-        allow: ['../..']
-      }
-    },
-    build: {
-      minify: 'terser',
-      chunkSizeWarningLimit: Infinity
-    },
-    json: {
-      stringify: true
-    },
-    plugins: [
-      pagefindPlugin({
-        forceLanguage: 'zh-cn',
-        btnPlaceholder: '搜索',
-        placeholder: '搜索文档',
-        emptyText: '空空如也',
-        heading: '共: {{searchResult}} 条结果',
-        customSearchQuery: chineseSearchOptimize
-      }),
-      groupIconVitePlugin({
-        customIcon: {
-          cloudflare: 'logos:cloudflare-workers-icon'
-        }
-      })
-    ],
-    experimental: {
-      enableNativePlugin: true
-    }
   }
 });
