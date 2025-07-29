@@ -1,12 +1,12 @@
-# 迁移 create-project 到 WinJS
+# Migrating create-project to WinJS
 
-> 本文档仅作为如何将 `@winner-fed/create-project` 迁移到 WinJS 的基础指引。真实项目的迁移，你可能还需要阅读我们的文档，了解更多关于[插件](../plugins/index)和[配置](../config/config)的相关信息。
+> This document serves only as a basic guide for migrating `@winner-fed/create-project` to WinJS. For real project migration, you may also need to read our documentation to learn more about [plugins](../plugins/index) and [configuration](../config/config).
 
-其实将一个 `@winner-fed/create-project` 项目迁移到 WinJS 是一件比较容易的事情。主要需要注意几个默认行为的差异。接下来，我们通过以下步骤，将 `@winner-fed/create-project` 的初始项目迁移到 WinJS。
+Actually, migrating a `@winner-fed/create-project` project to WinJS is relatively straightforward. The main thing to pay attention to is the differences in some default behaviors. Next, we'll migrate a `@winner-fed/create-project` initial project to WinJS through the following steps.
 
-## 依赖处理
+## Dependency Management
 
-在 `package.json` 中修改依赖并修改项目启动命令，更多 win cli 的信息，可以查看[我们的文档](../cli/commands)。
+Modify dependencies in `package.json` and update project startup commands. For more information about win CLI, check [our documentation](../cli/commands).
 
 ```diff
 {
@@ -26,11 +26,11 @@
 }
 ```
 
-## 修改根组件
+## Modifying the Root Component
 
-`@winner-fed/create-project` 的入口是 `src/App.vue`，在 WinJS 中并没有真实的暴露程序的主入口，但是我们可以在 [layouts](../guides/directory-structure#layouts-index-vue) 中执行同样的操作。
+The entry point for `@winner-fed/create-project` is `src/App.vue`. In WinJS, there's no real exposed main application entry, but we can perform the same operations in [layouts](../guides/directory-structure#layouts-index-vue).
 
-将 `src/App.vue` 中的逻辑转移到 `src/layouts/index.vue` 中，操作完成你的代码应该看起来像：
+Transfer the logic from `src/App.vue` to `src/layouts/index.vue`. After completing the operation, your code should look like:
 
 ```vue
 
@@ -67,16 +67,16 @@
 
 ```
 
-## 转移页面文件
+## Moving Page Files
 
-将页面组件转移到 [`src/pages`](../guides/routes#约定式路由) 目录下面。
+Move page components to the [`src/pages`](../guides/routes#convention-based-routing) directory.
 
-## HTML 模版
+## HTML Template
 
-将 `public/index.html` 文件移除。
+Remove the `public/index.html` file.
 
-WinJS 废弃了 `index.html`，可以直接通过暴露的相关 api 来拼成最终的 html。具体可以参考[此处](../guides/faq#index-html-去哪了-如何自定义-html-模板) 
+WinJS has deprecated `index.html`. You can directly compose the final HTML through exposed related APIs. For details, refer to [here](../guides/faq#where-did-index-html-go-how-to-customize-html-template).
 
-## 启动项目
+## Starting the Project
 
-执行 `win dev`，项目将会在 `http://localhost:8000/` 上启动，如果你习惯使用 `3000` 端口，你可以通过[环境变量](../guides/env-variables)来设置。现在项目看起来应该与迁移之前的效果一致。
+Execute `win dev`, and the project will start at `http://localhost:8000/`. If you're accustomed to using port `3000`, you can set it through [environment variables](../guides/env-variables). Now the project should look consistent with the effect before migration.
