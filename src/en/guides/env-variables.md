@@ -2,15 +2,15 @@
 outline: deep
 ---
 
-# 环境变量 {#env-variables}
+# Environment Variables {#env-variables}
 
-WinJS 可以通过环境变量来完成一些特殊的配置和功能，也可以实现给构建或运行时传递参数的功能。
+WinJS can complete some special configurations and functions through environment variables, and can also implement the function of passing parameters to build or runtime.
 
-## 如何设置环境变量
+## How to Set Environment Variables
 
-### 执行命令时设置
+### Set When Executing Commands
 
-例如需要改变 `win dev` 开发服务器的端口，进可以通过如下命令实现。
+For example, to change the port of the `win dev` development server, you can use the following command.
 
 ```bash
 # OS X, Linux
@@ -20,33 +20,33 @@ $ PORT=3000 win dev
 $ set PORT=3000&&win dev
 ```
 
-如果需要同时在不同的操作系统中使用环境变量，推荐使用工具 [cross-env](https://github.com/kentcdodds/cross-env)
+If you need to use environment variables on different operating systems simultaneously, it's recommended to use the tool [cross-env](https://github.com/kentcdodds/cross-env)
 
 ```bash
 $ pnpm install cross-env -D
 $ cross-env PORT=3000 win dev
 ```
-也可以在 `package.json` 内修改启动命令，以添加对应环境变量。
+You can also modify the startup commands in `package.json` to add corresponding environment variables.
 
-示例代码如下：
+Example code is as follows:
 
 ```json
 {
-/** 省略配置项 */
+/** Omitted configuration items */
   "scripts": {
-    /** 省略配置项 */
-    // 在 dev 命令内添加 WIN_ENV 环境变量
+    /** Omitted configuration items */
+    // Add WIN_ENV environment variable in dev command
     "dev": "cross-env WIN_ENV=dev win dev",
     "dev:test": "cross-env WIN_ENV=test MOCK=none win dev"
-    /** 省略配置项 */
+    /** Omitted configuration items */
   }
-/** 省略配置项 */
+/** Omitted configuration items */
 }
 ```
 
-### 设置在 .env 文件中
+### Set in .env File
 
-如果你的环境变量需要在开发者之间共享，推荐你设置在项目根目录的 `.env` 文件中，例如:
+If your environment variables need to be shared among developers, it's recommended to set them in the `.env` file in the project root directory, for example:
 
 ```text
 # file .env
@@ -54,13 +54,13 @@ PORT=3000
 BABEL_CACHE=none
 ```
 
-然后执行，
+Then execute:
 
 ```bash
 $ win dev
 ```
 
-WinJS 会以 3000 端口启动 dev server，并且禁用 babel 的缓存。
+WinJS will start the dev server on port 3000 and disable babel caching.
 
 如果你有部分环境变量的配置在本地要做特殊配置，可以配置在 `.env.local` 文件中去覆盖 `.env` 的配置。比如在之前的 `.env` 的基础上, 你想本地开发覆盖之前 3000 端口, 而使用 4000 端口，可以做如下定义。
 

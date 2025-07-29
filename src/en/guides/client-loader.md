@@ -1,11 +1,10 @@
-# 路由数据加载
+# Route Data Loading
 
-WinJS 提供了开箱即用的数据预加载方案，能够解决在多层嵌套路由下，页面组件和数据依赖的瀑布流请求。WinJS
-会自动根据当前路由或准备跳转的路由，并行地发起他们的数据请求，因此当路由组件加载完成后，已经有马上可以使用的数据了。
+WinJS provides an out-of-the-box data preloading solution that can solve waterfall requests for page components and data dependencies in multi-level nested routes. WinJS automatically initiates data requests in parallel based on the current route or the route being navigated to, so when route components finish loading, there's already data ready to use.
 
-## 启用方式
+## How to Enable
 
-配置开启：
+Configure to enable:
 
 ```ts
 // .winrc.ts
@@ -15,9 +14,9 @@ export default {
 }
 ```
 
-## 使用方式
+## How to Use
 
-在路由文件中，除了默认导出的页面组件外，再导出一个 `clientLoader` 函数，并且在该函数内完成路由数据加载的逻辑。
+In route files, in addition to the default exported page component, export a `clientLoader` function and complete the route data loading logic within this function.
 
 ```tsx
 // pages/.../some_page.tsx
@@ -35,21 +34,21 @@ export async function clientLoader() {
 }
 ```
 
-如上代码，在 `clientLoader` 函数返回的数据，可以在组件内调用 `useClientLoaderData` 获取。
+As shown in the code above, the data returned by the `clientLoader` function can be retrieved in the component by calling `useClientLoaderData`.
 
-## 优化效果
+## Optimization Effects
 
-考虑一个三层嵌套路由的场景：
+Consider a three-level nested route scenario:
 
-1. 我们需要先等第一层路由的组件加载完成，然后第一层路由的组件发起数据请求
-2. 第一层路由的数据请求完成后，开始请求第二层路由的组件，第二层路由的组件加载好以后请求第二层路由需要的数据
-3. 第二层路由的数据请求完成后，开始请求第三层路由的组件，第三层路由的组件加载好以后请求第三层路由需要的数据
-4. 第三层路由的数据请求完成后，整个页面才完成渲染
+1. We need to wait for the first-level route component to load completely, then the first-level route component initiates a data request
+2. After the first-level route data request completes, start requesting the second-level route component, and after the second-level route component loads, request the data needed by the second-level route
+3. After the second-level route data request completes, start requesting the third-level route component, and after the third-level route component loads, request the data needed by the third-level route
+4. After the third-level route data request completes, the entire page finishes rendering
 
-这样的瀑布流请求会严重影响用户的体验，如下图所示：
+Such waterfall requests severely impact user experience, as shown in the figure below:
 
 ![](https://img.alicdn.com/imgextra/i1/O1CN01OcsOL91CPw46Pm7vz_!!6000000000074-1-tps-600-556.gif)
 
-如果将组件请求数据的程序提取到 `clientLoader` 中，则 WinJS 可以并行地请求这些数据：
+If the component's data request logic is extracted into `clientLoader`, WinJS can request this data in parallel:
 
 ![](https://img.alicdn.com/imgextra/i3/O1CN01URnLH81un9EVYGeL9_!!6000000006081-1-tps-600-556.gif)

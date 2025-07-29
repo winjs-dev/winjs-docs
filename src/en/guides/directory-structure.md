@@ -46,34 +46,34 @@ One of the design principles of the WinJS framework is [Convention over Configur
 │       ├── mfsu
 │       └── mfsu-deps
 ├── .env
-├── .editorconfig // 编辑器编码风格配置
-├── .eslintignore // eslint 校验忽略文件
-├── .eslintrc.js // eslint 校验配置
-├── .gitignore // git 忽略文件
-├── .npmrc // npm 源地址配置
-├── .markdownlint.json // markdown lint 工具
-├── .markdownlintignore // markdown lint 忽略文件
-├── .prettierignore // prettier 代码格式化忽略文件
-├── .prettierrc.js // prettier 代码格式化配置
-├── .stylelintrc.js // stylelint css 代码规范配置
-├── .stylelintignore // stylelint css 忽略文件
-├── commitlint.config.js // git commit 规范配置
-├── f2elint.config.js // f2elint 配置文件
+├── .editorconfig // Editor coding style configuration
+├── .eslintignore // ESLint validation ignore file
+├── .eslintrc.js // ESLint validation configuration
+├── .gitignore // Git ignore file
+├── .npmrc // NPM source address configuration
+├── .markdownlint.json // Markdown lint tool
+├── .markdownlintignore // Markdown lint ignore file
+├── .prettierignore // Prettier code formatting ignore file
+├── .prettierrc.js // Prettier code formatting configuration
+├── .stylelintrc.js // Stylelint CSS code standards configuration
+├── .stylelintignore // Stylelint CSS ignore file
+├── commitlint.config.js // Git commit standards configuration
+├── f2elint.config.js // F2ELint configuration file
 ├── plugin.ts 
-├── .winrc.ts // 与 config/config 文件 2 选一
+├── .winrc.ts // Choose one between this and config/config file
 ├── package.json
 ├── tsconfig.json
 └── typings.d.ts
 ```
-## 根目录
+## Root Directory
 
 ### package.json
 
-WinJS 不会自动注册 `package.json` 中以 `@winner-fed/preset-`、`@winner-fed/plugin-`、`win-preset-` 和 `win-plugin-` 开头的插件、预设，若你需要自定义额外的插件、预设，需要手动配置到 [`plugins`](../config/config#plugins) 。
+WinJS does not automatically register plugins and presets starting with `@winner-fed/preset-`, `@winner-fed/plugin-`, `win-preset-`, and `win-plugin-` in `package.json`. If you need to customize additional plugins and presets, you need to manually configure them in [`plugins`](../config/config#plugins).
 
 ### .env
 
-环境变量，比如：
+Environment variables, for example:
 
 ```text
 PORT=8888
@@ -82,11 +82,11 @@ COMPRESS=none
 
 ### .winrc.ts
 
-> 与 `config/config.ts` 文件功能相同，2 选 1 。`.winrc.ts` 文件优先级较高
+> Has the same functionality as the `config/config.ts` file, choose one. The `.winrc.ts` file has higher priority.
 
-配置文件，包含 WinJS 所有[非运行时配置](../config/config)（运行时配置一般定义于 [`app.ts`](#apptstsx)）。
+Configuration file containing all [non-runtime configurations](../config/config) for WinJS (runtime configurations are generally defined in [`app.ts`](#apptstsx)).
 
-若你需要在不同环境中加载不同配置，这在 WinJS 中是根据 [`WIN_ENV`](./env-variables#win-env) 或 [`WIN_APP_ENV`](./env-variables#win-app-env)来实现的，一个不同环境启动的例子：
+If you need to load different configurations in different environments, this is implemented in WinJS based on [`WIN_ENV`](./env-variables#win-env) or [`WIN_APP_ENV`](./env-variables#win-app-env). An example of starting in different environments:
 
 ```json
 // package.json

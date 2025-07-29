@@ -1,10 +1,10 @@
-# 配置文件格式约定
+# Configuration File Format Convention
 
-为了方便 WinJS 通过 CLI 来修改项目的配置，项目配置文件需要采用下面两种方式来书写。
+To facilitate WinJS modifying project configurations through CLI, project configuration files need to be written in the following two ways.
 
-## 导出默认配置对象
+## Export Default Configuration Object
 
-推荐这样的方式：
+Recommended approach:
 
 ```ts
 // ✅
@@ -13,7 +13,7 @@ export default {
 }
 ```
 
-而不是这样的方式：
+Rather than this approach:
 
 ```ts
 // ❌
@@ -21,9 +21,9 @@ const config = { request: {} }
 export default config
 ```
 
-## 默认导出配置函数结果
+## Export Default Configuration Function Result
 
-推荐这样的方式：
+Recommended approach:
 ```ts
 // ✅
 import { defineConfig } from 'win';
@@ -33,7 +33,7 @@ export default defineConfig({
 })
 ```
 
-而不是这样的方式：
+Rather than this approach:
 ```ts
 // ❌
 import { defineConfig } from 'win';
@@ -42,7 +42,7 @@ const config = { dva: {} }
 export default defineConfig(config)
 ```
 
-也不是这样的方式：
+Also not this approach:
 
 ```ts
 // ❌
