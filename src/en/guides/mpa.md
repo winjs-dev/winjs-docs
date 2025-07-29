@@ -1,12 +1,12 @@
-# MPA 模式
+# MPA Mode
 
-Winjs 支持传统 MPA 模式，此模式下，会将 `src/pages` 目录下 `*/index.[jt]sx?` 文件作为 webpack entry 进行打包，无路由，无 history，无 win.js，满足比如 h5 研发、kitchen 插件研发等场景需要。
+WinJS supports traditional MPA mode. In this mode, `*/index.[jt]sx?` files in the `src/pages` directory are used as webpack entries for bundling, with no routing, no history, and no win.js, meeting the needs of scenarios such as H5 development and kitchen plugin development.
 
-注意：此 MPA 模式没有路由机制，也不能使用大量插件能力，仅适合当构建工具使用。
+Note: This MPA mode has no routing mechanism and cannot use many plugin capabilities. It's only suitable for use as a build tool.
 
-## 使用
+## Usage
 
-mpa 为内置功能，通过配置即可开启。
+MPA is a built-in feature that can be enabled through configuration.
 
 ```js
 export default {
@@ -19,20 +19,20 @@ export default {
 }
 ```
 
-MPA 的目录结构是 `src/pages/${dir}/index.[jt]sx` ，每个文件夹 `${dir}` 会生成一个页面，文件夹内的 `index.[jt]sx` 为页面的入口文件。
+The MPA directory structure is `src/pages/${dir}/index.[jt]sx`. Each folder `${dir}` generates a page, and the `index.[jt]sx` file within the folder is the entry file for that page.
 
-配置项：
+Configuration options:
 
- - `template` : 产物 HTML 模板，如 `template/index.html` 将使用项目根目录开始寻找，对应路径的 `index.html` 作为产物 HTML 模板。 
- - `getConfigFromEntryFile` : 从每个页面的入口文件（`src/*/index.tsx`）中读取页面独立配置。
- - `layout` : 全局默认 layout 。
- - `entry` : 每个入口文件的配置，如 `{ foo: { title: '...' } }` 可以配置 `src/foo/index.tsx` 页面的 `title` 属性。
+- `template`: HTML template for build artifacts. For example, `template/index.html` will search from the project root directory and use the `index.html` at the corresponding path as the HTML template for build artifacts.
+- `getConfigFromEntryFile`: Read page-specific configuration from each page's entry file (`src/*/index.tsx`).
+- `layout`: Global default layout.
+- `entry`: Configuration for each entry file. For example, `{ foo: { title: '...' } }` can configure the `title` property for the `src/foo/index.tsx` page.
 
-## 约定的入口文件
+## Conventional Entry Files
 
-默认的入口文件是 `src/pages` 目录下 `*/index.[jt]sx?` 文件。
+The default entry files are `*/index.[jt]sx?` files in the `src/pages` directory.
 
-比如：
+For example:
 
 ```
 + src/pages
@@ -41,7 +41,7 @@ MPA 的目录结构是 `src/pages/${dir}/index.[jt]sx` ，每个文件夹 `${dir
   - hoo.tsx
 ```
 
-那么，`entry` 结构为：
+Then, the `entry` structure would be:
 
 ```ts
 {
@@ -50,13 +50,13 @@ MPA 的目录结构是 `src/pages/${dir}/index.[jt]sx` ，每个文件夹 `${dir
 }
 ```
 
-构建之后，会同时为每个入口文件生成相应的 HTML 文件，此时产物为 `foo.html` 和 `bar.html` 。
+After building, corresponding HTML files will be generated for each entry file, resulting in artifacts `foo.html` and `bar.html`.
 
-### 页面级配置
+### Page-level Configuration
 
 ### config.json
 
-约定通过入口文件同层级的 `config.json` 声明配置，比如如下目录结构：
+Configuration is conventionally declared through `config.json` at the same level as the entry file. For example, with the following directory structure:
 
 ```
 + src/pages
@@ -65,7 +65,7 @@ MPA 的目录结构是 `src/pages/${dir}/index.[jt]sx` ，每个文件夹 `${dir
     - config.json
 ```
 
-`foo/config.json` 配置了该页面的独立 `layout` 布局和 `title` 标题：
+`foo/config.json` configures the page's independent `layout` and `title`:
 
 ```json
 {
@@ -74,20 +74,20 @@ MPA 的目录结构是 `src/pages/${dir}/index.[jt]sx` ，每个文件夹 `${dir
 }
 ```
 
-目前默认支持的配置项包括：
+Currently supported configuration options include:
 
-* **template**：模板路径，可参考 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 的模板写法，通过 lodash template 语法使用变量。
-* **layout**：页面布局，建议以 `@/` 开头引用 src 目录下的文件。
-* **title**：页面标题，默认是入口文件所在的目录名。
-* **mountElementId**：页面渲染时，挂载到节点的 id，默认是 `root` 。
+* **template**: Template path. Refer to [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) template syntax, using variables through lodash template syntax.
+* **layout**: Page layout. It's recommended to reference files in the src directory starting with `@/`.
+* **title**: Page title. Default is the directory name where the entry file is located.
+* **mountElementId**: The ID of the node to mount to when rendering the page. Default is `root`.
 
 ### getConfigFromEntryFile
 
-WinJS 还试验性地支持另一种配置读取方式，通过配置 `mpa: { getConfigFromEntryFile: true }` 开启。
+WinJS also experimentally supports another configuration reading method, enabled by configuring `mpa: { getConfigFromEntryFile: true }`.
 
-此时，你可以不使用 `config.json` ，而是在入口文件中通过 `export const config` 导出该页面的配置。
+In this case, you can avoid using `config.json` and instead export the page configuration through `export const config` in the entry file.
 
-比如：
+For example:
 
 ```ts
 // src/pages/foo/index.tsx
@@ -99,7 +99,7 @@ export const config = {
 
 ### entry
 
-在 `.winrc.ts` 中也可以配置每个页面：
+You can also configure each page in `.winrc.ts`:
 
 ```ts
   mpa: {
@@ -109,38 +109,38 @@ export const config = {
   }
 ```
 
-### 按需启动
+### On-demand Startup
 
-支持通过设置 `env.MPA_FILTER` 来指定需要启动的页面，以提高构建速度
+Supports specifying which pages to start by setting `env.MPA_FILTER` to improve build speed:
 
 ```text
 # file .env
-# 只会启动 bar、foo 这两个页面
+# Only bar and foo pages will be started
 MPA_FILTER=bar,foo
 ```
 
-## 渲染
+## Rendering
 
-默认渲染方式为 vue，入口文件只需导出 vue 组件，即可进行渲染。
+The default rendering method is Vue. Entry files only need to export Vue components for rendering.
 
 ```tsx
 <script setup>
   import { ref } from 'vue';
   /**
-  * 以下仅为事例代码，可以随意扩展修改
+  * The following is example code only and can be extended and modified freely
   */
   const title = ref('Welcome to Your Vue.js App.');
 </script>
 <template>
   <div class="page page-hello">
     <div class="page-content">
-      <!-- 静态资源路径写法事例 -->
+      <!-- Static resource path example -->
       <img class="logo" src="@/assets/img/logo.png" alt="logo" />
       <h1>{{ title }}</h1>
       <p>
-        有关自定义配置指引， 请前往
+        For custom configuration guidance, please visit
         <a href="https://cloud-templates.github.io/create-project/" target="_blank" rel="noopener"
-        >create-project 文档</a
+        >create-project documentation</a
         >.
       </p>
     </div>
@@ -150,9 +150,9 @@ MPA_FILTER=bar,foo
 <style lang="less" scoped src="./style.less"></style>
 ```
 
-## 模板
+## Template
 
-默认模板如下：
+The default template is as follows:
 
 ```html
 <!DOCTYPE html>
@@ -166,4 +166,4 @@ MPA_FILTER=bar,foo
 </html>
 ```
 
-通过 `template` 配置自定义全局 HTML 模板 ，也可以进行页面级配置定义不同页面使用不同的模板，请确保变量至少包含 `<%= title %>` 和 `<%= mountElementId %>`。
+You can customize the global HTML template through the `template` configuration, or configure page-level settings to use different templates for different pages. Please ensure that variables include at least `<%= title %>` and `<%= mountElementId %>`.

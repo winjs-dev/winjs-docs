@@ -1,11 +1,11 @@
-# 开发插件 {#plugins}
+# Developing Plugins {#plugins}
 
-WinJS 的核心就在于它的插件机制。基于 WinJS 的插件机制，你可以获得扩展项目的编译时和运行时的能力。你可以利用我们提供的 [插件API](../api/plugin-api) 来自由编写插件，进而实现修改代码打包配置，修改启动代码，约定目录结构，修改 HTML 等丰富的功能。
+The core of WinJS lies in its plugin mechanism. Based on WinJS's plugin mechanism, you can gain the ability to extend your project's compile-time and runtime capabilities. You can use the [Plugin API](../api/plugin-api) we provide to freely write plugins, thereby implementing rich functionality such as modifying code bundling configuration, modifying startup code, conventional directory structure, and modifying HTML.
 
-## 核心概念
-插件的本质就是一个方法，该方法接收了一个参数：api。在插件中，你可以调用 api 提供的方法进行一些 hook 的注册，随后 WinJS 会在特定的时机执行这些 hook。
+## Core Concepts
+A plugin is essentially a function that receives one parameter: api. In the plugin, you can call methods provided by the api to register some hooks, and then WinJS will execute these hooks at specific times.
 
-比如：
+For example:
 ```js
 import { IApi } from 'win';
 
@@ -25,12 +25,12 @@ export default (api: IApi) => {
   });
 };
 ```
-这个插件的作用是根据用户配置的 changeFavicon 值来更改配置中的 favicons，（一个很简单且没有实际用途的例子）。可以看到插件其实就是一个接收了参数 api 的方法。在这个方法中，我们调用了 `api.modifyConfig` 注册了一个 hook： `(memo)=>{...}`。当你在配置中配置了 `changeFavicon` 之后， WinJS 会注册该插件。在 WinJS 收集配置的生命周期里，我们在插件里注册的 hook 将被执行，此时配置中的 `favicon` 就会被修改为用户配置中的 `changeFavicon`。
+The purpose of this plugin is to change the favicons in the configuration based on the user-configured changeFavicon value (a simple example with no practical use). As you can see, a plugin is actually a function that receives the parameter api. In this function, we called `api.modifyConfig` to register a hook: `(memo)=>{...}`. When you configure `changeFavicon` in the configuration, WinJS will register this plugin. During WinJS's configuration collection lifecycle, the hook we registered in the plugin will be executed, and at this time the `favicon` in the configuration will be modified to the `changeFavicon` in the user configuration.
 
-### preset 和 plugin
-preset 的作用是预设一些插件，它通常用来注册一批 presets 和 plugins。在 preset 中，上述提到的接受 api 的方法可以有返回值，该返回值是一个包含 presets 和 plugins 属性的对象，其作用就是注册相应的插件或者插件集。
+### preset and plugin
+The purpose of a preset is to preset some plugins. It's usually used to register a batch of presets and plugins. In a preset, the method that receives the api mentioned above can have a return value, which is an object containing presets and plugins properties, and its purpose is to register corresponding plugins or plugin sets.
 
-比如：
+For example:
 ```js
 import { IApi } from 'win';
 
@@ -41,143 +41,143 @@ export default (api: IApi) => {
   }
 };
 ```
-它们的注册顺序是值得注意的： presets 始终先于 plugins 注册。WinJS 维护了两个队列分别用来依次注册 presets 和 plugins，这个例子中的注册的 `preset_foo` 将被置于 presets 队列队首，而 `plugin_foo` 和 `plugin_bar` 将被依次置于 plugins 队列队尾。这里把 preset 放在队首的目的在于保证 presets 之间的顺序和关系是可控的。
+Their registration order is worth noting: presets are always registered before plugins. WinJS maintains two queues to register presets and plugins in sequence. In this example, the registered `preset_foo` will be placed at the head of the presets queue, while `plugin_foo` and `plugin_bar` will be placed at the tail of the plugins queue in sequence. The purpose of putting presets at the head of the queue is to ensure that the order and relationships between presets are controllable.
 
-另外一个值得注意的点是：在 plugin 中，你也可以 return 一些 plugins 或者 presets，但是 WinJS 不会对它做任何事情。
+Another point worth noting is: in a plugin, you can also return some plugins or presets, but WinJS won't do anything with them.
 
-### 插件的 id 和 key
-每个插件都对应一个 id 和 key。
+### Plugin id and key
+Each plugin corresponds to an id and key.
 
-id 是插件所在路径的简写，作为插件的唯一标识；而 key 则是用于插件配置的键名。 
+The id is a shorthand for the plugin's path, serving as the plugin's unique identifier; while the key is used as the key name for plugin configuration.
 
-比如插件 `node_modules/@winner-fed/plugin-foo/index.js` ，通常来说，它的 id 是 `@winner-fed/plugin-foo` , key 是 `foo`。此时就允许开发者在配置中来配置键名为 `foo` 的项，用来对插件进行配置。
+For example, for the plugin `node_modules/@winner-fed/plugin-foo/index.js`, typically its id is `@winner-fed/plugin-foo` and key is `foo`. This allows developers to configure items with the key name `foo` in the configuration to configure the plugin.
 
-## 启用插件
-插件有两种启用方式： 
-1. 环境变量中启用
-2. 配置中启用。
- 
-::: warning 注意
-这里的插件指的是第三方插件，WinJS 的内置插件统一在配置中通过对其 key 进行配置来启用。
+## Enabling Plugins
+There are two ways to enable plugins:
+1. Enable in environment variables
+2. Enable in configuration.
+
+::: warning Note
+The plugins referred to here are third-party plugins. WinJS's built-in plugins are uniformly enabled in configuration by configuring their keys.
 :::
 
-### 环境变量
+### Environment Variables
 
-还可以通过环境变量 `WIN_PRESETS` 和 `WIN_PLUGINS` 注册额外插件。
+You can also register additional plugins through environment variables `WIN_PRESETS` and `WIN_PLUGINS`.
 
-比如：
+For example:
 
 ```shell
 $ WIN_PRESETS=foo/preset.js win dev
 ```
 
-::: warning 注意
-项目里不建议使用，通常用于基于 WinJS 的框架二次封装。
+::: warning Note
+Not recommended for use in projects; usually used for secondary packaging of frameworks based on WinJS.
 :::
 
-### 配置
-在配置里通过 `presets` 和 `plugins` 配置插件，比如：
+### Configuration
+Configure plugins through `presets` and `plugins` in the configuration, for example:
 ```js
 export default {
   presets: ['./preset/foo','bar/presets'],
   plugins: ['./plugin', require.resolve('plugin_foo')]
 }
 ```
-配置的内容为插件的路径。
+The configuration content is the path to the plugin.
 
-### 插件的顺序
+### Plugin Order
 
-WinJS 插件的注册遵循一定的顺序：
-- 所有的 presets 都先于 plugins 被注册。
-- 内置插件 -> 环境变量中的插件 -> 用户配置中的插件。
-- 同时注册（同一个数组里）的插件按顺序依次注册。
-- preset 中注册的 preset 立即执行，注册的 plugin 最后执行。
+WinJS plugin registration follows a certain order:
+- All presets are registered before plugins.
+- Built-in plugins -> plugins in environment variables -> plugins in user configuration.
+- Plugins registered simultaneously (in the same array) are registered in order.
+- Presets registered in a preset execute immediately, plugins registered execute last.
 
-## 禁用插件
-有两种方式禁用插件
+## Disabling Plugins
+There are two ways to disable plugins
 
-### 配置 key 为 false
-比如：
+### Configure key as false
+For example:
 ```js
 export default{
   mock: false
 }
 ```
-会禁用 WinJS 内置的 mock 插件。
+This will disable WinJS's built-in mock plugin.
 
-### 在插件中禁用其他插件
-可通过 `api.skipPlugins(pluginId[])` 的方式禁用，详见[插件 API](../api/plugin-api)。
+### Disable other plugins within a plugin
+You can disable through `api.skipPlugins(pluginId[])`, see [Plugin API](../api/plugin-api) for details.
 
-## 查看插件注册情况
-### 命令行
+## View Plugin Registration Status
+### Command Line
 ```shell
 $ win plugin list
 ```
 
-## 配置插件
-通过配置插件的 key 来配置插件，比如：
+## Configuring Plugins
+Configure plugins by configuring the plugin's key, for example:
 ```js
 export default{
   mock: { exclude: ['./foo'] }
 }
 ```
-这里 mock 就是 WinJS 内置插件 mock 的 key。
+Here mock is the key of WinJS's built-in mock plugin.
 
-再比如我们安装一个插件 `win-plugin-bar`, 其 key 默认是 `bar`, 就可以配置：
+For another example, if we install a plugin `win-plugin-bar` with a default key of `bar`, we can configure:
 ```js
 export default{
   bar: { ... }
 }
 ```
 
-### 插件 key 的默认命名规则
-如果插件是一个包的话，key 的默认值将是去除前缀的包名。比如 `@winner-fed/plugin-foo` 的 key 默认为 `foo`， `win-plugin-bar` 的 key 默认为 `bar`。值得注意的是，该默认规则要求你的包名符合 WinJS 插件的命名规范。
+### Default Naming Rules for Plugin Keys
+If the plugin is a package, the default value of the key will be the package name with prefixes removed. For example, `@winner-fed/plugin-foo` has a default key of `foo`, and `win-plugin-bar` has a default key of `bar`. It's worth noting that this default rule requires your package name to conform to WinJS plugin naming conventions.
 
-如果插件不是一个包的话，key 的默认值将是插件的文件名。比如 `./plugins/foo.js` 的 key 默认为 `foo`
+If the plugin is not a package, the default value of the key will be the plugin's filename. For example, `./plugins/foo.js` has a default key of `foo`
 
-为了避免不必要的麻烦，我们建议你为自己编写的插件显示地声明其 key。
+To avoid unnecessary trouble, we recommend explicitly declaring the key for plugins you write yourself.
 
-## WinJS 插件生命周期
+## WinJS Plugin Lifecycle
 
-### 生命周期
+### Lifecycle
 
-- init stage: 该阶段 WinJS 将加载各类配置信息。包括：加载 `.env` 文件； require `package.json`  ；加载用户的配置信息； resolve 所有的插件（内置插件、环境变量、用户配置依次进行）。
-- initPresets stage:  该阶段 WinJS 将注册 presets。presets 在注册的时候可以通过 `return { presets, plugins }` 来添加额外的插件。其中 presets 将添加到 presets 队列的队首，而 plugins 将被添加到 plugins 队列的队尾。
-- initPlugins stage: 该阶段 WinJS 将注册 plugins。这里的 plugins 包括上个阶段由 presets 添加的额外的 plugins， 一个值得注意的点在于： 尽管 plugins 也可以 `return { presets, plugins }` ，但是 WinJS 不会对其进行任何操作。插件的 init 其实就是执行插件的代码（但是插件的代码本质其实只是调用 api 进行各种 hook 的注册，而 hook 的执行并非在此阶段执行，因此这里叫插件的注册）。
-- resolveConfig stage: 该阶段 WinJS 将整理各个插件中对于 `config schema` 的定义，然后执行插件的 `modifyConfig` 、`modifyDefaultConfig`、 `modifyPaths` 等 hook，进行配置的收集。
-- collectionAppData stage: 该阶段 WinJS 执行 `modifyAppData` hook，来维护 App 的元数据。
-- onCheck stage: 该阶段 WinJS 执行 `onCheck` hook。
-- onStart stage: 该阶段 WinJS 执行 `onStart` hook
-- runCommand stage:  该阶段 WinJS 运行当前 cli 要执行的 command，（例如 `win dev`, 这里就会执行 dev command）WinJS 的各种核心功能都在 command 中实现。包括我们的插件调用 api 注册的绝大多数 hook。
+- init stage: In this stage, WinJS will load various configuration information. Including: loading `.env` files; requiring `package.json`; loading user configuration information; resolving all plugins (built-in plugins, environment variables, user configuration in sequence).
+- initPresets stage: In this stage, WinJS will register presets. When presets are registered, they can add additional plugins through `return { presets, plugins }`. Among them, presets will be added to the head of the presets queue, while plugins will be added to the tail of the plugins queue.
+- initPlugins stage: In this stage, WinJS will register plugins. The plugins here include additional plugins added by presets in the previous stage. A point worth noting is: although plugins can also `return { presets, plugins }`, WinJS won't perform any operations on them. Plugin initialization is actually executing the plugin's code (but the plugin's code is essentially just calling the api to register various hooks, and hook execution is not executed in this stage, so this is called plugin registration).
+- resolveConfig stage: In this stage, WinJS will organize the definitions of `config schema` from various plugins, then execute hooks like `modifyConfig`, `modifyDefaultConfig`, `modifyPaths` from plugins to collect configuration.
+- collectionAppData stage: In this stage, WinJS executes the `modifyAppData` hook to maintain App metadata.
+- onCheck stage: In this stage, WinJS executes the `onCheck` hook.
+- onStart stage: In this stage, WinJS executes the `onStart` hook
+- runCommand stage: In this stage, WinJS runs the command that the current cli needs to execute (for example, `win dev`, here it will execute the dev command). WinJS's various core functions are implemented in commands, including most hooks registered by our plugins calling the api.
 
-以上就是 WinJS 的插件机制的整体流程。
+The above is the overall flow of WinJS's plugin mechanism.
 
-### `register()` 、 `registerMethod()` 以及 `applyPlugins()`
+### `register()`, `registerMethod()` and `applyPlugins()`
 
-`register()` 接收一个 key 和 一个 hook，它维护了一个 `key-hook[]` 的 map，每当调用 `register()` 的时候，就会为 key 额外注册一个 hook。
+`register()` receives a key and a hook. It maintains a `key-hook[]` map. Every time `register()` is called, it will register an additional hook for the key.
 
-`register()` 注册的 hooks 供 applyPlugins 使用。 这些 hook 的执行顺序参照 [tapable](https://github.com/webpack/tapable)
+Hooks registered by `register()` are used by applyPlugins. The execution order of these hooks follows [tapable](https://github.com/webpack/tapable)
 
-`registerMethod()` 接收一个 key 和 一个 fn，它会在 api 上注册一个方法。如果你没有向 `registerMethod()` 中传入 fn，那么 `registerMethod()` 会在 api 上注册一个"注册器"： 它会将 `register()` 传入 key 并柯里化后的结果作为 fn 注册到 api 上。这样就可以通过调用这个"注册器"，快捷地为 key 注册 hook 了。
+`registerMethod()` receives a key and a fn, and it will register a method on the api. If you don't pass fn to `registerMethod()`, then `registerMethod()` will register a "registrar" on the api: it will register the curried result of `register()` passed with the key as fn on the api. This way you can quickly register hooks for the key by calling this "registrar".
 
-关于上述 api 的更具体的使用，请参照[插件 API](../api/plugin-api)
+For more specific usage of the above apis, please refer to [Plugin API](../api/plugin-api)
 
-### PluginAPI 的原理
+### Principle of PluginAPI
 
-WinJS 会为每个插件赋予一个 PluginAPI 对象，这个对象引用了插件本身和 WinJS 的 service。
+WinJS assigns a PluginAPI object to each plugin, which references the plugin itself and WinJS's service.
 
-WinJS 为 PluginAPI 对象的 get() 方法进行了 proxy， 具体规则如下：
-- pluginMethod:  如果 prop 是 WinJS 所维护的 `pluginMethods[]` ( `通过 registerMethod()` 注册的方法 ）中的方法，则返回这个方法。
-- service props: 如果 prop 是 serviceProps 数组中的属性（这些属性是 WinJS 允许插件直接访问的属性），则返回 service 对应的属性。
-- static props: 如果 prop 是参数 staticProps 数组中的属性（这些属性是静态变量，诸如一些类型定义和常量），则将其返回。
-- 否则返回 api 的属性
+WinJS proxies the get() method of the PluginAPI object with specific rules as follows:
+- pluginMethod: If prop is a method in the `pluginMethods[]` maintained by WinJS (methods registered through `registerMethod()`), return this method.
+- service props: If prop is a property in the serviceProps array (these properties are properties that WinJS allows plugins to directly access), return the corresponding property of the service.
+- static props: If prop is a property in the staticProps array parameter (these properties are static variables, such as some type definitions and constants), return it.
+- Otherwise return the property of the api
 
-因此，WinJS 提供给插件的 api 绝大多数都是依靠 `registerMethod()` 来实现的，你可以直接使用我们的这些 api 快速地在插件中注册 hook。这也是 WinJS 将框架和功能进行解耦的体现： WinJS 的 service 只提供插件的管理功能，而 api 都依靠插件来提供。
+Therefore, most of the apis that WinJS provides to plugins are implemented through `registerMethod()`. You can directly use these apis to quickly register hooks in plugins. This is also a reflection of WinJS's decoupling of framework and functionality: WinJS's service only provides plugin management functionality, while apis are provided by plugins.
 
 ### preset-win
-`core` 提供了一套插件的注册及管理机制。而 WinJS 的核心功能都靠  preset-win 来实现。
+`core` provides a set of plugin registration and management mechanisms. WinJS's core functionality relies on preset-win to implement.
 
-`preset-win` 其实就是内置的一个插件集，它提供的插件分为三大类：
-- registerMethods 这类插件注册了一些上述提到的"注册器"，以供开发者快速地注册 hook，这类方法也占据了 PluginAPI 中的大多数。
-- features 这类插件为 WinJS 提供了一些特性，例如 appData、appConfig、mock 等。
-- commands 这类插件注册了各类 command， 提供了 WinJS CLI 的各种功能。WinJS 能够在终端中正常运行，依靠的就是 command 提供的功能。
+`preset-win` is actually a built-in plugin set that provides plugins divided into three major categories:
+- registerMethods: These plugins register some of the "registrars" mentioned above for developers to quickly register hooks. These methods also occupy most of the PluginAPI.
+- features: These plugins provide WinJS with some features, such as appData, appConfig, mock, etc.
+- commands: These plugins register various commands, providing various functions of the WinJS CLI. WinJS's ability to run normally in the terminal relies on the functionality provided by commands.

@@ -187,10 +187,6 @@ export const sidebar = {
           text: 'HTTP Request',
           link: '/plugins/request'
         },
-        // {
-        //   text: 'MF',
-        //   link: '/plugins/mf'
-        // },
         {
           text: 'I18n',
           link: '/plugins/i18n'

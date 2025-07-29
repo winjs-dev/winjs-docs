@@ -1,13 +1,12 @@
 # Mock {#mock}
 
-WinJS 提供了开箱即用的 Mock 功能，能够用方便简单的方式来完成 Mock 数据的设置。
+WinJS provides out-of-the-box Mock functionality that allows you to set up Mock data in a convenient and simple way.
 
-::: tip 说明
-什么是 Mock 数据：在前后端约定好 API 接口以后，前端可以使用 Mock 数据来在本地模拟出 API 应该要返回的数据，这样一来前后端开发就可以同时进行，不会因为后端 API
-还在开发而导致前端的工作被阻塞。
+::: tip Description
+What is Mock data: After the frontend and backend agree on API interfaces, the frontend can use Mock data to locally simulate the data that the API should return. This way, frontend and backend development can proceed simultaneously, without the frontend work being blocked because the backend API is still under development.
 :::
 
-一个标准的 mock 由三部分组成，以 List 配置为例。
+A standard mock consists of three parts, using List configuration as an example.
 
 ```tsx
 export default {
@@ -20,15 +19,15 @@ export default {
 };
 ```
 
-第一部分是 网络请求的 Method 配置，完整的列表可以看[这里](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods)。一般我们都会使用 GET 和 POST。
+The first part is the Method configuration for network requests. You can see the complete list [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods). Generally, we use GET and POST.
 
-第二部分是 URL 也就是我们发起网络请求的地址。一般我们会使用统一的前缀方便代理的使用。
+The second part is the URL, which is the address where we initiate network requests. Generally, we use a unified prefix to facilitate proxy usage.
 
-第三部分是 数据处理，我们可以配置一个 JSON，JSON 数据会直接返回。或者是配置一个 function，function 有三个参数 [req](https://expressjs.com/en/4x/api.html#req)，[res](https://expressjs.com/en/4x/api.html#res)，url 。具体使用方式与 [express](https://expressjs.com/) 相同。数据必须要通过 `res.send` 来返回。
+The third part is data processing. We can configure a JSON object, and the JSON data will be returned directly. Or we can configure a function with three parameters: [req](https://expressjs.com/en/4x/api.html#req), [res](https://expressjs.com/en/4x/api.html#res), and url. The usage is the same as [express](https://expressjs.com/). Data must be returned through `res.send`.
 
-## 目录约定
+## Directory Convention
 
-WinJS 约定 `/mock` 目录下的所有文件为 [Mock 文件](#mock-文件)，例如这样的目录结构：
+WinJS conventionally treats all files in the `/mock` directory as [Mock files](#mock-files). For example, with this directory structure:
 
 ```text
 .
@@ -41,34 +40,34 @@ WinJS 约定 `/mock` 目录下的所有文件为 [Mock 文件](#mock-文件)，�
         └── index.tsx
 ```
 
-则 `/mock` 目录中的 `todos.ts`, `items.ts` 和 `users.ts` 就会被 WinJS 视为 [Mock 文件](#mock-文件) 来处理。
+The `todos.ts`, `items.ts`, and `users.ts` files in the `/mock` directory will be treated as [Mock files](#mock-files) by WinJS.
 
-## Mock 文件
+## Mock Files
 
-Mock 文件默认导出一个对象，而对象的每个 Key 对应了一个 Mock 接口，值则是这个接口所对应的返回数据，例如这样的 Mock 文件：
+Mock files export a default object, where each Key corresponds to a Mock interface, and the value is the return data for that interface. For example, this Mock file:
 
 ```ts
 // ./mock/users.ts
 
 export default {
 
-  // 返回值可以是数组形式
+  // Return value can be in array form
   'GET /api/users': [
     { id: 1, name: 'foo' },
     { id: 2, name: 'bar' }
   ],
 
-  // 返回值也可以是对象形式
+  // Return value can also be in object form
   'GET /api/users/1': { id: 1, name: 'foo' },
 
 }
 ```
 
-就声明了两个 Mock 接口，透过 `GET /api/users` 可以拿到一个带有两个用户数据的数组，透过 `GET /api/users/1` 可以拿到某个用户的模拟数据。
+This declares two Mock interfaces. Through `GET /api/users`, you can get an array with two user data entries, and through `GET /api/users/1`, you can get mock data for a specific user.
 
-### 请求方法
+### Request Methods
 
-当 Http 的请求方法是 GET 时，可以省略方法部分，只需要路径即可，例如：
+When the HTTP request method is GET, you can omit the method part and only need the path, for example:
 
 ```ts
 // ./mock/users.ts
@@ -85,7 +84,7 @@ export default {
 }
 ```
 
-也可以用不同的请求方法，例如 `POST`，`PUT`，`DELETE`：
+You can also use different request methods, such as `POST`, `PUT`, `DELETE`:
 
 ```ts
 // ./mock/users.ts
@@ -99,15 +98,15 @@ export default {
 }
 ```
 
-### 自定义函数
+### Custom Functions
 
-除了直接静态声明返回值，也可以用函数的方式来声明如何计算返回值，例如：
+Besides directly declaring static return values, you can also use functions to declare how to calculate return values, for example:
 
 ```ts
 export default {
 
   'POST /api/users/create': (req, res) => {
-    // 添加跨域请求头
+    // Add CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.end('ok');
   }
@@ -115,36 +114,38 @@ export default {
 }
 ```
 
-关于 `req` 和 `res` 的 API 可参考 [Express@4 官方文档](https://expressjs.com/en/api.html) 来进一步了解。
+For more information about `req` and `res` APIs, refer to the [Express@4 official documentation](https://expressjs.com/en/api.html).
 
 ### defineMock
 
-另外，也可以使用 `defineMock` 类型帮助函数来提供编写 mock 对象的代码提示，如：
+Additionally, you can use the `defineMock` type helper function to provide code hints when writing mock objects:
+
 ```ts
 import { defineMock } from "win";
 
 export default defineMock({
-  /* 属性为具体的 method 和 请求 url，值为 object 或 array 作为请求的结果 */
+  /* Properties are specific method and request url, values are object or array as request results */
   "GET /api/users": [
     { id: 1, name: "foo" },
     { id: 2, name: "bar" },
   ],
   
-  /* method 默认为 GET */
+  /* method defaults to GET */
   "/api/users/1": { id: 1, name: "foo" },
 
-  /* 可以使用自定义函数根据请求动态返回数据, req & res 都是 Node.js HTTP 原生对象 */
+  /* You can use custom functions to dynamically return data based on requests, req & res are both Node.js HTTP native objects */
   "GET /api/users/2": (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200).json({ id: 2, name: "bar" });
   },
 });
 ```
-`defineMock` 仅仅提供类型提示，入参与出参完全一致。
 
-## 关闭 Mock
+`defineMock` only provides type hints; input and output parameters are completely identical.
 
-WinJS 默认开启 Mock 功能，如果不需要的话可以从配置文件关闭：
+## Disabling Mock
+
+WinJS enables Mock functionality by default. If not needed, you can disable it from the configuration file:
 
 ```ts
 // .winrc.ts
@@ -154,39 +155,38 @@ export default {
 };
 ```
 
-或是用环境变量的方式关闭：
+Or disable it using environment variables:
 
 ```bash
 MOCK=none win dev
 ```
 
-## 引入 Mock.js
+## Integrating Mock.js
 
-在 Mock 中我们经常使用 [Mock.js](http://mockjs.com/) 来帮我们方便的生成随机的模拟数据，如果你使用了 WinJS 的 Mock
-功能，建议你搭配这个库来提升模拟数据的真实性：
+In Mock, we often use [Mock.js](http://mockjs.com/) to help us conveniently generate random mock data. If you use WinJS's Mock functionality, we recommend pairing it with this library to improve the realism of mock data:
 
 ```ts
 import mockjs from 'mockjs';
 
 export default {
-  // 使用 mockjs 等三方库
+  // Using third-party libraries like mockjs
   'GET /api/tags': mockjs.mock({
     'list|100': [{ name: '@city', 'value|1-100': 50, 'type|0-2': 1 }],
   }),
 };
 ```
 
-:::tip 更多随机数据生成库
+:::tip More Random Data Generation Libraries
 
 - [Chancejs](https://github.com/chancejs/chancejs)
 - [Mock](https://github.com/nuysoft/Mock/wiki/Getting-Started)
 
 :::
 
-## 延迟响应
+## Delayed Response
 
-- 可以使用浏览器「 弱网模拟 」的功能实现。
-- 可以通过 `setTimeout` 为单个接口设置延迟，例如：
+- You can use the browser's "slow network simulation" feature to implement this.
+- You can set delays for individual interfaces through `setTimeout`, for example:
 
 ```js
 export default {
@@ -198,6 +198,6 @@ export default {
 };
 ```
 
-## 其他配置
+## Other Configurations
 
-关于 Mock 功能完整的的其他配置项，请在文档的 [配置](../config/config#mock) 章节中查看。
+For complete information about other configuration options for Mock functionality, please check the [Configuration](../config/config#mock) section in the documentation.

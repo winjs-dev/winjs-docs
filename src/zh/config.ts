@@ -187,10 +187,6 @@ export const sidebar = {
           text: 'HTTP 请求',
           link: '/plugins/request'
         },
-        // {
-        //   text: 'MF',
-        //   link: '/plugins/mf'
-        // },
         {
           text: '国际化',
           link: '/plugins/i18n'
