@@ -1,16 +1,16 @@
-# 插件 {#use-plugins}
+# Plugins {#use-plugins}
 
-## 使用插件
+## Using Plugins
 
-在普通的 WinJS 应用中，默认 **不附带任何插件** ，需要手动安装插件并开启他们：
+In regular WinJS applications, **no plugins are included by default**, and you need to manually install plugins and enable them:
 
-如安装 request 插件：
+For example, to install the request plugin:
 
 ```bash
 pnpm add -D @winner-fed/plugin-request
 ```
 
-如开启 request 插件：
+To enable the request plugin:
 
 ```ts
 // .winrc.ts
@@ -20,15 +20,15 @@ export default {
 }
 ```
 
-## 项目级插件
+## Project-level Plugins
 
-若你想在项目中快速使用插件的功能（如 [修改产物的 html](./faq#documentejs-去哪了如何自定义-html-模板) ），可以在项目的根目录创建 `plugin.ts` 编写一个项目级插件，该文件将被自动作为插件加载。
+If you want to quickly use plugin functionality in your project (such as [modifying the build output HTML](./faq#documentejs-去哪了如何自定义-html-模板)), you can create a `plugin.ts` file in the project root directory to write a project-level plugin, which will be automatically loaded as a plugin.
 
-有关更详细的目录结构说明请参阅 [目录结构](./directory-structure) 章节。
+For more detailed directory structure information, please refer to the [Directory Structure](./directory-structure) chapter.
 
-## 开发插件
+## Developing Plugins
 
-请参阅 [开发插件](./plugins) 章节。
+Please refer to the [Developing Plugins](./plugins) chapter.
 
 
 
