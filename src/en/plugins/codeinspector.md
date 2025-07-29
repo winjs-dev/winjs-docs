@@ -1,12 +1,12 @@
-# 页面开发提效工具
+# Page Development Efficiency Tool
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-code-inspector?style=flat-square&colorB=646cff)
 
-点击页面上的 DOM，它能够自动打开你的 IDE 并将光标定位到 DOM 对应的源代码位置。
+Click on any DOM element on the page, and it will automatically open your IDE and position the cursor to the source code location corresponding to that DOM element.
 
-## 开启方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -27,7 +27,7 @@ $ bun add @winner-fed/plugin-code-inspector -D
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -38,6 +38,6 @@ export default defineConfig({
 });
 ```
 
-## 配置和参数
+## Configuration and Parameters
 
-参考：[CodeInspector](https://inspector.fe-dev.cn/guide/introduction.html)
+Reference: [CodeInspector](https://inspector.fe-dev.cn/guide/introduction.html)

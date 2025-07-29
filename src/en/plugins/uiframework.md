@@ -1,16 +1,16 @@
-# UI 组件库
+# UI Component Libraries
 
-为了方便开发者快速集成常用的 UI 组件库，省略一些繁琐的配置，开发了配套的插件功能，支持的 UI 组件如 `vant`、`element-plus`、`element-ui`、`ant-design-vue`、`winUI` 等。
+To help developers quickly integrate common UI component libraries and eliminate tedious configurations, we've developed accompanying plugin functionality that supports UI components such as `vant`, `element-plus`, `element-ui`, `ant-design-vue`, `winUI`, and more.
 
 ## Vant
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-vant?style=flat-square&colorB=646cff)
 
-适用于 Vue2 和 Vue3                                                                 
+Compatible with Vue 2 and Vue 3                                                                 
 
-### 开启方式
+### Setup
  
-1. 安装
+1. Installation
 
 ::: code-group
 
@@ -47,7 +47,7 @@ $ bun add vant@2.x
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -55,30 +55,30 @@ import { defineConfig } from 'win';
 export default defineConfig({
   plugins: ['@winner-fed/plugin-vant'],
   /**
-   * @name vant 插件
+   * @name vant plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#vant
    */
   vant: {
-    // 使用 `Vant4.x` 无须配置该属性
+    // No need to configure this property when using `Vant4.x`
     legacyFunction: ['Toast']
   }
 });
 ```
 
-::: warning 注意
+::: warning Note
 
-`legacyFunction`属性是为了处理 `Vant2.x` 有个别组件是以函数的形式提供的，包括 `Toast`，`Dialog`，`Notify` 和 `ImagePreview` 组件。在使用函数组件时，`unplugin-vue-components` 无法自动引入对应的样式，因此做了特殊处理（这几个特殊组件会再生成的 plugin-vant/runtime.tsx 里进行全局引入，有几个好处，以 Dialog 为例说明，1）防止样式出现问题，如 dialog 弹出时动画效果偶现异常 2）在 vue 文件中，可以使用 this.$dialog 3）在js文件中直接使用 Dialog.alert(...)）。默认值是 []。数组里的值只识别 `Toast`,`Dialog`,`Notify`,`ImagePreview`。
+The `legacyFunction` property is designed to handle individual components in `Vant2.x` that are provided as functions, including `Toast`, `Dialog`, `Notify`, and `ImagePreview` components. When using function components, `unplugin-vue-components` cannot automatically import corresponding styles, so special handling is implemented (these special components will be globally imported in the generated plugin-vant/runtime.tsx, which has several benefits. Using Dialog as an example: 1) Prevents style issues, such as occasional animation anomalies when dialog pops up 2) Allows using this.$dialog in Vue files 3) Allows direct use of Dialog.alert(...) in JS files). The default value is []. The array only recognizes `Toast`, `Dialog`, `Notify`, `ImagePreview`.
 
-在配置文件 .winrc 里配置后，这样在业务代码中使用组件时，便不再需要引入组件和样式了。如
+After configuring in the .winrc configuration file, you no longer need to import components and styles when using components in business code. For example:
 
 ```diff
-// 1. 需要移除这段显示引用
+// 1. Need to remove this explicit import
 - import { Dialog } from 'vant';
 
-// 2. 在 js 文件（不能直接在 app.js 里使用）或 vue 文件的 script 标签里使用
+// 2. Use in JS files (cannot be used directly in app.js) or in script tags of Vue files
 Dialog.confirm({
-  title: '标题',
-  message: '弹窗内容',
+  title: 'Title',
+  message: 'Dialog content',
 })
   .then(() => {
     // on confirm
@@ -88,18 +88,18 @@ Dialog.confirm({
   });
 ```
 
-提示：在单个项目中不应该同时使用「全量引入」和「按需引入」，否则会导致代码重复、样式错乱等问题。
+Tip: You should not use "full import" and "on-demand import" simultaneously in a single project, as this will cause code duplication and style conflicts.
 :::
  
 ## Antdv
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-antdv?style=flat-square&colorB=646cff)
 
-适用于 Vue2 和 Vue3
+Compatible with Vue 2 and Vue 3
 
-### 开启方式
+### Setup
 
-1. 安装
+1. Installation
 
 ::: code-group
 
@@ -136,7 +136,7 @@ $ bun add ant-design-vue@1.x
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -144,7 +144,7 @@ import { defineConfig } from 'win';
 export default defineConfig({
   plugins: ['@winner-fed/plugin-antdv'],
   /**
-   * @name ant-design-vue 插件
+   * @name ant-design-vue plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#antdv
    */
   antdv: {}
@@ -155,11 +155,11 @@ export default defineConfig({
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-element-ui?style=flat-square&colorB=646cff)
 
-适用于 Vue2
+Compatible with Vue 2
 
-### 开启方式
+### Setup
 
-1. 安装
+1. Installation
 
 ::: code-group
 
@@ -184,7 +184,7 @@ $ bun add element-ui
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -192,7 +192,7 @@ import { defineConfig } from 'win';
 export default defineConfig({
   plugins: [require.resolve('@winner-fed/plugin-element-ui')],
   /**
-   * @name element-ui 插件
+   * @name element-ui plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#elementui
    */
   elementUI: {}
@@ -203,11 +203,11 @@ export default defineConfig({
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-element-plus?style=flat-square&colorB=646cff)
 
-适用于 Vue3
+Compatible with Vue 3
 
-### 开启方式
+### Setup
 
-1. 安装
+1. Installation
 
 ::: code-group
 
@@ -232,7 +232,7 @@ $ bun add element-plus
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -240,19 +240,19 @@ import { defineConfig } from 'win';
 export default defineConfig({
   plugins: ['@winner-fed/plugin-element-plus'],
   /**
-   * @name element-plus 插件
+   * @name element-plus plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#elementplus
    */
   elementPlus: {}
 });
 ```
 
-::: warning 注意
+::: warning Note
 
-使用 element-plus 里的组件 API 时，比如 ElMessage, ElMessageBox, ElNotification, ElLoading，一定要手动引入组件对应的样式，如：
+When using component APIs in element-plus, such as ElMessage, ElMessageBox, ElNotification, ElLoading, you must manually import the corresponding component styles, for example:
 
 ```js
-// 需手动引入该样式
+// Manually import these styles
 import 'element-plus/es/components/message/style/css';
 import { ElMessage } from 'element-plus';
 ```
@@ -262,11 +262,11 @@ import { ElMessage } from 'element-plus';
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-winui?style=flat-square&colorB=646cff)
 
-适用于 Vue2 与 Vue3
+Compatible with Vue 2 and Vue 3
 
-### 开启方式
+### Setup
 
-1. 安装
+1. Installation
 
 ::: code-group
 
@@ -303,7 +303,7 @@ $ bun add @winner-fed/win-ui@1.x
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -311,30 +311,30 @@ import { defineConfig } from 'win';
 export default defineConfig({
   plugins: ['@winner-fed/plugin-winui'],
   /**
-   * @name winUI 插件
+   * @name winUI plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/uiframework.html#winui
    */
   winUI: {
-    // 使用 `WinUI 3.x` 无须配置该属性
+    // No need to configure this property when using `WinUI 3.x`
     legacyFunction: ['Toast']
   }
 });
 ```
 
-::: warning 注意
+::: warning Note
 
-`legacyFunction`属性是为了处理 `WinUI1.x` 有个别组件是以函数的形式提供的，包括 `Toast`，`Dialog`，`Notify` 和 `ImagePreview` 组件。在使用函数组件时，`unplugin-vue-components` 无法自动引入对应的样式，因此做了特殊处理。默认值是 []。数组里的值只识别 `Toast`,`Dialog`,`Notify`,`ImagePreview`。
+The `legacyFunction` property is designed to handle individual components in `WinUI1.x` that are provided as functions, including `Toast`, `Dialog`, `Notify`, and `ImagePreview` components. When using function components, `unplugin-vue-components` cannot automatically import corresponding styles, so special handling is implemented. The default value is []. The array only recognizes `Toast`, `Dialog`, `Notify`, `ImagePreview`.
 
-在配置文件 .winrc 里配置后，这样在业务代码中使用组件时，便不再需要引入组件和样式了。如
+After configuring in the .winrc configuration file, you no longer need to import components and styles when using components in business code. For example:
 
 ```diff
-// 1. 需要移除这段显示引用
+// 1. Need to remove this explicit import
 - import { Dialog } from '@winner-fed/win-ui';
 
-// 2. 在 js 文件（不能直接在 app.js 里使用）或 vue 文件的 script 标签里使用
+// 2. Use in JS files (cannot be used directly in app.js) or in script tags of Vue files
 Dialog.confirm({
-  title: '标题',
-  message: '弹窗内容',
+  title: 'Title',
+  message: 'Dialog content',
 })
   .then(() => {
     // on confirm
@@ -344,5 +344,5 @@ Dialog.confirm({
   });
 ```
 
-提示：在单个项目中不应该同时使用「全量引入」和「按需引入」，否则会导致代码重复、样式错乱等问题。
+Tip: You should not use "full import" and "on-demand import" simultaneously in a single project, as this will cause code duplication and style conflicts.
 :::  

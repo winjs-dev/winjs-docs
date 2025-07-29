@@ -1,14 +1,14 @@
-# keepalive
+# KeepAlive
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-keepalive?style=flat-square&colorB=646cff)
 
-::: warning 注意
-此方案只适用于 Vue3。
+::: warning Note
+This solution is only applicable to Vue 3.
 :::
 
-## 开启方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -29,7 +29,7 @@ $ bun add @winner-fed/plugin-keepalive -D
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -54,20 +54,20 @@ export default defineConfig({
     ]
   }],
   /**
-   * @name 路由状态保持插件
+   * @name Route state persistence plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/keepalive.html
    */
   keepalive: ['/hello', '/docs'],
-  // 需关闭 mfsu
+  // Need to disable mfsu
   mfsu: false
 });
 ```
 
-## 介绍
+## Introduction
 
-配置需要状态保持的路由。
+Configure routes that require state persistence.
 
-* 类型：`(string | RegExp)[]`
+* Type: `(string | RegExp)[]`
 
 ```ts
 import { defineConfig } from 'win';
@@ -77,11 +77,9 @@ export default defineConfig({
 });
 ```
 
-> 注意，keepalive 的配置项，支持正则表达式。但是所有的路由正则匹配应该是全小写的，比如不管你的路由是 `home`、`Home`
-> 还是 `hoMe` ，只有设置 `keepalive:[/home/]` 才有效。而字符串的配置方式就刚好相反，如果你的路由是`home`，你配置 `home`、`Home`
-> 还是 `hoMe` 都有效。
+> Note that the keepalive configuration supports regular expressions. However, all route regex matching should be lowercase. For example, regardless of whether your route is `home`, `Home`, or `hoMe`, only setting `keepalive:[/home/]` will be effective. String configuration works the opposite way - if your route is `home`, configuring `home`, `Home`, or `hoMe` will all be effective.
 
-在需要使用  `<router-view></router-view>` 都需要使用 `<KeepAliveLayout>`  代替
+Wherever you need to use `<router-view></router-view>`, you should replace it with `<KeepAliveLayout>`
 
 ```diff
 <template>

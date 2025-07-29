@@ -6,7 +6,7 @@ import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-i
 import { headerPlugin } from './headerMdPlugin';
 import { baseURL } from './meta';
 
-const prod = !!process.env.NETLIFY
+const prod = !!process.env.NETLIFY;
 
 export default defineConfig({
   base: baseURL,
@@ -23,7 +23,7 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://winjs-dev.github.io/winjs-docs/',
     transformItems(items) {
-      return items.filter((item) => !item.url.includes('migration'))
+      return items.filter((item) => !item.url.includes('migration'));
     }
   },
 
@@ -63,10 +63,7 @@ export default defineConfig({
     ['meta', { name: 'mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
     ['script', {}, fs.readFileSync(path.resolve(__dirname, './inlined-scripts/restorePreference.js'), 'utf-8')],
-    [
-      'script',
-      { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-0Z8G2EZKXV' }
-    ],
+    ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-0Z8G2EZKXV' }],
     [
       'script',
       {},
@@ -129,12 +126,21 @@ export default defineConfig({
     },
     plugins: [
       pagefindPlugin({
-        forceLanguage: 'zh-cn',
-        btnPlaceholder: '搜索',
-        placeholder: '搜索文档',
-        emptyText: '空空如也',
-        heading: '共: {{searchResult}} 条结果',
-        customSearchQuery: chineseSearchOptimize
+        locales: {
+          root: {
+            btnPlaceholder: 'Search',
+            placeholder: 'Search Docs...',
+            emptyText: 'No results',
+            heading: 'Total: {{searchResult}} search results.'
+          },
+          zh: {
+            btnPlaceholder: '搜索',
+            placeholder: '搜索文档',
+            emptyText: '空空如也',
+            heading: '共: {{searchResult}} 条结果',
+            customSearchQuery: chineseSearchOptimize
+          }
+        }
       }),
       groupIconVitePlugin({
         customIcon: {
@@ -149,15 +155,12 @@ export default defineConfig({
 
   transformPageData: prod
     ? (pageData, ctx) => {
-      const site = resolveSiteDataByRoute(
-        ctx.siteConfig.site,
-        pageData.relativePath
-      )
-      const title = `${pageData.title || site.title} | ${pageData.description || site.description}`
-      ;((pageData.frontmatter.head ??= []) as HeadConfig[]).push(
-        ['meta', { property: 'og:locale', content: site.lang }],
-        ['meta', { property: 'og:title', content: title }]
-      )
-    }
+        const site = resolveSiteDataByRoute(ctx.siteConfig.site, pageData.relativePath);
+        const title = `${pageData.title || site.title} | ${pageData.description || site.description}`;
+        ((pageData.frontmatter.head ??= []) as HeadConfig[]).push(
+          ['meta', { property: 'og:locale', content: site.lang }],
+          ['meta', { property: 'og:title', content: title }]
+        );
+      }
     : undefined
 });

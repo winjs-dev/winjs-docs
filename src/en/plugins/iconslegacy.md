@@ -1,12 +1,12 @@
-# icons 遗留方案
+# Icons Legacy Solution
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-icons-legacy?style=flat-square&colorB=646cff)
 
-icons 的遗留方案，主要提供 Vue2 使用。使用 SvgIcon 组件。默认 src/icons 目录的 svg 文件采用此方案。该方案底层依赖了 svg-sprite-loader 实现，所以 bundler 不支持 vite。
+Legacy solution for icons, primarily provided for Vue 2 usage. Uses the SvgIcon component. SVG files in the src/icons directory use this solution by default. This solution relies on svg-sprite-loader implementation, so the bundler does not support Vite.
 
-## 开启方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -27,7 +27,7 @@ $ bun add @winner-fed/plugin-icons-legacy -D
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -40,10 +40,10 @@ export default defineConfig({
 });
 ```
  
-## 配置
+## Configuration
  
 ### include
-- **类型**：`Array<string>` 
-- **默认值**：`[]`
+- **Type**: `Array<string>` 
+- **Default**: `[]`
 
-用于额外需要使用此方案解析的 svg 文件。注意需要使用**绝对路径**。
+Used for additional SVG files that need to be parsed using this solution. Note that **absolute paths** must be used.

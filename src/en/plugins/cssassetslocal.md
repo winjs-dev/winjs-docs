@@ -1,12 +1,12 @@
-# CSS 资源本地化
+# CSS Asset Localization
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-css-assets-local?style=flat-square&colorB=646cff)
 
-组件代码里有可能会依赖一些远程 CDN 的字体文件等，某些情况下网站运行时可能访问不了。该插件提供在构建部署时将 CSS 中的网络资源本地化能力，例如字体文件等。
+Component code may depend on some remote CDN font files, etc., which may be inaccessible when the website is running in certain situations. This plugin provides the ability to localize network resources in CSS during build and deployment, such as font files.
 
-## 开启方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -27,7 +27,7 @@ $ bun add @winner-fed/plugin-css-assets-local -D
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts 
 import { defineConfig } from 'win';
@@ -40,25 +40,25 @@ export default defineConfig(() => ({
 }));
 ```
 
-## 配置
+## Configuration
 
 ### `outputPath`
 
-提取后的静态文件目录前缀
+Directory prefix for extracted static files
 
-- 类型: `string`
-- 默认值: `assets`
+- Type: `string`
+- Default: `assets`
 
 ### `relativeCssPath`
 
-提取的文件后相对于 CSS 的路径
+Path of extracted files relative to CSS
 
-- 类型: `string`
-- 默认值: `../`
+- Type: `string`
+- Default: `../`
 
 ### `enableInDev`
 
-本地调试时是否启用插件
+Whether to enable the plugin during local debugging
 
-- 类型: `boolean`
-- 默认值: `false`
+- Type: `boolean`
+- Default: `false`

@@ -2,15 +2,15 @@
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-unicons?style=flat-square&colorB=646cff)
 
-WinJS 提供的有关 icons 统一解决方案，以 [unplugin-icons](https://github.com/unplugin/unplugin-icons) 作为底层解析工具。适配多种构建工具，如 webpack, rspack, vite 等和前端框架，如 vue2，vue等。插件本身也内置了 [Resolver](https://github.com/unplugin/unplugin-icons/tree/main?tab=readme-ov-file#use-with-resolver) 功能，可自动引入所需的 svg 图标。
+A unified icon solution provided by WinJS, using [unplugin-icons](https://github.com/unplugin/unplugin-icons) as the underlying parsing tool. Compatible with multiple build tools such as webpack, rspack, vite, etc., and frontend frameworks such as Vue 2, Vue, etc. The plugin also has built-in [Resolver](https://github.com/unplugin/unplugin-icons/tree/main?tab=readme-ov-file#use-with-resolver) functionality that can automatically import required SVG icons.
 
-::: tip 注意
-请先掌握 unplugin-icons 的用法。
+::: tip Note
+Please master the usage of unplugin-icons first.
 :::
 
-## 开启方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -31,7 +31,7 @@ $ bun add @winner-fed/plugin-unicons -D
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -40,7 +40,7 @@ export default defineConfig({
   plugins: [require.resolve('@winner-fed/plugin-unicons')],
   unIcons: {
     include: [],
-    // 支持 unplugin-icons 配置参数，如
+    // Supports unplugin-icons configuration parameters, such as
     customCollections: {
       ...
     }
@@ -49,16 +49,16 @@ export default defineConfig({
 });
 ```
  
-## 配置
+## Configuration
  
 ### include
-- **类型**：`Array<string>` 
-- **默认值**：`[]`
+- **Type**: `Array<string>` 
+- **Default**: `[]`
 
-用于额外需要使用此方案解析的 svg 文件。注意需要使用**绝对路径**，并且会被插件内置的 svgo 压缩。
+Used for additional SVG files that need to be parsed using this solution. Note that **absolute paths** must be used, and they will be compressed by the plugin's built-in svgo.
  
-### 支持 unplugin-icons 扩展配置
-- 继承了 [unplugin-icons](https://github.com/unplugin/unplugin-icons)插件的[配置参数](https://github.com/unplugin/unplugin-icons/blob/main/src/types.ts)
+### Supports unplugin-icons Extended Configuration
+- Inherits [configuration parameters](https://github.com/unplugin/unplugin-icons/blob/main/src/types.ts) from the [unplugin-icons](https://github.com/unplugin/unplugin-icons) plugin
  
-## 注意
-- 在使用本地图标时，根据[unplugin-icons](https://github.com/unplugin/unplugin-icons?tab=readme-ov-file#name-conversion)的命名规则，默认使用 `icon` 作为前缀(prefix)，`win` 作为集合（collection）。默认解析 `src/icons` 下的 svg 图标，如 `icon-win-dog`
+## Note
+- When using local icons, according to the naming rules of [unplugin-icons](https://github.com/unplugin/unplugin-icons?tab=readme-ov-file#name-conversion), it uses `icon` as the prefix by default and `win` as the collection. It parses SVG icons under `src/icons` by default, such as `icon-win-dog`

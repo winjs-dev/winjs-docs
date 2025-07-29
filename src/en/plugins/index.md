@@ -1,55 +1,53 @@
-# 简介
+# Introduction
 
-## 插件可以做什么
+## What Plugins Can Do
 
-WinJS 的所有功能都是通过插件系统实现的，这意味着 WinJS 中的所有能力是都对开发者开放的。开发者可以通过编写插件来扩展更多功能，适配复杂场景，包括但不限于：
+All functionality in WinJS is implemented through the plugin system, which means all capabilities in WinJS are open to developers. Developers can extend more functionality and adapt to complex scenarios by writing plugins, including but not limited to:
 
-- 注册命令
-- 修改 WinJS 配置、配置校验 Schema
-- 修改编译时的 Webpack/Babel/Less/Sass/Tailwind CSS/... 配置
-- 修改运行时需要渲染的 Vue 组件
-- 修改页面路由
-- 自定义动态 HTML 模版
-- 自定义 Vue 组件客户端
+- Registering commands
+- Modifying WinJS configuration and configuration validation schemas
+- Modifying compile-time configurations for Webpack/Babel/Less/Sass/Tailwind CSS/...
+- Modifying Vue components that need to be rendered at runtime
+- Modifying page routes
+- Customizing dynamic HTML templates
+- Customizing Vue component clients
 - ...
 
-当 WinJS 暂时没有覆盖到你所需要的功能或场景时，可以开发一个自定义插件，来实现适配特殊场景的相关功能。
+When WinJS doesn't yet cover the functionality or scenarios you need, you can develop a custom plugin to implement functionality that adapts to special scenarios.
 
-## 插件和插件集
+## Plugins and Plugin Presets
 
 <img src="/images/plugins/plugins.jpeg" alt="plugins"/>
 
-WinJS 支持插件和插件集，通过这张图应该很好理解到他们的关系，通过插件集我们把插件收敛依赖然后支持不同的业务类型。插件是为了扩展一个功能，而插件集是为了扩展一类业务。比如要支持
-vue2，我们可以有 @winner-fed/preset-vue2，包含 vue 2.x 相关的构建和运行时；比如要支持 h5 的应用类型，可以有
-@winner-fed/preset-pc，把 pc 相关的功能集合到一起。
+WinJS supports both plugins and plugin presets. This diagram clearly illustrates their relationship - through plugin presets, we consolidate plugin dependencies to support different business types. Plugins are designed to extend a single feature, while plugin presets are designed to extend a category of business functionality. For example, to support Vue 2, we can have @winner-fed/preset-vue2, which includes Vue 2.x related build and runtime features; to support H5 application types, we can have @winner-fed/preset-pc, which brings together PC-related functionality.
 
-如果要类比，插件集和 babel 的 preset，以及 eslint 的 config 都类似。
+To draw an analogy, plugin presets are similar to Babel presets and ESLint configs.
 
-## 插件列表
+## Plugin List
 
-| 插件                                                                       | 介绍                                                                                                 |
-|--------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| [@winner-fed/plugin-request](./request.md)                               | 基于 `Axios` 封装的 request，及 `vue-hooks-plus` 提供的强大管理网络请求能力 `useRequest` Hook 函数。内置防止重复请求、请求节流、错误处理等功能 | 
-| [@winner-fed/plugin-locale](./i18n.md)                                   | 基于 [Vue I18n](https://vue-i18n.intlify.dev/guide/)，提供国际化能力，适用于 vue3                                | 
-| [@winner-fed/plugin-keepalive](./keepalive.md)                           | 配置需要状态保持的路由，适用于 vue3                                                                               | 
-| [@winner-fed/plugin-access](./access.md)                                 | 提供对页面资源的权限配置能力，适用于 vue3                                                                            |
-| [@winner-fed/plugin-vant](./uiframework.md#vant)                         | vant 组件库，适用于 vue2 和 vue3                                                                           |                                                                                 
-| [@winner-fed/plugin-element-ui](./uiframework.md#elementui)              | element-ui 组件库，适用于 vue2                                                                            
-| [@winner-fed/plugin-hui](./uiframework.md#hui)                           | HUI 组件库，适用于 vue2                                                                                   
-| [@winner-fed/plugin-element-plus](./uiframework.md#elementplus)          | element-plus 组件库，适用于 vue3                                                                          | 
-| [@winner-fed/plugin-antdv](./uiframework.md#antdv)                       | ant-design-vue 组件库，适用于 vue2 和 vue3                                                                 | 
-| [@winner-fed/plugin-winui](./uiframework.md#winui)                       | WinUI 组件库，适用于 vue2 和 vue3                                                                          | 
-| [@winner-fed/plugins/dist/mobile-layout](./mobilelayout.md)              | 移动端布局方案，适用于 vue3                                                                                   | 
-| [@winner-fed/plugin-web-update-notification](./webupdatenotification.md) | 检测网页更新通知更新插件                                                                                       | 
-| [@winner-fed/plugin-css-assets-local](./cssassetslocal.md)               | CSS 资源本地化                                                                                          | 
-| [@winner-fed/plugin-watermark](./watermark.md)                           | 水印                                                                                                 | 
-| [@winner-fed/plugin-assets-retry](./assetsretry.md)                      | 静态资源加载失败时自动发起重试请求                                                                                  | 
-| [@winner-fed/plugin-wconsole](./wconsole.md)                             | 移动端调试工具                                                                                            |
-| [@winner-fed/plugin-qiankun](./qiankun.md)                               | 适配乾坤微前端                                                                                            | 
-| [@winner-fed/plugin-remove-console](./removeconsole.md)                  | 在生产模式下自动移除构建产物的调试信息                                                                                |
-| [@winner-fed/plugin-icons-legacy](./iconslegacy.md)                      | 针对 Vue2 的 icons 的遗留方案                                                                              | 
-| [@winner-fed/plugin-openapi](./openapi.md)                               | 将 Swagger 文档生成前端所需的接口请求、Mock 文件和文档说明                                                               | 
-| [@winner-fed/plugin-unicons](./unicons.md)                               | icons 的统一解决方案                                                                                      | 
-| [@winner-fed/plugin-viewport](./viewport.md)                             | 视窗单位适配的解决方案                                                                                        | 
-| [@winner-fed/plugin-security](./security.md)                             | 子资源完整性 Subresource Integrity（SRI）的解决方案                                                             |
-| [@winner-fed/plugin-check-syntax](./checksyntax.md)                      | 用于分析产物的语法兼容性，判断是否存在导致兼容性问题的高级语法                                                             | 
+| Plugin                                                                    | Description                                                                                                                             |
+|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| [@winner-fed/plugin-request](./request.md)                               | Request wrapper based on `Axios` and powerful network request management `useRequest` Hook from `vue-hooks-plus`. Built-in features include duplicate request prevention, request throttling, and error handling | 
+| [@winner-fed/plugin-locale](./i18n.md)                                   | Internationalization capabilities based on [Vue I18n](https://vue-i18n.intlify.dev/guide/), compatible with Vue 3                                | 
+| [@winner-fed/plugin-keepalive](./keepalive.md)                           | Configure routes that require state persistence, compatible with Vue 3                                                                               | 
+| [@winner-fed/plugin-access](./access.md)                                 | Provides permission configuration capabilities for page resources, compatible with Vue 3                                                                            |
+| [@winner-fed/plugin-vant](./uiframework.md#vant)                         | Vant UI component library, compatible with Vue 2 and Vue 3                                                                           |                                                                                 
+| [@winner-fed/plugin-element-ui](./uiframework.md#elementui)              | Element UI component library, compatible with Vue 2                                                                            
+| [@winner-fed/plugin-hui](./uiframework.md#hui)                           | HUI component library, compatible with Vue 2                                                                                   
+| [@winner-fed/plugin-element-plus](./uiframework.md#elementplus)          | Element Plus component library, compatible with Vue 3                                                                          | 
+| [@winner-fed/plugin-antdv](./uiframework.md#antdv)                       | Ant Design Vue component library, compatible with Vue 2 and Vue 3                                                                 | 
+| [@winner-fed/plugin-winui](./uiframework.md#winui)                       | WinUI component library, compatible with Vue 2 and Vue 3                                                                          | 
+| [@winner-fed/plugins/dist/mobile-layout](./mobilelayout.md)              | Mobile layout solution, compatible with Vue 3                                                                                   | 
+| [@winner-fed/plugin-web-update-notification](./webupdatenotification.md) | Web update detection and notification plugin                                                                                       | 
+| [@winner-fed/plugin-css-assets-local](./cssassetslocal.md)               | CSS asset localization                                                                                          | 
+| [@winner-fed/plugin-watermark](./watermark.md)                           | Watermark functionality                                                                                                 | 
+| [@winner-fed/plugin-assets-retry](./assetsretry.md)                      | Automatically retry requests when static asset loading fails                                                                                  | 
+| [@winner-fed/plugin-wconsole](./wconsole.md)                             | Mobile debugging tools                                                                                            |
+| [@winner-fed/plugin-qiankun](./qiankun.md)                               | Qiankun microfrontend integration                                                                                            | 
+| [@winner-fed/plugin-remove-console](./removeconsole.md)                  | Automatically remove debug information from build artifacts in production mode                                                                                |
+| [@winner-fed/plugin-icons-legacy](./iconslegacy.md)                      | Legacy icon solution for Vue 2                                                                              | 
+| [@winner-fed/plugin-openapi](./openapi.md)                               | Generate frontend API requests, Mock files, and documentation from Swagger specifications                                                               | 
+| [@winner-fed/plugin-unicons](./unicons.md)                               | Unified icon solution                                                                                      | 
+| [@winner-fed/plugin-viewport](./viewport.md)                             | Viewport unit adaptation solution                                                                                        | 
+| [@winner-fed/plugin-security](./security.md)                             | Subresource Integrity (SRI) solution                                                             |
+| [@winner-fed/plugin-check-syntax](./checksyntax.md)                      | Analyze build artifact syntax compatibility to detect advanced syntax that may cause compatibility issues                                                             | 

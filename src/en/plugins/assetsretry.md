@@ -1,12 +1,12 @@
-# Assets Retry 插件 {#assetsretry}
+# Assets Retry Plugin {#assetsretry}
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-assets-retry?style=flat-square&colorB=646cff)
 
-用于在静态资源加载失败时自动发起重试请求。
+Automatically retry requests when static asset loading fails.
 
-## 开启方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -27,7 +27,7 @@ $ bun add @winner-fed/plugin-assets-retry -D
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -35,7 +35,7 @@ import { defineConfig } from 'win';
 export default defineConfig({
   plugins: ['@winner-fed/plugin-assets-retry'],
   /**
-   * @name assetsRetry插件
+   * @name assetsRetry plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/assetsretry.html
    */
   assetsRetry: {
@@ -60,11 +60,11 @@ export default defineConfig({
 });
 ```
 
-## 选项
+## Options
 
-你可以通过选项来配置资源加载失败时的重试逻辑。
+You can configure the retry logic when resource loading fails through options.
 
-- **类型：**
+- **Type:**
 
 ```ts
 interface AssetsRetryOptions {
@@ -92,7 +92,7 @@ type FailFunction = (currentUrl: string) => void
 type Domain = string[] | { [x: string]: string }
 ```
 
-- **默认值：**
+- **Default:**
 
 ```ts
 const defaultOptions = {
@@ -109,15 +109,14 @@ const defaultOptions = {
 
 ### domain
 
-- **类型：** `string[]`
-- **默认值：** `[]`
+- **Type:** `string[]`
+- **Default:** `[]`
 
-指定资源加载失败时的重试域名列表。在 `domain` 数组中，第一项是当前使用的域名，后面几项为备用域名。当某个域名的资源请求失败时，插件会在数组中找到该域名，并替换为数组的下一个域名。
-**数组类型：** 表示从域名列表中循环加载（1 -> 2 -> 3 -> ... -> n -> 1 -> ...），直到加载成功或超过限次
-**对象类型：** 如 `{ 'a.cdn': 'b.cdn', 'c.cdn': 'd.cdn' }` 表示在 `a.cdn` 失败的资源应从 `b.cdn` 重试，在 `c.cdn`
-失败的资源应从 `d.cdn` 重试。
+Specify the retry domain list when resource loading fails. In the `domain` array, the first item is the currently used domain, and the following items are backup domains. When a resource request from a certain domain fails, the plugin will find that domain in the array and replace it with the next domain in the array.
+**Array type:** Indicates cyclic loading from the domain list (1 -> 2 -> 3 -> ... -> n -> 1 -> ...), until loading succeeds or exceeds the limit.
+**Object type:** For example, `{ 'a.cdn': 'b.cdn', 'c.cdn': 'd.cdn' }` means that resources that fail on `a.cdn` should retry from `b.cdn`, and resources that fail on `c.cdn` should retry from `d.cdn`.
 
-举个例子：
+Example:
 
 ```js
 assetsRetry({
@@ -125,16 +124,16 @@ assetsRetry({
 });
 ```
 
-添加以上配置后，当 `cdn1.com` 域名的资源加载失败时，请求域名会自动降级到 `cdn2.com`。
+After adding the above configuration, when resources from the `cdn1.com` domain fail to load, the request domain will automatically downgrade to `cdn2.com`.
 
-如果 `cdn2.com` 的资源也请求失败，则会继续请求 `cdn3.com`。
+If resources from `cdn2.com` also fail to load, it will continue to request from `cdn3.com`.
 
 ### maxRetryCount
 
-- **类型：** `number`
-- **默认值：** `3`
+- **Type:** `number`
+- **Default:** `3`
 
-单个资源的最大重试次数。比如：
+Maximum retry count for a single resource. For example:
 
 ```js
 assetsRetry({
@@ -144,28 +143,27 @@ assetsRetry({
 
 ### onRetry
 
-- **类型：** `(currentUrl: string, originalUrl: string, retryCollector: null | RetryStatistics) => string | null`
+- **Type:** `(currentUrl: string, originalUrl: string, retryCollector: null | RetryStatistics) => string | null`
 
-资源重试时的回调函数。
+Callback function when retrying resources.
 
-该函数接收 3 个参数：
+This function receives 3 parameters:
 
-- `currentUrl`: 即将被选为重试地址的 `URL`
-- `originalUrl`: 上一次加载失败的 `URL`
-- `retryCollector`: 为当前资源的数据收集对象，如果资源为 CSS 中使用 `url` 引用的图片资源，**该参数为 `null`**
-  。当该参数不为 `null` 时，包含 3 个属性：
-- `retryTimes`: 表示当前为第 x 次重试（从 1 开始）
-- `failed`: 已失败的资源列表（从同一域名加载多次时，可能重复）
-- `succeeded`: 已成功的资源列表
-  - 该函数的返回值必须为字符串或 `null` 对象。
-  - 当返回 `null` 时，表示终止该次重试
-  - 当返回字符串（url）时，会尝试从 url 中加载资源。
+- `currentUrl`: The `URL` that will be selected as the retry address
+- `originalUrl`: The `URL` that failed to load last time
+- `retryCollector`: Data collection object for the current resource. If the resource is an image referenced with `url` in CSS, **this parameter is `null`**. When this parameter is not `null`, it contains 3 properties:
+- `retryTimes`: Indicates the current retry count (starting from 1)
+- `failed`: List of failed resources (may be duplicated when loading multiple times from the same domain)
+- `succeeded`: List of successful resources
+  - The return value of this function must be a string or `null` object.
+  - When returning `null`, it indicates terminating this retry
+  - When returning a string (url), it will attempt to load the resource from the url.
 
-该函数的返回值必须为字符串或 `null` 对象。
-- 当返回 `null` 时，表示终止该次重试
-- 当返回字符串（url）时，会尝试从 url 中加载资源。
+The return value of this function must be a string or `null` object.
+- When returning `null`, it indicates terminating this retry
+- When returning a string (url), it will attempt to load the resource from the url.
 
-比如：
+For example:
 
 ```js
 assetsRetry({
@@ -180,14 +178,14 @@ assetsRetry({
 
 ### onSuccess
 
-- **类型：** `(currentUrl: string) => void`
+- **Type:** `(currentUrl: string) => void`
 
-在域名列表内的资源最终加载成功时执行。
+Executed when resources in the domain list are finally loaded successfully.
 
-该函数接收 1 个参数：
-- `currentUrl`: 资源名，可通过该名称来找到当前资源的数据收集对象
+This function receives 1 parameter:
+- `currentUrl`: Resource name, through which you can find the data collection object of the current resource
 
-比如：
+For example:
 ```js
 assetsRetry({
   onSuccess: (currentUrl) => {
@@ -200,14 +198,14 @@ assetsRetry({
 
 ### onFail
 
-- **类型：** `(currentUrl: string) => void`
+- **Type:** `(currentUrl: string) => void`
 
-在域名列表内的资源最终加载失败时执行。
+Executed when resources in the domain list finally fail to load.
 
-该函数接收 1 个参数：
-- `currentUrl`: 资源名，可通过该名称来找到当前资源的数据收集对象
+This function receives 1 parameter:
+- `currentUrl`: Resource name, through which you can find the data collection object of the current resource
 
-比如：
+For example:
 ```js
 assetsRetry({
   onFail: (currentUrl) => {
@@ -218,26 +216,26 @@ assetsRetry({
 });
 ```
 
-## 工作原理
+## How It Works
 
-Assets-Retry 的实现主要分为三部分：
+The implementation of Assets-Retry is mainly divided into three parts:
 
-1. 如何自动获取加载失败的静态资源（同步加载的 `<script>`, `<link>`, `<img>`）并重试
-2. 如何自动获取加载失败的异步脚本并重试
-3. 如何自动获取加载失败的背景图片并重试
+1. How to automatically capture failed static resources (synchronously loaded `<script>`, `<link>`, `<img>`) and retry them
+2. How to automatically capture failed asynchronous scripts and retry them
+3. How to automatically capture failed background images and retry them
 
-### 获取加载失败的静态资源
+### Capturing Failed Static Resources
 
-这部分实现较为简单，监听 `document` 对象的 `error` 事件便能够捕获到静态资源加载失败的错误。当 `event.target` 为需要重试的元素时，重试加载该元素即可。但需要注意以下场景：
+This part is relatively simple to implement. By listening to the `error` event of the `document` object, you can capture errors when static resources fail to load. When `event.target` is an element that needs to be retried, just retry loading that element. However, you need to pay attention to the following scenario:
 
 ```html
 <script src="/vendor.js"></script>
 <script src="/app.js"></script>
 ```
 
-在上面的代码中， `app.js` 依赖 `vendor.js` 中的功能，这在使用 webpack 打包的项目中极其常见，如果使用 `document.createElement('script')` 来对其进行重试，在网络环境不确定的情况下，`app.js` 很有可能比 `vendor.js` 先加载完毕，导致页面报错不可用。
+In the above code, `app.js` depends on functionality in `vendor.js`, which is extremely common in projects using webpack bundling. If you use `document.createElement('script')` to retry them, in uncertain network conditions, `app.js` is very likely to finish loading before `vendor.js`, causing page errors and making it unusable.
 
-所以对于在 `html` 中同步加载的 `script` 标签，在页面还未加载完毕时，需要使用 `document.write`，阻塞式地将 `script` 标签动态添加到 `html` 中。
+Therefore, for `script` tags that are synchronously loaded in `html`, when the page has not finished loading, you need to use `document.write` to dynamically add `script` tags to the `html` in a blocking manner.
 
-## 参考
-- 底层依赖：[assets-retry](https://github.com/Nikaple/assets-retry)
+## Reference
+- Underlying dependency: [assets-retry](https://github.com/Nikaple/assets-retry)
