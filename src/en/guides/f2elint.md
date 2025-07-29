@@ -1,65 +1,65 @@
 # F2ELint
 
-F2ELint 是《前端规约》的配套 Lint 工具，可以为项目一键接入规约、一键扫描和修复规约问题，保障项目的编码规范和代码质量。
+F2ELint is the accompanying Lint tool for "Frontend Standards", which can provide one-click integration of standards, one-click scanning and fixing of standard issues for projects, ensuring project coding standards and code quality.
 
-## 背景
+## Background
 
-我们引入了多个业界流行的 Linter 作为《前端规约》的配套，并根据规约内容定制了规则包，它们包括：
+We have introduced multiple popular Linters in the industry as companions to "Frontend Standards" and customized rule packages according to the standard content, including:
 
-| 规约 | Lint 工具                                                    | 规则包 |
+| Standards | Lint Tool                                                    | Rule Package |
 | -------- |------------------------------------------------------------| -------- |
-| 《JavaScript 编码规约》 <br/> 《TypeScript 编码规约》 <br/> 《Vue 编码规约》     | [eslint](https://eslint.org/)                              | [@winner-fed/eslint-config-win](https://www.npmjs.com/package/@winner-fed/eslint-config-win) |
-| 《CSS 编码规约》     | [stylelint](https://stylelint.io/)                         | [@winner-fed/stylelint-config-win](https://www.npmjs.com/package/@winner-fed/stylelint-config-win) |
-| 《Git 规约》     | [commitlint](https://commitlint.js.org/#/)                 | [@winner-fed/commitlint-config-win](https://www.npmjs.com/package/@winner-fed/commitlint-config-win) |
-| 《文档通用规约》     | [markdownlint](https://github.com/DavidAnson/markdownlint) | [@winner-fed/markdownlint-config-win](https://www.npmjs.com/package/@winner-fed/markdownlint-config-win) |
+| "JavaScript Coding Standards" <br/> "TypeScript Coding Standards" <br/> "Vue Coding Standards"     | [eslint](https://eslint.org/)                              | [@winner-fed/eslint-config-win](https://www.npmjs.com/package/@winner-fed/eslint-config-win) |
+| "CSS Coding Standards"     | [stylelint](https://stylelint.io/)                         | [@winner-fed/stylelint-config-win](https://www.npmjs.com/package/@winner-fed/stylelint-config-win) |
+| "Git Standards"     | [commitlint](https://commitlint.js.org/#/)                 | [@winner-fed/commitlint-config-win](https://www.npmjs.com/package/@winner-fed/commitlint-config-win) |
+| "General Documentation Standards"     | [markdownlint](https://github.com/DavidAnson/markdownlint) | [@winner-fed/markdownlint-config-win](https://www.npmjs.com/package/@winner-fed/markdownlint-config-win) |
 
-可以看到这些 Linter 和规则包众多且零散，全部安装它们会给项目增加十几个依赖，接入和升级成本都比较高。
+As you can see, these Linters and rule packages are numerous and scattered. Installing all of them would add dozens of dependencies to the project, making integration and upgrade costs quite high.
 
-F2ELint 收敛屏蔽了这些依赖和配置细节，提供简单的 CLI 和 Node.js API，可以让项目能够一键接入、一键扫描、一键修复、一键升级，并为项目配置 git commit 卡口，降低项目接入规约的成本。
+F2ELint converges and shields these dependency and configuration details, providing simple CLI and Node.js API that allows projects to achieve one-click integration, one-click scanning, one-click fixing, one-click upgrading, and configures git commit gates for projects, reducing the cost of project integration with standards.
 
-## CLI 使用
+## CLI Usage
 
-### 安装
+### Installation
 
-在终端执行：
+Execute in terminal:
 
 ```bash
 npm install @winner-fed/f2elint -g
 ```
 
-安装完成后，可执行 `f2elint -h` 以验证安装成功。
+After installation, you can execute `f2elint -h` to verify successful installation.
 
-### 使用
+### Usage
 
-`f2elint` 提供了以下命令使用： 
+`f2elint` provides the following commands for use: 
 
-#### `f2elint init`：一键接入
+#### `f2elint init`: One-click Integration
 
-在项目根目录执行 `f2elint init`，即可一键接入规约，为项目安装规约 Lint 所需的依赖和配置。
+Execute `f2elint init` in the project root directory to achieve one-click integration of standards, installing the dependencies and configurations required for standard Lint in the project.
 
-具体会做以下事情：
+Specifically, it will do the following:
 
-- 安装各种依赖：包括 Linter 依赖，如 [ESLint](https://eslint.org/)、[stylelint](https://stylelint.io/)
-  、[commitlint](https://commitlint.js.org/#/)、[markdownlint](https://github.com/DavidAnson/markdownlint)
-  等；配置依赖，如 [@winner-fed/eslint-config-win](https://www.npmjs.com/package/@winner-fed/eslint-config-win)
-  、[@winner-fed/stylelint-config-win](https://www.npmjs.com/package/@winner-fed/stylelint-config-win)
-  、[@winner-fed/commitlint-config-win](https://www.npmjs.com/package/@winner-fed/commitlint-config-win)
-  、[@winner-fed/markdownlint-config-win](https://www.npmjs.com/package/@winner-fed/markdownlint-config-win) 等
-- 写入各种配置文件，包括：
-  - `.eslintrc.js`、`.eslintignore`：ESLint 配置（继承 @winner-fed/eslint-config-win）及黑名单文件
-  - `.stylelintrc.js`、`.stylelintignore`：stylelint 配置（继承 @winner-fed/stylelint-config-win）及黑名单文件
-  - `commitlint.config.js`：commitlint 配置（继承 @winner-fed/commitlint-config-win）
-  - `.markdownlint.json`、`.markdownlintignore`：markdownlint 配置及黑名单文件
-  - `.prettierrc.js`：符合规约的 [Prettier 配置](https://prettier.io/docs/en/configuration.html)
-  - `.editorconfig`：符合规约的 [editorconfig](https://editorconfig.org/)
+- Install various dependencies: including Linter dependencies such as [ESLint](https://eslint.org/), [stylelint](https://stylelint.io/)
+  , [commitlint](https://commitlint.js.org/#/), [markdownlint](https://github.com/DavidAnson/markdownlint)
+  , etc.; configuration dependencies such as [@winner-fed/eslint-config-win](https://www.npmjs.com/package/@winner-fed/eslint-config-win)
+  , [@winner-fed/stylelint-config-win](https://www.npmjs.com/package/@winner-fed/stylelint-config-win)
+  , [@winner-fed/commitlint-config-win](https://www.npmjs.com/package/@winner-fed/commitlint-config-win)
+  , [@winner-fed/markdownlint-config-win](https://www.npmjs.com/package/@winner-fed/markdownlint-config-win), etc.
+- Write various configuration files, including:
+  - `.eslintrc.js`, `.eslintignore`: ESLint configuration (inheriting @winner-fed/eslint-config-win) and ignore files
+  - `.stylelintrc.js`, `.stylelintignore`: stylelint configuration (inheriting @winner-fed/stylelint-config-win) and ignore files
+  - `commitlint.config.js`: commitlint configuration (inheriting @winner-fed/commitlint-config-win)
+  - `.markdownlint.json`, `.markdownlintignore`: markdownlint configuration and ignore files
+  - `.prettierrc.js`: [Prettier configuration](https://prettier.io/docs/en/configuration.html) compliant with standards
+  - `.editorconfig`: [editorconfig](https://editorconfig.org/) compliant with standards
   - `.vscode/extensions.json`
-    ：写入规约相关的 [VSCode 插件推荐](https://code.visualstudio.com/docs/editor/extension-gallery#_workspace-recommended-extensions)
-    ，包括 ESLint、stylelint、markdownlint、prettier 等
+    : Write standards-related [VSCode plugin recommendations](https://code.visualstudio.com/docs/editor/extension-gallery#_workspace-recommended-extensions)
+    , including ESLint, stylelint, markdownlint, prettier, etc.
   - `.vscode/settings.json`
-    ：写入规约相关的 [VSCode 设置](https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations)，设置 ESLint 和
-    stylelint 插件的 validate 及**保存时自动运行 fix**，如果选择使用 Prettier，会同时将 prettier-vscode 插件设置为各前端语言的 defaultFormatter，并配置**
-    保存时自动格式化**
-  - `f2elint.config.js`：f2elint 包的一些配置，如启用的功能等
+    : Write standards-related [VSCode settings](https://code.visualstudio.com/docs/getstarted/settings#_settings-file-locations), configure ESLint and
+    stylelint plugin validation and **auto-run fix on save**. If you choose to use Prettier, it will also set the prettier-vscode plugin as the defaultFormatter for various frontend languages and configure **
+    auto-format on save**
+  - `f2elint.config.js`: Some configurations for the f2elint package, such as enabled features, etc.
 - 配置 git commit 提交卡口：使用 [husky](https://www.npmjs.com/package/husky) 设置代码提交卡口，在 git commit
   时会运行 `f2elint commit-file-scan` 和 `f2elint commit-msg-scan` 分别对提交文件和提交信息进行规约检查。`f2elint commit-file-scan` 默认仅对 error
   问题卡口，如果你想对 warn 问题也卡口，可以增加 `--strict` 参数以开启严格模式

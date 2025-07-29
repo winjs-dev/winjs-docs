@@ -1,13 +1,13 @@
-# 开启 REM 适配
+# Enable REM Adaptation
 
-WinJS 支持通过 [convertToRem](../config/config#converttorem) 一键开启 REM 适配能力，能够根据屏幕大小来动态调整字体大小，让网页在不同大小的屏幕上都能够自适应显示。
+WinJS supports one-click enabling of REM adaptation capability through [convertToRem](../config/config#converttorem), which can dynamically adjust font sizes based on screen size, allowing web pages to adapt and display properly on screens of different sizes.
 
-## 开启 REM 的适配能力
+## Enable REM Adaptation Capability
 
-开启 `convertToRem` 后，会对页面进行如下两个操作：
+After enabling `convertToRem`, the following two operations will be performed on the page:
 
-1. 将 CSS 属性中的 px 转成 rem。
-2. 对根元素的字体大小进行动态设置。
+1. Convert px in CSS properties to rem.
+2. Dynamically set the font size of the root element.
 
 ```ts
 export default {
@@ -15,9 +15,9 @@ export default {
 };
 ```
 
-## CSS 属性值转换
+## CSS Property Value Conversion
 
-由于默认的 rootFontSize 为 37.5。开启 rem 转换后，会按照 1rem = 37.5px 的比例，对 CSS 样式做如下转换：
+Since the default rootFontSize is 37.5, after enabling rem conversion, CSS styles will be converted according to the ratio of 1rem = 37.5px as follows:
 
 ```css
 /* input */
@@ -37,7 +37,7 @@ h1 {
 }
 ```
 
-WinJS 默认会对部分 CSS 属性进行转换，如果希望仅对 letter-spacing 属性进行转换，可通过设置 pxtorem.propList 实现。
+WinJS will convert some CSS properties by default. If you want to convert only the letter-spacing property, you can achieve this by setting pxtorem.propList.
 
 ```ts
 export default {
@@ -49,20 +49,20 @@ export default {
 };
 ```
 
-## 根元素字体大小计算
+## Root Element Font Size Calculation
 
-页面根元素的字体大小的计算公式为：
+The calculation formula for the font size of the page root element is:
 
 ```
-根元素字体大小 = 当前客户端屏幕宽度  * 根元素字体值 / UI 设计图宽度
+Root element font size = Current client screen width * Root element font value / UI design width
 
-(即：pageRootFontSize = clientWidth * rootFontSize / screenWidth)
+(i.e.: pageRootFontSize = clientWidth * rootFontSize / screenWidth)
 ```
 
-以屏幕宽度为 390 的手机端浏览器为例，根元素字体值的默认值为 50， UI 设计图宽度为 375。
+Taking a mobile browser with a screen width of 390 as an example, the default root element font value is 50, and the UI design width is 375.
 
-此时计算出的页面根元素的字体大小为 52 (`390 * 50 / 375`)。
-此时 1 rem 为 52px，CSS 样式中的 32px（0.64 rem），实际页面效果为 33.28 px。
+The calculated page root element font size is 52 (`390 * 50 / 375`).
+At this time, 1 rem is 52px, and 32px (0.64 rem) in CSS styles has an actual page effect of 33.28 px.
 
 ```ts
 export default {
@@ -73,11 +73,11 @@ export default {
 };
 ```
 
-## 自定义最大根元素字体值
+## Custom Maximum Root Element Font Value
 
-在桌面浏览器端，根据计算公式得到的页面根元素字体值往往过大，当计算出的结果超出了默认的最大根元素字体值时，则采用当前设置的最大根元素字体值为当前根元素字体值。
+On desktop browsers, the page root element font value calculated according to the formula is often too large. When the calculated result exceeds the default maximum root element font value, the currently set maximum root element font value is used as the current root element font value.
 
-以屏幕宽度为 1920 的桌面浏览器为例，此时计算出的根元素的字体大小为 349，超出了最大根元素字体值 64。则采用 64 为当前的根元素字体值。
+Taking a desktop browser with a screen width of 1920 as an example, the calculated root element font size is 349, which exceeds the maximum root element font value of 64. Therefore, 64 is used as the current root element font value.
 
 ```ts
 export default {
@@ -87,12 +87,11 @@ export default {
 };
 ```
 
-## 如何判断 REM 是否生效？
+## How to Check if REM is Effective?
 
-1. CSS：查看生成的 `.css` 文件中对应属性的值是否从 px 转换成 rem。
-2. HTML：打开页面控制台查看 `document.documentElement.style.fontSize` 是否存在有效值。
+1. CSS: Check whether the corresponding property values in the generated `.css` file have been converted from px to rem.
+2. HTML: Open the page console and check whether `document.documentElement.style.fontSize` has a valid value.
 
-## 如何获取页面实际生效的 rootFontSize 值？
+## How to Get the Actually Effective rootFontSize Value on the Page?
 
-页面实际生效的 rootFontSize 会根据当前页面的情况动态计算。 可通过打印 `document.documentElement.style.fontSize`
-查看，也可通过 `window.ROOT_FONT_SIZE` 获取。
+The actually effective rootFontSize on the page will be dynamically calculated based on the current page situation. You can check it by printing `document.documentElement.style.fontSize`, or get it through `window.ROOT_FONT_SIZE`.

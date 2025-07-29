@@ -93,9 +93,9 @@ Both methods can navigate to the path `/user/erina`.
 
 A redirect means that when a user visits `/home`, the URL will be replaced by `/`, and then matched as `/`. So what is an alias?
 
-将 `/` 别名为 `/home`，意味着当用户访问 `/home` 时，URL 仍然是 `/home`，但会被匹配为用户正在访问 `/`。
+Aliasing `/` as `/home` means that when a user visits `/home`, the URL remains `/home`, but it will be matched as if the user is visiting `/`.
 
-上面对应的路由配置为：
+The corresponding route configuration is:
 
 ```ts
 export default {
@@ -109,8 +109,7 @@ export default {
 }
 ```
 
-通过别名，你可以自由地将 UI 结构映射到一个任意的 URL，而不受配置的嵌套结构的限制。使别名以 `/`
-开头，以使嵌套路径中的路径成为绝对路径。你甚至可以将两者结合起来，用一个数组提供多个别名：
+Through aliases, you can freely map UI structure to any URL without being constrained by the nested structure of the configuration. Make aliases start with `/` to make paths in nested routes absolute paths. You can even combine both and provide multiple aliases with an array:
 
 ```ts
 export default {
@@ -119,7 +118,7 @@ export default {
       path: '/users',
       component: 'users',
       routes: [
-        // 为这 3 个 URL 呈现 UserList
+        // Render UserList for these 3 URLs
         // - /users
         // - /users/list
         // - /people
@@ -132,7 +131,7 @@ export default {
 
 ### meta
 
-我们在定义路由时可以配置 `meta` 字段，用于扩展路由元信息，来记录一些和路由相关的信息：
+When defining routes, we can configure the `meta` field to extend route meta information and record some route-related information:
 
 ```js
 const router = new VueRouter({
@@ -161,16 +160,15 @@ const router = new VueRouter({
 
 * Type: `string`
 
-配置 location 和 path 匹配后用于渲染的 React 组件路径。可以是绝对路径，也可以是相对路径，如果是相对路径，会从 `src/pages`
-开始寻找。
+Configure the React component path used for rendering after location and path matching. It can be an absolute path or a relative path. If it's a relative path, it will start searching from `src/pages`.
 
-如果指向 `src` 目录的文件，可以用 `@`，比如 `component: '@/layouts/basic'`，推荐使用 `@` 组织路由文件位置。
+If pointing to a file in the `src` directory, you can use `@`, for example `component: '@/layouts/basic'`. It's recommended to use `@` to organize route file locations.
 
 ### routes
 
-配置子路由，通常在需要为多个路径增加 layout 组件时使用。
+Configure child routes, usually used when you need to add layout components for multiple paths.
 
-比如：
+For example:
 
 ```js
 export default {
@@ -188,7 +186,7 @@ export default {
 }
 ```
 
-在全局布局 `src/layouts/index` 中，通过 `<router-view />` 来渲染子路由：
+In the global layout `src/layouts/index`, render child routes through `<router-view />`:
 
 ```tsx
 export default function Page() {
@@ -200,15 +198,15 @@ export default function Page() {
 }
 ```
 
-这样，访问 `/list` 和 `/admin` 就会带上 `src/layouts/index` 这个 layout 组件。
+This way, accessing `/list` and `/admin` will include the `src/layouts/index` layout component.
 
 ### redirect
 
 * Type: `string`
 
-配置路由跳转。
+Configure route redirection.
 
-比如：
+For example:
 
 ```js
 export default {
@@ -219,9 +217,9 @@ export default {
 }
 ```
 
-访问 `/` 会跳转到 `/list`，并由 `src/pages/list` 文件进行渲染。
+Accessing `/` will redirect to `/list` and be rendered by the `src/pages/list` file.
 
-重定向的目标也可以是一个命名的路由，下面例子是从 `/home` 重定向到 `/`：
+The redirect target can also be a named route. The following example redirects from `/home` to `/`:
 
 ```ts
 export default {

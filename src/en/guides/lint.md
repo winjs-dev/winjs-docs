@@ -1,22 +1,22 @@
-# 规范
+# Linting
 
-写程序的时候，首先考虑到人，其次才考虑机器。 —— 出自《代码大全》 
+When writing programs, think of people first, then machines. — From "Code Complete"
   
-## 编码规范
+## Coding Standards
 
-我们通常会在项目中使用 ESLint、Stylelint 来协助我们把控编码质量，为了实现低成本、高性能、更稳定地接入上述工具，WinJS 提供了开箱即用的 Lint 能力，包含以下特性：
+We typically use ESLint and Stylelint in projects to help us control code quality. To achieve low-cost, high-performance, and more stable integration of these tools, WinJS provides out-of-the-box Lint capabilities with the following features:
 
-1. **推荐配置**：提供 ESLint 及 Stylelint 推荐配置，可以直接继承使用
-2. **统一的 CLI**：提供 `win lint` CLI，集成式调用 ESLint 和 Stylelint
-3. **规则稳定**：始终确保规则的稳定性，不会出现上游配置更新导致存量项目 lint 失败的情况
+1. **Recommended Configuration**: Provides recommended configurations for ESLint and Stylelint that can be directly inherited and used
+2. **Unified CLI**: Provides `win lint` CLI that integrates calls to ESLint and Stylelint
+3. **Rule Stability**: Always ensures rule stability, preventing existing projects from failing lint due to upstream configuration updates
 
-其中，ESLint 配置具备如下特点：
+Among these, the ESLint configuration has the following characteristics:
 
-1. **仅质量相关**：我们从数百条规则中筛选出数十条与编码质量相关的规则进行白名单开启，回归 Lint 本质，且不会与 Prettier 的规则冲突
-2. **性能优先**：部分 TypeScript 的规则实用型低但项目全量编译的成本却很高，我们对这些规则进行禁用以提升性能
-3. **内置常用插件**：包含 vue、@typescript/eslint 等，满足日常所需
+1. **Quality-focused Only**: We selected dozens of rules related to code quality from hundreds of rules for whitelist activation, returning to the essence of Lint without conflicting with Prettier rules
+2. **Performance Priority**: Some TypeScript rules have low practicality but high project-wide compilation costs, so we disable these rules to improve performance
+3. **Built-in Common Plugins**: Includes vue, @typescript/eslint, etc., meeting daily needs
 
-来看看如何接入吧。
+Let's see how to integrate it.
 
 ### 使用方式
 第一次执行 `win lint`时，会检测当前工程中是否存在 [f2elint](f2elint.md) 的配置文件，如果没有，会引导安装。根据命令行里的提示进行安装即可。

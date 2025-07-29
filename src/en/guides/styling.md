@@ -1,10 +1,10 @@
-# 样式 {#styling}
+# Styling {#styling}
 
-本文介绍各种在 WinJS 项目中使用样式的方式。
+This article introduces various ways to use styles in WinJS projects.
 
-## 全局样式
+## Global Styles
 
-根据项目长期累积的 `reset.c[le]ss` 作为 CSS 样式重置的一个现代替代方案。
+Based on the project's long-term accumulated `reset.c[le]ss` as a modern alternative to CSS style reset.
 
 ```less
 /*
@@ -18,11 +18,11 @@
 }
 
 *:not(input, textarea) {
-  // 非标准属性
-  // 当你触摸并按住触摸目标时候，禁止或显示系统默认菜单。在iOS上，当你触摸并按住触摸的目标，比如一个链接，Safari浏览器将显示链接有关的系统默认菜单。这个属性可以让你禁用系统默认菜单。
+  // Non-standard property
+  // When you touch and hold a touch target, disable or show the system default menu. On iOS, when you touch and hold a touch target, such as a link, Safari browser will show the system default menu related to the link. This property allows you to disable the system default menu.
   -webkit-touch-callout: none;
-  // iOS 若设置为 none, 则 input,textarea 输入无法触发 onchange 或者 oninput 事件
-  // 会出现输入不了值的问题
+  // If set to none on iOS, input and textarea input cannot trigger onchange or oninput events
+  // This will cause the problem of not being able to input values
   -webkit-user-select: none;
   user-select: none;
 }
@@ -166,21 +166,21 @@ h6 {
   isolation: isolate;
 }
 
-// --- 项目级别添加
-// 防止图像被拉伸或压缩
+// --- Project-level additions
+// Prevent images from being stretched or compressed
 img {
   object-fit: cover;
 }
 
 ```
 
-项目中使用的通用样式，都存放于 `src/assets/style/` 目录下。
+Common styles used in the project are stored in the `src/assets/style/` directory.
 
-## 使用 CSS 样式
+## Using CSS Styles
 
-你可以在 WinJS 项目中使用 `.css` 文件声明各种样式，然后在 `.js` 文件中引入即可生效。
+You can use `.css` files to declare various styles in WinJS projects, then import them in `.js` files to take effect.
 
-例如，在 `src/pages/index.css` 文件按照以下代码声明 `.title` 类的样式为红色：
+For example, declare the `.title` class style as red in the `src/pages/index.css` file with the following code:
 
 ```css
 .title {
@@ -188,7 +188,7 @@ img {
 }
 ```
 
-然后在 `src/pages/index.tsx` 文件中引入即可生效。
+Then import it in the `src/pages/index.tsx` file to take effect.
 
 ```jsx
 // src/pages/index.tsx
@@ -200,13 +200,11 @@ export default function () {
 }
 ```
 
-按照此种引入方式的样式会在整个 WinJS 项目中生效，即无论你从哪个 `.js`
-文件引入，他声明的样式可以在任何页面和组件中使用。如果你想要避免这种情况，可以使用 [CSS Modules](#使用-css-modules)
-的功能来限制样式的作用域。
+Styles imported in this way will take effect throughout the WinJS project, meaning that regardless of which `.js` file you import from, the declared styles can be used in any page and component. If you want to avoid this situation, you can use [CSS Modules](#using-css-modules) functionality to limit the scope of styles.
 
-## 使用 CSS Modules
+## Using CSS Modules
 
-在 `js` 文件中引入样式时，如果赋予他一个变量名，就可以将样式以 CSS Module 的形式引入。
+When importing styles in `js` files, if you assign it a variable name, you can import the styles as CSS Modules.
 
 ```jsx
 // src/pages/index.tsx
@@ -220,17 +218,14 @@ export default function () {
 }
 ```
 
-上面的示例中，`index.css` 文件中声明的样式不会对全局样式造成影响，只会对从 `styles` 变量中使用的样式生效。
+In the above example, the styles declared in the `index.css` file will not affect global styles and will only take effect for styles used from the `styles` variable.
 
-## 使用 CSS 预处理器
+## Using CSS Preprocessors
 
-WinJS 默认支持 LESS (推荐)，SASS 和 SCSS 样式的导入，你可以直接按照引入 CSS 文件的方式引入并使用这些由 CSS
-预处理器处理的样式。同时，提供了一些基于 LESS 积累的 `mixins`
-函数库 [magicless](https://github.com/cloud-templates/magicless)。并且，脚手架已经全局注入了常用的**变量和函数**
-，故可以在实际的页面开发中直接使用。
+WinJS supports importing LESS (recommended), SASS, and SCSS styles by default. You can directly import and use these styles processed by CSS preprocessors in the same way as importing CSS files. It also provides some LESS-based `mixins` function library [magicless](https://github.com/cloud-templates/magicless) accumulated over time. Moreover, the scaffolding has globally injected common **variables and functions**, so they can be used directly in actual page development.
 
-::: tip 提示
-在 WinJS 中使用 Sass(Scss) 需要额外安装预处理依赖 如: `npm add -D sass`
+::: tip Tip
+Using Sass(Scss) in WinJS requires additional installation of preprocessing dependencies such as: `npm add -D sass`
 :::
 
 ```jsx
@@ -245,7 +240,7 @@ export default function () {
 }
 ```
 
-同样也支持 CSS Module 的用法：
+CSS Module usage is also supported:
 
 ```jsx
 // src/pages/index.tsx
@@ -263,7 +258,7 @@ export default function () {
 }
 ```
 
-WinJS 也同时提供了对 `.styl` 和 `.stylus` 文件的内置支持。使用必须安装 `stylus` 相应的预处理器依赖, 其他用法可以参考上面的例子
+WinJS also provides built-in support for `.styl` and `.stylus` files. To use them, you must install the corresponding `stylus` preprocessor dependency. Other usage can refer to the examples above.
 
 ```bash
 # .styl and .stylus
@@ -272,7 +267,7 @@ npm add -D stylus
 
 ### Scoped
 
-为 `<style>` 添加 `scoped` 属性，它的 CSS 只作用于当前组件中的元素，父组件的样式将不会渗透到子组件。可以避免造成全局污染。
+Adding the `scoped` attribute to `<style>` makes its CSS only apply to elements in the current component, and parent component styles will not penetrate into child components. This can avoid global pollution.
 
 ```vue
 
@@ -283,34 +278,33 @@ npm add -D stylus
 </style>
 ```
 
-### 深度选择器
+### Deep Selectors
 
-如果你希望 `scoped` 样式中的一个选择器能够作用得「更深」，例如影响子组件，你可以使用 `>>>` 操作符。有些像 `Sass`
-之类的预处理器无法正确解析 >>>。这种情况下你可以使用 `/deep/` 或 `::v-deep` 操作符取而代之——两者都是 `>>>` 的别名，同样可以正常工作。
+If you want a selector in `scoped` styles to work "deeper", for example, to affect child components, you can use the `>>>` operator. Some preprocessors like `Sass` cannot parse `>>>` correctly. In this case, you can use `/deep/` or `::v-deep` operators instead—both are aliases for `>>>` and work the same way.
 
-由于使用 `scoped` 后，父组件的样式将不会渗透到子组件中。我们可以使用以下方式解决：
+Since using `scoped` prevents parent component styles from penetrating into child components, we can solve this using the following methods:
 
 ```vue
-<!-- 写法1 使用 ::v-deep -->
+<!-- Method 1: Using ::v-deep -->
 <style scoped>
   ::v-deep(.win-card) {
     background-color: #940000;
   }
 </style>
 
-<!-- 写法2 使用 >>> 操作符-->
+<!-- Method 2: Using >>> operator-->
 <style scoped>
   >>> .win-card {
     background-color: #940000;
   }
 </style>
-<!-- 写法3 使用 /deep/ -->
+<!-- Method 3: Using /deep/ -->
 <style scoped>
   /deep/ .win-card {
     background-color: #940000;
   }
 </style>
-<!-- 写法4 使用 :deep(<inner-selector>) -->
+<!-- Method 4: Using :deep(<inner-selector>) -->
 <style lang="scss" scoped>
   :deep(.win-card) {
     background-color: #940000;
@@ -318,35 +312,32 @@ npm add -D stylus
 </style>
 ```
 
-::: tip 提示
+::: tip Tip
 
-- 写法1和写法4，都支持 Sass 预处理器。但是在 Vue3.0 单文件规范中，如果你还是使用写法1，会碰到如下警告:
+- Methods 1 and 4 both support Sass preprocessors. However, in the Vue 3.0 single-file specification, if you still use method 1, you will encounter the following warning:
 
 ```text
 [@vue/compiler-sfc] ::v-deep usage as a combinator has been deprecated. Use :deep(<inner-selector>) instead.
 ```
 
-- 写法1在 Vue3.0 中已经被弃用了，以后在开发 Vue3.0 项目的时候，推荐使用写法4。
+- Method 1 has been deprecated in Vue 3.0. When developing Vue 3.0 projects in the future, method 4 is recommended.
 
-- 关于写法1和写法3，主要是不支持 Sass 预处理器的解析，且 >>> 操作符存在浏览器兼容性问题
+- Regarding methods 1 and 3, they mainly don't support Sass preprocessor parsing, and the >>> operator has browser compatibility issues.
 
 :::
 
-## 进阶设置
+## Advanced Settings
 
-如果你需要使用除了常见的 LESS, SASS 或 SCSS 以外的其他样式预处理器，你可以透过 WinJS
-插件提供的 [chainWebpack 接口](../config/config#chainwebpack)来加入自己需要的 Loader。
+If you need to use other style preprocessors besides the common LESS, SASS, or SCSS, you can add the Loaders you need through the [chainWebpack interface](../config/config#chainwebpack) provided by WinJS plugins.
 
-## 使用 Tailwindcss
+## Using Tailwindcss
 
-WinJS 提供了 [Tailwindcss](https://tailwindcss.com/)
-[插件](https://www.npmjs.com/package/@winner-fed/plugin-tailwindcss))，并且可以直接方便地使用 [微生成器](./generator#tailwind-css-配置生成器) 来启用。
+WinJS provides a [Tailwindcss](https://tailwindcss.com/) [plugin](https://www.npmjs.com/package/@winner-fed/plugin-tailwindcss), and you can conveniently enable it directly using the [micro-generator](./generator#tailwind-css-configuration-generator).
 
-::: tip 提示
-根据需求不同，你可以选择性地导入 Tailwind CSS 提供的 CSS 样式。请参考 [`@tailwind` 文档](https://tailwindcss.com/docs/functions-and-directives#tailwind) 来了解 `@tailwind` 指令的详细用法。
+::: tip Tip
+Depending on your needs, you can selectively import CSS styles provided by Tailwind CSS. Please refer to the [`@tailwind` documentation](https://tailwindcss.com/docs/functions-and-directives#tailwind) to learn about the detailed usage of the `@tailwind` directive.
 :::
 
-## 使用 UnoCSS
+## Using UnoCSS
 
-与 Tailwindcss 相同，WinJS 也提供了 [UnoCSS](https://github.com/unocss/unocss)
-[插件](https://www.npmjs.com/package/@winner-fed/plugin-unocss)，同样也可以使用[微生成器](./generator#unocss)相同方式开启。
+Like Tailwindcss, WinJS also provides [UnoCSS](https://github.com/unocss/unocss) [plugin](https://www.npmjs.com/package/@winner-fed/plugin-unocss), which can also be enabled using the [micro-generator](./generator#unocss) in the same way.

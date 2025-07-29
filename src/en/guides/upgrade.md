@@ -1,11 +1,11 @@
-# 版本升级 {#upgrade}
+# Version Upgrade {#upgrade}
 
-## 官方包
+## Official Packages
 
-WinJS 所有的官方包目前都使用统一版本号进行发布。
+All official WinJS packages currently use unified version numbers for release.
 
-| 包名                        | 版本                                                                                                         |
-|---------------------------|------------------------------------------------------------------------------------------------------------|
+| Package Name              | Version                                                                                                      |
+|---------------------------|--------------------------------------------------------------------------------------------------------------|
 | @winner-fed/create-win    | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fwinjs?style=flat-square&colorB=646cff)         |
 | @winner-fed/preset-vue    | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fpreset-vue?style=flat-square&colorB=646cff)    |
 | @winner-fed/preset-vue2   | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fpreset-vue2?style=flat-square&colorB=646cff)   |
@@ -13,20 +13,19 @@ WinJS 所有的官方包目前都使用统一版本号进行发布。
 | @winner-fed/renderer-vue2 | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Frenderer-vue2?style=flat-square&colorB=646cff) |
 | @winner-fed/winjs         | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fwinjs?style=flat-square&colorB=646cff)         |
 
-## 使用 Taze
+## Using Taze
 
-我们推荐使用 [Taze](https://github.com/antfu-collective/taze) 来升级 WinJS 的版本，这是一个用于升级 npm 依赖版本的 CLI
-工具。
+We recommend using [Taze](https://github.com/antfu-collective/taze) to upgrade WinJS versions. This is a CLI tool for upgrading npm dependency versions.
 
-### 用法
+### Usage
 
-运行以下命令来升级所有名称中包含 `winner-fed` 的依赖：
+Run the following command to upgrade all dependencies containing `winner-fed` in their names:
 
 ```bash
 npx taze --include /winner-fed/ -w
 ```
 
-运行结果类似于：
+The output will be similar to:
 
 ```bash
 winner-fed - 3 patch
@@ -38,44 +37,44 @@ winner-fed - 3 patch
 ℹ changes written to package.json, run npm i to install updates.
 ```
 
-你也可以调整 `include` 来匹配不同的包，比如仅升级 `@winner-fed` scope 下的包：
+You can also adjust `include` to match different packages, for example, to upgrade only packages under the `@winner-fed` scope:
 
 ```bash
 npx taze --include /@winner-fed/ -w
 ```
 
-### 选项
+### Options
 
-下面是一些使用 taze 选项的示例。
+Here are some examples of using taze options.
 
-- 在 monorepo 中，你可以添加 `-r` 选项来递归升级：
+- In a monorepo, you can add the `-r` option to upgrade recursively:
 
 ```bash
 npx taze --include /winner-fed/ -w -r
 ```
 
-- 添加 `-l` 来升级被锁定的版本：
+- Add `-l` to upgrade locked versions:
 
 ```bash
 npx taze --include /winner-fed/ -w -l
 ```
 
-- 升级 major 版本：
+- Upgrade major versions:
 
 ```bash
 npx taze major --include /winner-fed/ -w
 ```
 
-> 更多选项请参考 [taze 文档](https://github.com/antfu-collective/taze)。
+> For more options, please refer to the [taze documentation](https://github.com/antfu-collective/taze).
 >
 
-## 锁定子依赖
+## Lock Sub-dependencies
 
-当项目某个子依赖出现问题，可能会导致 WinJS 或者项目工程无法更新，此时可以使用包管理器锁定子依赖版本。
+When a sub-dependency in a project has issues that may prevent WinJS or the project from updating, you can use package managers to lock sub-dependency versions.
 
 ### pnpm
 
-对于使用 pnpm 的项目，请在**项目根目录**的 `package.json` 中添加以下配置，然后重新执行 `pnpm install`：
+For projects using pnpm, add the following configuration to the `package.json` in the **project root directory**, then re-run `pnpm install`:
 
 ```json title="package.json"
 {
@@ -89,7 +88,7 @@ npx taze major --include /winner-fed/ -w
 
 ### Yarn
 
-对于使用 Yarn 的项目，请在**项目根目录**的 `package.json` 中添加以下配置，然后重新执行 `yarn install`：
+For projects using Yarn, add the following configuration to the `package.json` in the **project root directory**, then re-run `yarn install`:
 
 ```json title="package.json"
 {
@@ -101,7 +100,7 @@ npx taze major --include /winner-fed/ -w
 
 ### Npm
 
-对于使用 Npm 的项目，请在**项目根目录**的 `package.json` 中添加以下配置，然后重新执行 `npm install`：
+For projects using Npm, add the following configuration to the `package.json` in the **project root directory**, then re-run `npm install`:
 
 ```json title="package.json"
 {
@@ -111,7 +110,7 @@ npx taze major --include /winner-fed/ -w
 }
 ```
 
-::: tip 提示
-对于 Monorepo 仓库，只能在项目根目录的 package.json 中锁定依赖版本，并且会影响 Monorepo 中的所有 package。
+::: tip Tip
+For Monorepo repositories, dependency versions can only be locked in the package.json in the project root directory, and this will affect all packages in the Monorepo.
 :::
 

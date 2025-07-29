@@ -1,10 +1,10 @@
-# Vite 模式
+# Vite Mode
 
-[Vite](https://vitejs.dev/) 是一种新型的前端构建工具，与 Webpack 相比，Vite 基于浏览器原生的 ES Module 规范能够让调试服务以及热更新更快，提升开发者体验。WinJS 同时支持 Webpack@5 以及 Vite@4 两种模式，开发者按需选择，对于增量业务我们更推荐采用 Vite 的构建模式。
+[Vite](https://vitejs.dev/) is a new type of frontend build tool. Compared to Webpack, Vite is based on the browser's native ES Module specification, which enables faster debugging services and hot module replacement, improving the developer experience. WinJS supports both Webpack@5 and Vite@4 modes, allowing developers to choose as needed. For incremental business, we recommend using Vite's build mode.
 
-## 开启 Vite 模式
+## Enable Vite Mode
 
-在配置文件 `.winrc` 中进行以下配置启用 Vite 模式：
+Configure the following in the configuration file `.winrc` to enable Vite mode:
 
 ```ts
 export default { 
@@ -12,17 +12,17 @@ export default {
 };
 ```
 
-## 常见问题
+## Common Issues
 
-### 本地开发正常，线上环境报错 `require is not defined`
+### Local development works fine, but production environment reports `require is not defined`
 
 ![vite-error](/images/guide/vite-error.png)
 
-这种情况一般是因为使用了不规范的 npm 包：一个文件里混用了 ESM(import) 和 CJS(require)，这种情况需要对应的 npm 包进行规范化修改。通过以下方式可以快速排查出是哪个 npm 包导致的：
+This situation is generally caused by using non-standard npm packages: a file that mixes ESM (import) and CJS (require). This requires the corresponding npm package to be standardized. You can quickly identify which npm package is causing the issue through the following steps:
 
-1. 在 `.winrc.ts` 中添加 `jsMinifier: 'none'` 选项禁止构建时压缩
-2. 执行 `npm run build` 进行构建
-3. 执行 `npm run preview` 预览产物：
+1. Add the `jsMinifier: 'none'` option in `.winrc.ts` to disable compression during build
+2. Run `npm run build` to build
+3. Run `npm run preview` to preview the build output:
 
 ```bash
 $ cd winjs-demo/
@@ -30,11 +30,11 @@ $ npm run build
 $ npm run preview
 ```
 
-启动后通过浏览器访问页面，根据报错位置的代码定位是哪个 npm 包引起的，然后推进对应的包做修改。
+After starting, access the page through the browser, locate which npm package is causing the issue based on the error location in the code, and then push for the corresponding package to be modified.
 
-### 在线上页面环境中如何代理调试本地 dev 资源？
+### How to proxy debug local dev resources in online page environment?
 
-在一些特殊场景下，比如因为本地服务端环境不稳定或者只有线上页面才能复现的问题，我们通常希望在线上页面环境可以调试本地 start 的资源，在原先的 Webpack 模式我们只需要借助 Chrome 插件（如 XSwitch）将页面里的线上资源（js/css）代理到本地 `//127.0.0.1:8000/js/index.js` 即可，但是 Vite 模式下 build 产物和 start 产物差异非常大，因此无法通过该方式实现。在 Vite 模式下，我们推荐在服务端同时维护一份 dev 的 html 结构，当 url 里包含特殊的 query 时则渲染该 html 内容方便前端调试，html 内容如下：
+In some special scenarios, such as when the local server environment is unstable or issues that can only be reproduced on online pages, we usually want to debug local start resources in the online page environment. In the original Webpack mode, we only needed to use Chrome plugins (such as XSwitch) to proxy online resources (js/css) in the page to local `//127.0.0.1:8000/js/index.js`. However, in Vite mode, the build output and start output are very different, so this method cannot be used. In Vite mode, we recommend maintaining a dev HTML structure on the server side. When the URL contains a special query, render that HTML content to facilitate frontend debugging. The HTML content is as follows:
 
 ```html
 <!DOCTYPE html><html>
@@ -50,14 +50,14 @@ $ npm run preview
 </body></html>
 ```
 
-当服务端返回这份 HTML 内容时，就会加载本地的 dev 资源，同时使用线上的接口数据。
+When the server returns this HTML content, it will load local dev resources while using online interface data.
 
-### 如何兼容 Webpack 构建模式下 inline loader 的导入
+### How to be compatible with inline loader imports in Webpack build mode
 
-代码中存在 inline loader 的语法，在 Vite 构建模式下将会失效：
+Code with inline loader syntax will fail in Vite build mode:
 
 ```js
 import Styles from '!style-loader!css-loader?modules!./styles.css';
 ```
 
-移除 inline loader 写法，大部分需求可以被内置的工程能力处理，定制 loader 能力推荐结合 Vite 插件的 [transform](https://vitejs.dev/guide/api-plugin.html#transforming-custom-file-types) 进行处理。
+Remove inline loader syntax. Most requirements can be handled by built-in engineering capabilities. For custom loader capabilities, we recommend using Vite plugin's [transform](https://vitejs.dev/guide/api-plugin.html#transforming-custom-file-types) for processing.

@@ -1,8 +1,8 @@
-# 非现代浏览器兼容 {#legacy-browser}
+# Legacy Browser Compatibility {#legacy-browser}
 
-## 默认兼容说明
+## Default Compatibility Description
 
-WinJS 默认不支持 IE ，编译兼容目标 `targets` 为 `chrome: 80` ，如需调整，请指定明确的 [targets](../config/config#targets) ：
+WinJS does not support IE by default. The compilation compatibility target `targets` is `chrome: 80`. If you need to adjust this, please specify explicit [targets](../config/config#targets):
 
 ```ts
 // .winrc.ts
@@ -12,13 +12,13 @@ export default {
 }
 ```
 
-若想反馈更多关于兼容性的问题，或参与讨论，请前往：[issue / 8656](https://github.com/umijs/umi/issues/8658)
+For more feedback on compatibility issues or to participate in discussions, please visit: [issue / 8656](https://github.com/umijs/umi/issues/8658)
 
-## 兼容非现代浏览器
+## Compatible with Non-Modern Browsers
 
-如果你并不需要兼容至 IE ，只为了提升项目对非现代浏览器的兼容性，可调整兼容目标 [targets](../config/config#targets) 。
+If you don't need to support IE but only want to improve your project's compatibility with non-modern browsers, you can adjust the compatibility target [targets](../config/config#targets).
 
-WinJS 默认使用现代构建工具，产物生成至 `es6` ，如果你有要打包为 `es5` 产物的考量，请调整配置：
+WinJS uses modern build tools by default, generating artifacts to `es6`. If you need to bundle as `es5` artifacts, please adjust the configuration:
 
 ```ts
 // .winrc.ts
@@ -28,13 +28,13 @@ export default {
 }
 ```
 
-## 兼容旧时代浏览器 ( IE 11 ) 
+## Compatible with Legacy Browsers (IE 11)
 
-由于 IE 已经淘汰不再主流，当需要兼容至 IE 时，请阅读以下对策。
+Since IE has been deprecated and is no longer mainstream, when you need to support IE, please read the following solutions.
 
-### 框架自带的 legacy mode
+### Framework's Built-in Legacy Mode
 
-WinJS 自带提供一个 `legacy` 配置用于构建降级（使用限制等详见 [legacy](../config/config#legacy) ）：
+WinJS provides a built-in `legacy` configuration for build downgrading (see [legacy](../config/config#legacy) for usage restrictions and details):
 
 ```ts
 // .winrc.ts
@@ -44,15 +44,15 @@ export default {
 }
 ```
 
-默认仅在构建时生效，将尝试构建能使 IE 兼容的产物。
+By default, it only takes effect during build time and will attempt to build artifacts that are IE-compatible.
 
-### legacy mode 的更多自定义
+### More Customization for Legacy Mode
 
-`legacy` 开启时，默认会转译全部 `node_modules` ，这在大型项目中，会极大的增加构建时间。
+When `legacy` is enabled, all `node_modules` are transpiled by default, which can significantly increase build time in large projects.
 
-若你了解当前项目使用的第三方依赖情况（知道哪些不再提供 `es5` 产物了），可以关闭 `node_modules` 的转换，改为使用 [`extraBabelIncludes`](../config/config#extrababelincludes) 定点配置那些需要额外纳入转换范围的包。
+If you understand the third-party dependencies used in your current project (knowing which ones no longer provide `es5` artifacts), you can disable `node_modules` transformation and use [`extraBabelIncludes`](../config/config#extrababelincludes) to specifically configure packages that need to be included in the transformation scope.
 
-一个例子：
+An example:
 
 ```ts
 // .winrc.ts
@@ -68,9 +68,9 @@ export default {
 }
 ```
 
-### 提高兼容的鲁棒性
+### Improving Compatibility Robustness
 
-`legacy` 选项并不能 100% 保证产物 **没有边界情况** 的运行在被淘汰的浏览器内，你可能还需要添加 **前置的** 全量 polyfill 来增强项目的 [鲁棒性](https://baike.baidu.com/item/%E9%B2%81%E6%A3%92%E6%80%A7/832302) 。
+The `legacy` option cannot 100% guarantee that artifacts will run in deprecated browsers **without edge cases**. You may also need to add **preloaded** full polyfills to enhance your project's [robustness](https://en.wikipedia.org/wiki/Robustness_(computer_science)).
 
 ```ts
 // .winrc.ts
@@ -83,29 +83,29 @@ export default {
 }
 ```
 
-参考的思路有：
+Reference approaches include:
 
-方案 | 说明                                                                                                                                                                                                                                                                                 
-:-|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CDN 引入 | 以 cdn 形式引入 **script 形式且前置的** 、目标浏览器环境缺少的 polyfill js 文件，如 [es6-shim](https://github.com/paulmillr/es6-shim) 。                                                                                                                                                                      
-人工 core-js | 利用 [core-js](https://github.com/zloirock/core-js) 系工具，如通过 [core-js-builder](https://github.com/zloirock/core-js/tree/master/packages/core-js-builder) 构建自己需要的 polyfill 产物，再以 **前置 script 脚本** 形式引入项目。                                                                              
-动态 polyfill 服务 | 使用根据当前浏览器请求 UA 动态下发所需 polyfill 的服务，比如 [polyfill.io (alicdn)](http://polyfill.alicdn.com/v3/polyfill.min.js) 或 [polyfill.io (CloudFlare)](https://cdnjs.cloudflare.com/polyfill/) 服务。另外，你还可以使用 [polyfill-service](https://github.com/cdnjs/polyfill-service) 自建相同的动态 polyfill 下发服务。 |
+| Solution | Description |
+|:--|:--|
+| CDN Import | Import polyfill js files that are missing in the target browser environment in **script form and preloaded** via CDN, such as [es6-shim](https://github.com/paulmillr/es6-shim). |
+| Manual core-js | Use [core-js](https://github.com/zloirock/core-js) tools, such as building your own needed polyfill artifacts through [core-js-builder](https://github.com/zloirock/core-js/tree/master/packages/core-js-builder), then import them into the project as **preloaded script**. |
+| Dynamic Polyfill Service | Use services that dynamically deliver required polyfills based on the current browser request UA, such as [polyfill.io (alicdn)](http://polyfill.alicdn.com/v3/polyfill.min.js) or [polyfill.io (CloudFlare)](https://cdnjs.cloudflare.com/polyfill/) services. You can also use [polyfill-service](https://github.com/cdnjs/polyfill-service) to build your own dynamic polyfill delivery service. |
 
-注：
+Notes:
 
-1. 当你处于内外网隔离开发环境时，可以考虑将全部 polyfill 的 js 内容传入内网，在内网的 CDN 使用，或放入 public 目录等方式使用。
+1. When you're in an isolated internal/external network development environment, consider transferring all polyfill js content to the internal network, using it on internal CDN, or placing it in the public directory.
 
-2. 使用 script 前置引入的意义在于，在项目 js 资源运行前就准备好一个完整的、被 polyfill 过 api 的环境。
+2. The significance of using preloaded script imports is to prepare a complete, polyfilled API environment before the project's js resources run.
 
-### 在开发环境验证
+### Verification in Development Environment
 
-推荐的做法是：构建后在本地通过 [`win preview`](../cli/commands#preview) 或 [`serve`](https://www.npmjs.com/package/serve) 、nginx 等启动服务，来验证产物的 IE 11 运行可行性。
+The recommended approach is: after building, start a service locally through [`win preview`](../cli/commands#preview) or [`serve`](https://www.npmjs.com/package/serve), nginx, etc., to verify the feasibility of running artifacts in IE 11.
 
-当你需要在开发环境验证时：
+When you need to verify in the development environment:
 
-1. 将 `legacy.buildOnly` 置为 `false` 。
+1. Set `legacy.buildOnly` to `false`.
 
-2. 由于 hmr 等开发注入的 es6 代码始终在第一位运行，你需要以 script 形式添加一个前置的 polyfill ，提前准备好环境。
+2. Since es6 code injected by hmr and other development tools always runs first, you need to add a preloaded polyfill in script form to prepare the environment in advance.
 
 ```ts
 // .winrc.ts
@@ -121,38 +121,38 @@ export default {
 }
 ```
 
-注：IE 11 并不能完整支持开发时的热更新，且缓存可能需要人为在控制台进行清除后才能看到最新的页面，请做好准备。
+Note: IE 11 cannot fully support hot reloading during development, and cache may need to be manually cleared in the console to see the latest page.
 
-## 扩展知识
+## Extended Knowledge
 
-在处理浏览器兼容性问题之前，建议你了解以下背景知识，以更好地处理相关问题。
+Before dealing with browser compatibility issues, it's recommended that you understand the following background knowledge to better handle related problems.
 
-### 语法降级和 API 降级
+### Syntax Downgrading and API Downgrading
 
-当你在项目中使用高版本语法和 API 时，为了让编译后的代码能稳定运行在低版本浏览器中，需要完成两部分降级：语法降级和 API 降级。
+When you use high-version syntax and APIs in your project, to make the compiled code run stably in low-version browsers, you need to complete two parts of downgrading: syntax downgrading and API downgrading.
 
-**WinJS 通过语法转译来对语法进行降级，通过 polyfill 来对 API 进行进行降级。**
+**WinJS downgrades syntax through syntax transpilation and downgrades APIs through polyfills.**
 
-> 语法和 API 并不是强绑定的，浏览器厂商在实现引擎的时候，会根据规范或者自身需要提前支持一些语法或者提前实现一些 API。因此，同一时期的不同厂商的浏览器，对语法和 API 的兼容都不一定相同。所以在一般的实践中，语法和 API 是分成两个部分进行处理的。
+> Syntax and APIs are not strongly bound. When implementing engines, browser vendors will support some syntax early or implement some APIs early according to specifications or their own needs. Therefore, different vendors' browsers from the same period may not have the same compatibility for syntax and APIs. So in general practice, syntax and APIs are handled as two separate parts.
 
-### 语法转译
+### Syntax Transpilation
 
-**语法是编程语言如何组织代码的一系列规则**，不遵守这些规则的代码无法被编程语言的引擎正确识别，因此无法被运行。在 JavaScript 中，以下几个示例都是语法规则：
+**Syntax is a series of rules about how a programming language organizes code**. Code that doesn't follow these rules cannot be correctly recognized by the programming language's engine and therefore cannot be executed. In JavaScript, the following examples are all syntax rules:
 
-- 在 `const foo = 1` 中，`const` 表示声明一个不可变的常量。
-- 在 `foo?.bar?.baz` 中，`?.` 表示可选链访问属性。
-- 在 `async function () {}` 中，`async` 表示声明一个异步函数。
+- In `const foo = 1`, `const` indicates declaring an immutable constant.
+- In `foo?.bar?.baz`, `?.` indicates optional chaining to access properties.
+- In `async function () {}`, `async` indicates declaring an asynchronous function.
 
-由于不同浏览器的解析器所能支持的语法不同，尤其是旧版本浏览器引擎所能支持的语法较少，因此一些语法在低版本浏览器引擎中运行时，就会在解析 AST 的阶段报错。
+Since different browsers' parsers support different syntax, especially older browser engines support fewer syntax features, some syntax will cause errors during the AST parsing stage when running in low-version browser engines.
 
-比如下面这段代码在 IE 浏览器或低版本 Node.js 下会报错：
+For example, the following code will error in IE browsers or low-version Node.js:
 
 ```js
 const foo = {};
 foo?.bar();
 ```
 
-我们在低版本 Node.js 中运行这段代码，会出现以下错误信息：
+Running this code in low-version Node.js will produce the following error message:
 
 ```bash
 SyntaxError: Unexpected token .
@@ -164,51 +164,51 @@ SyntaxError: Unexpected token .
   at node.js:814:3
 ```
 
-从错误信息里可以明显看到，这是一个语法错误（SyntaxError）。这说明这个语法在低版本的引擎中是不受支持的。
+From the error message, you can clearly see this is a syntax error (SyntaxError). This indicates that this syntax is not supported in low-version engines.
 
-**语法是不能通过 polyfill 或者 shim 进行支持的**。如果想在低版本浏览器中运行一些它原本不支持的语法，那么就需要对代码进行转译，转译成低版本引擎所能支持的语法。
+**Syntax cannot be supported through polyfills or shims**. If you want to run syntax that's not originally supported in low-version browsers, you need to transpile the code into syntax that low-version engines can support.
 
-将上述代码转译为以下代码即可在低版本引擎中运行：
+Transpiling the above code to the following code allows it to run in low-version engines:
 
 ```js
 var foo = {};
 foo === null || foo === void 0 ? void 0 : foo.bar();
 ```
 
-转译后，代码的语法变了，把一些低版本引擎无法理解的语法用其可理解的语法替代，**但代码本身的意义没有变**。
+After transpilation, the code's syntax changed, replacing syntax that low-version engines cannot understand with syntax they can understand, **but the code's meaning itself hasn't changed**.
 
-如果引擎在转换为 AST 的时候遇到了无法识别的语法，就会报语法错误，并中止代码执行流程。在这种情况下，如果你的项目没有使用 SSR 或 SSG 等能力的话，页面将会直接白屏，导致页面不可用。
+If the engine encounters unrecognizable syntax when converting to AST, it will report a syntax error and halt code execution. In this case, if your project doesn't use capabilities like SSR or SSG, the page will directly show a white screen, making the page unusable.
 
-如果代码被转换为 AST 成功，引擎会将 AST 转为可执行代码，并在引擎内部正常执行。
+If the code is successfully converted to AST, the engine will convert the AST to executable code and execute it normally within the engine.
 
 ### API Polyfill
 
-JavaScript 是解释型脚本语言，不同于 Rust 等编译型语言。Rust 会在编译阶段对代码中的调用进行检查，而 JavaScript 在真正运行到某一行代码之前，并不知道这一行代码所调用的函数是否存在，因此一些错误只有在运行时才会出现。
+JavaScript is an interpreted scripting language, different from compiled languages like Rust. Rust checks calls in code during compilation, while JavaScript doesn't know if functions called in a line of code exist until it actually runs that line, so some errors only appear at runtime.
 
-举个例子，下面这段代码：
+For example, this code:
 
 ```js
 var str = 'Hello world!';
 console.log(str.notExistedMethod());
 ```
 
-上面这段代码有着正确的语法，在引擎运行时的第一个阶段也能正确转换为 AST，但是在真正运行的时候，由于 `String.prototype` 上不存在 `notExistedMethod` 这个方法，所以在实际运行的时候会报错：
+The above code has correct syntax and can be correctly converted to AST in the first stage of engine runtime, but when actually running, since `String.prototype` doesn't have the `notExistedMethod` method, it will error during actual execution:
 
 ```bash
 Uncaught TypeError: str.notExistedMethod is not a function
   at <anonymous>:2:17
 ```
 
-随着 ECMAScript 的迭代，一些内置对象也会迎来新的方法。比如 `String.prototype.replaceAll` 是在 ES2021 中被引入的，那么在大部分 2021 年前的浏览器的引擎的内置对象 `String.prototype` 中是不存在 `replaceAll` 方法的，因此下面这段代码在最新的 Chrome 里可以运行，但是在较早的版本里无法运行：
+As ECMAScript iterates, some built-in objects also get new methods. For example, `String.prototype.replaceAll` was introduced in ES2021, so in most browsers' engines before 2021, the built-in object `String.prototype` doesn't have the `replaceAll` method. Therefore, the following code can run in the latest Chrome but cannot run in earlier versions:
 
 ```js
 'abc'.replaceAll('abc', 'xyz');
 ```
 
-为了解决在旧版浏览器中的 `String.prototype` 缺少 `replaceAll` 的问题，我们可以在老版本的浏览器里扩展 `String.prototype` 对象，给它加上 `replaceAll` 方法，例如：
+To solve the problem of missing `replaceAll` in `String.prototype` in older browsers, we can extend the `String.prototype` object in old browsers and add the `replaceAll` method, for example:
 
 ```js
-// 该 polyfill 的实现并不一定符合标准，仅作为示例。
+// This polyfill implementation may not conform to standards and is for example only.
 if (!String.prototype.replaceAll) {
   String.prototype.replaceAll = function (str, newStr) {
     // If a regex pattern
@@ -223,31 +223,31 @@ if (!String.prototype.replaceAll) {
 }
 ```
 
-> 这种为旧环境提供实现来对齐新 API 的技术被称作 polyfill。
+> This technique of providing implementations for old environments to align with new APIs is called polyfill.
 
-### 降级方式
-在 WinJS 中我们可以将代码分为三类：
-- 第一类是当前项目中的源代码。
-- 第二类是通过 npm 安装的第三方依赖代码。
-- 第三类是非当前项目的代码，比如 monorepo 中其他目录下的代码。
+### Downgrading Methods
+In WinJS, we can categorize code into three types:
+- The first type is source code in the current project.
+- The second type is third-party dependency code installed via npm.
+- The third type is code not from the current project, such as code in other directories in a monorepo.
 
-默认情况下，Rsbuild 只会对第一类代码进行编译和降级，而其他类型的代码默认是不进行降级处理的。
+By default, Rsbuild only compiles and downgrades the first type of code, while other types of code are not downgraded by default.
 
-之所以这样处理，主要有几个考虑：
+The reasons for this approach include several considerations:
 
-- 将所有第三方依赖代码都进行降级的话会**导致构建性能显著下降**。
-- 大部分第三方依赖在发布前已经进行了降级处理，二次降级可能会引入新问题。
-- 非当前项目的代码可能已经经过了编译处理，或者编译所需的配置与当前项目并不相同。
+- Downgrading all third-party dependency code would **significantly degrade build performance**.
+- Most third-party dependencies have already been downgraded before publishing, and secondary downgrading might introduce new issues.
+- Code not from the current project may have already been compiled, or the compilation configuration required may differ from the current project.
 
-#### 降级当前项目代码
+#### Downgrading Current Project Code
 
-当前项目的代码会被默认降级，因此你不需要添加额外的配置，只需要保证正确设置了浏览器范围即可。
+Current project code is downgraded by default, so you don't need to add extra configuration. Just ensure you've correctly set the browser range.
 
-#### 降级第三方依赖
+#### Downgrading Third-party Dependencies
 
-当你发现某个第三方依赖的代码导致了兼容性问题时，你可以将这个依赖添加到 WinJS 的 [extraBabelIncludes](/config/config/extrababelincludes) 配置中，使 WinJS 对该依赖进行额外的编译。
+When you find that certain third-party dependency code causes compatibility issues, you can add this dependency to WinJS's [extraBabelIncludes](/config/config/extrababelincludes) configuration to make WinJS perform additional compilation on that dependency.
 
-以 `query-string` 这个 npm 包为例，你可以做如下的配置：
+Taking the `query-string` npm package as an example, you can configure it as follows:
 
 ```ts
 import path from 'path';
@@ -259,11 +259,11 @@ export default {
 };
 ```
 
-### 降级非当前项目的代码
+### Downgrading Non-Current Project Code
 
-当你引用非当前项目的代码时，如果该代码未经过编译处理，那么你也需要配置 [extraBabelIncludes](/config/source/extrababelincludes) 来对它进行编译。
+When you reference code not from the current project, if that code hasn't been compiled, you also need to configure [extraBabelIncludes](/config/source/extrababelincludes) to compile it.
 
-比如，你需要引用 monorepo 中 `packages` 目录下的某个模块，可以添加如下的配置：
+For example, if you need to reference a module in the `packages` directory of a monorepo, you can add the following configuration:
 
 ```ts
 import path from 'path';
@@ -271,25 +271,25 @@ import path from 'path';
 export default {
   source: {
     include: [
-      // 方法一:
-      // 编译 Monorepo 的 package 目录下的所有文件
+      // Method 1:
+      // Compile all files in the Monorepo's package directory
       path.resolve(__dirname, '../../packages'),
 
-      // 方法二:
-      // 编译 Monorepo 的 package 目录里某个包的源代码
-      // 这种写法匹配的范围更加精准，对整体编译性能的影响更小
+      // Method 2:
+      // Compile source code of a specific package in the Monorepo's package directory
+      // This approach has a more precise matching scope and less impact on overall compilation performance
       path.resolve(__dirname, '../../packages/abc/src'),
     ],
   },
 };
 ```
 
-## 查询浏览器支持情况
+## Querying Browser Support
 
-在开发时，我们需要了解某些特性或 API 的浏览器支持情况，此时我们可以在 [caniuse](https://caniuse.com/) 网站上进行查询。
+During development, we need to understand browser support for certain features or APIs. We can query this on the [caniuse](https://caniuse.com/) website.
 
-比如我们需要知道 `Promise` 的浏览器支持情况，只需要在 [caniuse](https://caniuse.com/) 中输入 `Promise`，就可以看到以下结果：
+For example, if we need to know the browser support for `Promise`, we just need to enter `Promise` in [caniuse](https://caniuse.com/) to see the following results:
 
 ![caniuse-promise-example.png](/images/guide/caniuse-promise-example.png)
 
-从上表可以看出，`Promise` 在 Chrome 33 和 iOS 8 中得到了原生支持，但是在 IE 11 中不被支持。
+From the table above, we can see that `Promise` gained native support in Chrome 33 and iOS 8, but is not supported in IE 11.
