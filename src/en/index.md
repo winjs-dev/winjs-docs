@@ -3,37 +3,37 @@ layout: home
 title: WinJS
 hero:
   name: WinJS
-  text: 前端开发框架
-  tagline: 用 WinJS 「拼搭」你的下一个 Web 应用
+  text: Frontend Development Framework
+  tagline: Build your next web application with WinJS
   image:
     src: /images/hero.png
     alt: WinJS
   actions:
-    - text: 快速上手
+    - text: Get Started
       link: /guides/getting-started.html
       theme: brand
-    - text: 框架简介
+    - text: Introduction
       link: /guides/introduce.html
       theme: alt
 features:
   - icon: 💎
-    title: 大道至简
-    details: 内置路由、状态管理、构建、部署、测试、Lint、SvgIcon 等，仅需一个 WinJS 依赖即可上手开发。
+    title: Simplicity First
+    details: Built-in routing, state management, build tools, deployment, testing, linting, and SvgIcon support. Start developing with just one WinJS dependency.
   - icon:  🎁
-    title: 功能丰富
-    details: 一键创建 Web、插件、小程序、H5、离线包应用程序，快捷开发，开箱即用。贯彻“约定优于配置”思想。代码配置化了，配置约定化了。
+    title: Feature Rich
+    details: One-click creation of Web apps, plugins, mini-programs, H5, and offline packages. Fast development with out-of-the-box functionality. Embraces "convention over configuration" philosophy.
   - icon: 🎉
-    title: 可扩展
-    details: 借鉴 UmiJs，实现了 web 应用开发的完整生命周期，并使之插件化，包括 WinJS 内部功能也是全由插件实现。
+    title: Extensible
+    details: Inspired by UmiJS, implements the complete lifecycle of web application development with plugin architecture. Even WinJS internal features are implemented as plugins.
   - icon: ⚖️
-    title: 多构建引擎
-    details: 提供 Vite、 Webpack、Rsbuild 等多种构建模式供开发者选择，并尽可能保证它们之间功能的一致性。
+    title: Multiple Build Engines
+    details: Provides multiple build solutions including Vite, Webpack, and Rsbuild for developers to choose from, ensuring functional consistency across different engines.
   - icon: 🌴
-    title: 完备路由
-    details: 基于 vue-router，类 Nuxt.js，支持嵌套、动态、动态可选、按需加载、基于路由的请求优化等。
+    title: Complete Routing
+    details: Based on vue-router with Nuxt.js-like features. Supports nested routes, dynamic routes, optional dynamic routes, code splitting, and route-based request optimization.
   - icon: 🚄
-    title: 面向未来
-    details: 在满足需求的同时，我们也不会停止对新技术的探索。已使用 Vue3.0 来提升应用性能。
+    title: Future Ready
+    details: While meeting current requirements, we never stop exploring new technologies. Built with Vue 3.0 to enhance application performance.
 footer: MIT Licensed | Copyright © 2016-present winjs-dev
 ---
 
