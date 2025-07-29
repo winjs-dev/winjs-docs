@@ -1,11 +1,11 @@
-# WinJS 文档
+# WinJS Documentation
 
 <p align="center">
   <img src="src/public/images/logo.png" width="120" alt="WinJS Logo">
 </p>
 
 <p align="center">
-  <strong>WinJS - 可扩展的 Vue.js 前端应用框架</strong>
+  <strong>WinJS - A Scalable Vue.js Frontend Application Framework</strong>
 </p>
 
 <p align="center">
@@ -20,119 +20,120 @@
   </a>
 </p>
 
-## 📖 关于此项目
+English | [简体中文](./README.zh-CN.md)
 
-这是 WinJS 框架的官方文档站点，使用 [VitePress](https://vitepress.dev/) 构建。文档涵盖了 WinJS 框架的完整使用指南、API
-参考、插件开发等内容。
+## 📖 About This Project
 
-## ✨ WinJS 简介
+This is the official documentation site for the WinJS framework, built with [VitePress](https://vitepress.dev/). The documentation provides comprehensive usage guides, API references, plugin development guidelines, and more for the WinJS framework.
 
-WinJS 是一个可扩展的前端应用框架，Fork 自 UmiJS，专为 Vue.js 生态系统设计。它提供了完整的前端开发解决方案，从项目初始化到生产部署的全流程支持。
+## ✨ Introduction to WinJS
 
-### 核心特性
+WinJS is a scalable frontend application framework, forked from UmiJS and specifically designed for the Vue.js ecosystem. It provides a complete frontend development solution with full-lifecycle support from project initialization to production deployment.
 
-- 💎 **大道至简** - 内置路由、状态管理、构建、部署等，仅需一个依赖即可开发
-- 🎁 **功能丰富** - 支持 Web、插件、小程序、H5、离线包等多种应用类型
-- 🎉 **可扩展** - 完整的插件化生命周期，所有功能均可通过插件扩展
-- ⚖️ **多构建引擎** - 支持 Vite、Webpack、Rsbuild 等多种构建方案
-- 🌴 **完备路由** - 基于 vue-router，支持嵌套、动态路由和按需加载
-- 🚄 **面向未来** - 基于 Vue 3.0，拥抱最新的前端技术
+### Core Features
 
-## 🚀 快速开始
+- 💎 **Simplicity First** - Built-in routing, state management, build tools, and deployment - only one dependency needed for development
+- 🎁 **Feature Rich** - Supports multiple application types including Web apps, plugins, mini-programs, H5, and offline packages
+- 🎉 **Extensible** - Complete plugin lifecycle with all features extensible through plugins
+- ⚖️ **Multiple Build Engines** - Supports various build solutions including Vite, Webpack, and Rsbuild
+- 🌴 **Complete Routing** - Based on vue-router with support for nested routes, dynamic routing, and code splitting
+- 🚄 **Future Ready** - Built on Vue 3.0, embracing the latest frontend technologies
 
-### 环境要求
+## 🚀 Quick Start
+
+### Prerequisites
 
 - Node.js >= 18
-- pnpm >= 7.4.0 (推荐) / npm >= 8 / yarn >= 1.x
+- pnpm >= 7.4.0 (recommended) / npm >= 8 / yarn >= 1.x
 
-### 创建项目
+### Create Project
 
 ```bash
-# 使用 pnpm (推荐)
+# Using pnpm (recommended)
 pnpm dlx @winner-fed/create-win@latest
 
-# 使用 npm
+# Using npm
 npx @winner-fed/create-win@latest
 
-# 使用 yarn
+# Using yarn
 yarn create @winner-fed/win
 ```
 
-### 本地开发
+### Local Development
 
 ```bash
-# 安装依赖
+# Install dependencies
 pnpm install
 
-# 启动开发服务器
+# Start development server
 pnpm dev
 
-# 构建生产版本
+# Build for production
 pnpm build
 ```
 
-## 📚 文档结构
+## 📚 Documentation Structure
 
 ```
 src/
-├── api/              # API 参考文档
-├── guides/           # 开发指南
-│   ├── getting-started.md    # 快速开始
-│   ├── introduce.md          # 框架介绍
-│   ├── build.md             # 构建配置
-│   ├── routes.md            # 路由配置
+├── api/              # API Reference Documentation
+├── guides/           # Development Guides
+│   ├── getting-started.md    # Quick Start
+│   ├── introduce.md          # Framework Introduction
+│   ├── build.md             # Build Configuration
+│   ├── routes.md            # Routing Configuration
 │   └── ...
-├── config/           # 配置说明
-├── cli/              # CLI 命令
-├── plugins/          # 插件文档
-└── blog/             # 博客文章
+├── config/           # Configuration Documentation
+├── cli/              # CLI Commands
+├── plugins/          # Plugin Documentation
+└── blog/             # Blog Articles
 ```
 
-## 💻 本地运行文档
+## 💻 Running Documentation Locally
 
-### 环境准备
+### Environment Setup
 
-确保已安装 Node.js 18+ 和 pnpm 7.4+。
+Ensure Node.js 18+ and pnpm 7.4+ are installed.
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
 pnpm install
 ```
 
-### 启动开发服务器
+### Start Development Server
 
 ```bash
 pnpm dev
 ```
 
-访问 http://localhost:5173 查看文档。
+Visit http://localhost:5173 to view the documentation.
 
-### 构建文档
+### Build Documentation
 
 ```bash
 pnpm build
 ```
 
-构建产物将生成在 `.vitepress/dist` 目录。
+The build artifacts will be generated in the `.vitepress/dist` directory.
 
-## 🤝 贡献指南
+## 🤝 Contributing
 
-我们欢迎社区的贡献！如果你想要参与文档的改进：
+We welcome contributions from the community! If you'd like to help improve the documentation:
 
-1. Fork 此仓库
-2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交你的更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启一个 Pull Request
+1. Fork this repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### 文档规范
+### Documentation Standards
 
-- 使用中文编写文档
-- 遵循 Markdown 语法规范
-- 代码示例需要完整可运行
-- 新增内容需要更新相应的导航
+- Write documentation in English
+- Follow Markdown syntax standards
+- Code examples should be complete and runnable
+- Update relevant navigation when adding new content
 
-## 📄 许可证
+## 📄 License
 
-本项目基于 [MIT 许可证](LICENSE) 开源。
+This project is open source under the [MIT License](LICENSE).
