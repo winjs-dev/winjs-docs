@@ -1,4 +1,6 @@
 ---
+pagefind-indexed: false
+
 layout: home
 title: WinJS
 hero:
