@@ -3,7 +3,7 @@ import { defineAdditionalConfig } from 'vitepress';
 const nav = [
   { text: '指南', link: '/zh/guides/getting-started', activeMatch: `^/guides/` },
   { text: '配置', link: '/zh/config/config', activeMatch: `^/config/` },
-  { text: '插件', link: '/zh/plugins/index', activeMatch: `^/plugins/` },
+  { text: '插件', link: '/zh/plugins/introduction', activeMatch: `^/plugins/` },
   { text: 'API', link: '/zh/api/api', activeMatch: `^/api/` },
   { text: 'CLI', link: '/zh/cli/commands', activeMatch: `^/cli/` },
   { text: '博文', link: '/zh/blog/migrating-create-project-to-win', activeMatch: `^/blog/` },
@@ -24,310 +24,313 @@ const nav = [
   }
 ];
 export const sidebar = {
-  '/zh/guides/': [
-    {
-      text: '开始',
-      items: [
-        { text: '介绍', link: '/guides/introduce' },
-        {
-          text: '快速上手',
-          link: '/guides/getting-started'
-        },
-        {
-          text: '版本升级',
-          link: '/guides/upgrade'
-        },
-        {
-          text: '构建工具',
-          link: '/guides/builder'
-        }
-      ]
-    },
-    {
-      text: '基础',
-      items: [
-        {
-          text: '开发环境',
-          link: '/guides/prepare'
-        },
-        {
-          text: '目录结构',
-          link: '/guides/directory-structure'
-        },
-        {
-          text: '环境变量',
-          link: '/guides/env-variables'
-        },
-        {
-          text: '编码规范',
-          link: '/guides/lint'
-        },
-        {
-          text: '路由',
-          link: '/guides/routes'
-        },
-        {
-          text: '插件',
-          link: '/guides/use-plugins'
-        },
-        {
-          text: '数据请求',
-          link: '/guides/data-request'
-        },
-        {
-          text: 'mock',
-          link: '/guides/mock'
-        },
-        {
-          text: 'proxy',
-          link: '/guides/proxy'
-        },
-        {
-          text: 'TypeScript',
-          link: '/guides/typescript'
-        },
-        {
-          text: '使用 Vue2',
-          link: '/guides/with-vue2'
-        },
-        {
-          text: 'Vite 模式',
-          link: '/guides/vite'
-        },
-        {
-          text: 'Rsbuild 模式',
-          link: '/guides/rsbuild'
-        }
-      ]
-    },
-    {
-      text: '进阶',
-      items: [
-        {
-          text: '脚手架',
-          link: '/guides/boilerplate'
-        },
-        {
-          text: '微生成器',
-          link: '/guides/generator'
-        },
-        {
-          text: 'MPA 模式',
-          link: '/guides/mpa'
-        },
-        {
-          text: 'autoImport 研发模式',
-          link: '/guides/autoImport'
-        },
-        {
-          text: '调试',
-          link: '/guides/debug'
-        },
-        {
-          text: '开启 REM 适配',
-          link: '/guides/rem'
-        },
-        {
-          text: '构建生产版本',
-          link: '/guides/build'
-        },
-        {
-          text: '部署',
-          link: '/guides/deploy'
-        }
-      ]
-    },
-    {
-      text: '样式和资源文件',
-      items: [
-        { text: '样式', link: '/guides/styling' },
-        { text: '静态资源', link: '/guides/assets' }
-      ]
-    },
-    {
-      text: '其他',
-      items: [
-        { text: '代码拆分指南', link: '/guides/code-splitting' },
-        { text: '非现代浏览器兼容', link: '/guides/legacy-browser' },
-        { text: '产物体积优化', link: '/guides/optimize-bundle' },
-        { text: '构建模式', link: '/guides/build-mode' },
-        { text: '常见问题', link: '/guides/faq' }
-      ]
-    }
-  ],
-  '/zh/api/': [
-    {
-      text: 'API',
-      items: [
-        {
-          text: 'API',
-          link: '/api/api'
-        },
-        {
-          text: '插件 API',
-          link: '/api/plugin-api'
-        }
-      ]
-    }
-  ],
-  '/zh/plugins/': [
-    {
-      text: '插件介绍',
-      items: [
-        {
-          text: '简介',
-          link: '/plugins/index'
-        }
-      ]
-    },
-    {
-      text: '插件集',
-      items: [
-        {
-          text: 'HTTP 请求',
-          link: '/plugins/request'
-        },
-        {
-          text: '国际化',
-          link: '/plugins/i18n'
-        },
-        {
-          text: 'KeepAlive',
-          link: '/plugins/keepalive'
-        },
-        {
-          text: '权限',
-          link: '/plugins/access'
-        },
-        {
-          text: 'UI 组件库',
-          link: '/plugins/uiframework'
-        },
-        {
-          text: '状态管理',
-          link: '/plugins/statemanagement'
-        },
-        {
-          text: '移动端布局',
-          link: '/plugins/mobilelayout'
-        },
-        {
-          text: '检测网页更新通知用户',
-          link: '/plugins/webupdatenotification'
-        },
-        {
-          text: 'CSS 资源本地化',
-          link: '/plugins/cssassetslocal'
-        },
-        {
-          text: '水印',
-          link: '/plugins/watermark'
-        },
-        {
-          text: 'AssetsRetry',
-          link: '/plugins/assetsretry'
-        },
-        {
-          text: 'wConsole',
-          link: '/plugins/wconsole'
-        },
-        {
-          text: 'Qiankun 乾坤',
-          link: '/plugins/qiankun'
-        },
-        {
-          text: 'RemoveConsole',
-          link: '/plugins/removeconsole'
-        },
-        {
-          text: 'CodeInspector',
-          link: '/plugins/codeinspector'
-        },
-        {
-          text: 'IconsLegacy',
-          link: '/plugins/iconslegacy'
-        },
-        {
-          text: 'OpeanAPI',
-          link: '/plugins/openapi'
-        },
-        {
-          text: 'UnIcons',
-          link: '/plugins/unicons'
-        },
-        {
-          text: '安全增强',
-          link: '/plugins/security'
-        },
-        {
-          text: 'Viewport',
-          link: '/plugins/viewport'
-        },
-        {
-          text: 'CheckSyntax',
-          link: '/plugins/checksyntax'
-        }
-      ]
-    },
-    {
-      text: '插件开发',
-      items: [
-        {
-          text: '开发插件',
-          link: '/plugins/plugins'
-        }
-      ]
-    }
-  ],
-  '/zh/config/': [
-    {
-      text: '配置',
-      items: [
-        { text: '基础配置', link: '/config/config' },
-        {
-          text: '运行时配置',
-          link: '/config/runtime-config'
-        }
-      ]
-    }
-  ],
-  '/zh/cli/': [
-    {
-      text: 'CLI',
-      items: [
-        {
-          text: '命令行',
-          link: 'cli/commands'
-        }
-      ]
-    }
-  ],
-  '/zh/other/': [
-    {
-      text: '其他',
-      items: [
-        {
-          text: '设计思路',
-          link: 'cli/philosophy'
-        },
-        {
-          text: 'FAQ',
-          link: 'cli/faq'
-        }
-      ]
-    }
-  ],
-  '/zh/blog/': [
-    {
-      text: '博文',
-      items: [
-        {
-          text: '迁移 create-project 到 win',
-          link: 'blog/migrating-create-project-to-win'
-        }
-      ]
-    }
-  ]
+  '/zh/guides/': {
+    base: '/zh/guides/',
+    items: [
+      {
+        text: '开始',
+        items: [
+          { text: '介绍', link: 'introduce' },
+          {
+            text: '快速上手',
+            link: 'getting-started'
+          },
+          {
+            text: '版本升级',
+            link: 'upgrade'
+          },
+          {
+            text: '构建工具',
+            link: 'builder'
+          }
+        ]
+      },
+      {
+        text: '基础',
+        items: [
+          {
+            text: '开发环境',
+            link: 'prepare'
+          },
+          {
+            text: '目录结构',
+            link: 'directory-structure'
+          },
+          {
+            text: '环境变量',
+            link: 'env-variables'
+          },
+          {
+            text: '编码规范',
+            link: 'lint'
+          },
+          {
+            text: '路由',
+            link: 'routes'
+          },
+          {
+            text: '插件',
+            link: 'use-plugins'
+          },
+          {
+            text: '数据请求',
+            link: 'data-request'
+          },
+          {
+            text: 'mock',
+            link: 'mock'
+          },
+          {
+            text: 'proxy',
+            link: 'proxy'
+          },
+          {
+            text: 'TypeScript',
+            link: 'typescript'
+          },
+          {
+            text: '使用 Vue2',
+            link: 'with-vue2'
+          },
+          {
+            text: 'Vite 模式',
+            link: 'vite'
+          },
+          {
+            text: 'Rsbuild 模式',
+            link: 'rsbuild'
+          }
+        ]
+      },
+      {
+        text: '进阶',
+        items: [
+          {
+            text: '脚手架',
+            link: 'boilerplate'
+          },
+          {
+            text: '微生成器',
+            link: 'generator'
+          },
+          {
+            text: 'MPA 模式',
+            link: 'mpa'
+          },
+          {
+            text: 'autoImport 研发模式',
+            link: 'autoImport'
+          },
+          {
+            text: '调试',
+            link: 'debug'
+          },
+          {
+            text: '开启 REM 适配',
+            link: 'rem'
+          },
+          {
+            text: '构建生产版本',
+            link: 'build'
+          },
+          {
+            text: '部署',
+            link: 'deploy'
+          }
+        ]
+      },
+      {
+        text: '样式和资源文件',
+        items: [
+          { text: '样式', link: 'styling' },
+          { text: '静态资源', link: 'assets' }
+        ]
+      },
+      {
+        text: '其他',
+        items: [
+          { text: '代码拆分指南', link: 'code-splitting' },
+          { text: '非现代浏览器兼容', link: 'legacy-browser' },
+          { text: '产物体积优化', link: 'optimize-bundle' },
+          { text: '构建模式', link: 'build-mode' },
+          { text: '常见问题', link: 'faq' }
+        ]
+      }
+    ]
+  },
+  '/zh/api/': {
+    base: '/zh/api/',
+    items: [
+      {
+        text: 'API',
+        items: [
+          {
+            text: 'API',
+            link: '/api/api'
+          },
+          {
+            text: '插件 API',
+            link: '/api/plugin-api'
+          }
+        ]
+      }
+    ]
+  },
+  '/zh/plugins/': {
+    base: '/zh/plugins/',
+    items: [
+      {
+        text: '插件介绍',
+        items: [
+          {
+            text: '简介',
+            link: 'introduction'
+          }
+        ]
+      },
+      {
+        text: '插件集',
+        items: [
+          {
+            text: 'HTTP 请求',
+            link: 'request'
+          },
+          {
+            text: '国际化',
+            link: 'i18n'
+          },
+          {
+            text: 'KeepAlive',
+            link: 'keepalive'
+          },
+          {
+            text: '权限',
+            link: 'access'
+          },
+          {
+            text: 'UI 组件库',
+            link: 'uiframework'
+          },
+          {
+            text: '状态管理',
+            link: 'statemanagement'
+          },
+          {
+            text: '移动端布局',
+            link: 'mobilelayout'
+          },
+          {
+            text: '检测网页更新通知用户',
+            link: 'webupdatenotification'
+          },
+          {
+            text: 'CSS 资源本地化',
+            link: 'cssassetslocal'
+          },
+          {
+            text: '水印',
+            link: 'watermark'
+          },
+          {
+            text: 'AssetsRetry',
+            link: 'assetsretry'
+          },
+          {
+            text: 'wConsole',
+            link: 'wconsole'
+          },
+          {
+            text: 'Qiankun 乾坤',
+            link: 'qiankun'
+          },
+          {
+            text: 'RemoveConsole',
+            link: 'removeconsole'
+          },
+          {
+            text: 'CodeInspector',
+            link: 'codeinspector'
+          },
+          {
+            text: 'IconsLegacy',
+            link: 'iconslegacy'
+          },
+          {
+            text: 'OpeanAPI',
+            link: 'openapi'
+          },
+          {
+            text: 'UnIcons',
+            link: 'unicons'
+          },
+          {
+            text: '安全增强',
+            link: 'security'
+          },
+          {
+            text: 'Viewport',
+            link: 'viewport'
+          },
+          {
+            text: 'CheckSyntax',
+            link: 'checksyntax'
+          }
+        ]
+      },
+      {
+        text: '插件开发',
+        items: [
+          {
+            text: '开发插件',
+            link: 'plugins'
+          }
+        ]
+      }
+    ]
+  },
+  '/zh/config/': {
+    base: '/zh/config/',
+    items: [
+      {
+        text: '配置',
+        items: [
+          { text: '基础配置', link: 'config' },
+          {
+            text: '运行时配置',
+            link: 'runtime-config'
+          }
+        ]
+      }
+    ]
+  },
+  '/zh/cli/': {
+    base: '/zh/cli/',
+    items: [
+      {
+        text: 'CLI',
+        items: [
+          {
+            text: '命令行',
+            link: 'commands'
+          }
+        ]
+      }
+    ]
+  },
+  '/zh/blog/': {
+    base: '/zh/blog/',
+    items: [
+      {
+        text: '博文',
+        items: [
+          {
+            text: '迁移 create-project 到 win',
+            link: 'migrating-create-project-to-win'
+          }
+        ]
+      }
+    ]
+  }
 };
 
 export default defineAdditionalConfig({

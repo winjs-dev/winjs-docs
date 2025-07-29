@@ -3,7 +3,7 @@ import { defineAdditionalConfig } from 'vitepress'
 const nav = [
   { text: 'Guide', link: '/guides/getting-started', activeMatch: `^/guides/` },
   { text: 'Config', link: '/config/config', activeMatch: `^/config/` },
-  { text: 'Plugin', link: '/plugins/index', activeMatch: `^/plugins/` },
+  { text: 'Plugin', link: '/plugins/introduction', activeMatch: `^/plugins/` },
   { text: 'API', link: '/api/api', activeMatch: `^/api/` },
   { text: 'CLI', link: '/cli/commands', activeMatch: `^/cli/` },
   { text: 'Blog', link: '/blog/migrating-create-project-to-win', activeMatch: `^/blog/` },
@@ -176,7 +176,7 @@ export const sidebar = {
       items: [
         {
           text: 'Introduction',
-          link: '/plugins/index'
+          link: '/plugins/introduction'
         }
       ]
     },

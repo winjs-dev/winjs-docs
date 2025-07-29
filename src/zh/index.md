@@ -10,10 +10,10 @@ hero:
     alt: WinJS
   actions:
     - text: 快速上手
-      link: /guides/getting-started.html
+      link: /zh/guides/getting-started.html
       theme: brand
     - text: 框架简介
-      link: /guides/introduce.html
+      link: /zh/guides/introduce.html
       theme: alt
 features:
   - icon: 💎
