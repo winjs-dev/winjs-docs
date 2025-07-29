@@ -1,17 +1,16 @@
-# 路由 {#routes}
+# Routing {#routes}
 
-在 WinJS 应用是[单页应用](https://en.wikipedia.org/wiki/Single-page_application)，页面地址的跳转都是在浏览器端完成的，不会重新请求服务端获取
-html，html 只在应用初始化时加载一次。所有页面由不同的组件构成，页面的切换其实就是不同组件的切换，你只需要在配置中把不同的路由路径和对应的组件关联上。
+WinJS applications are [single-page applications](https://en.wikipedia.org/wiki/Single-page_application), where page navigation is completed on the browser side without requesting HTML from the server again. HTML is only loaded once during application initialization. All pages are composed of different components, and page switching is actually switching between different components. You just need to associate different route paths with corresponding components in the configuration.
 
-## 路由类型配置
+## Route Type Configuration
 
-请参考 [history](../config/config#history) 配置。
+Please refer to [history](../config/config#history) configuration.
 
-## 配置路由
+## Configuring Routes
 
-在配置文件中通过 `routes` 进行配置，格式为路由信息的数组。
+Configure routes through `routes` in the configuration file, formatted as an array of route information.
 
-比如：
+For example:
 
 ```ts
 // .winrc.ts
@@ -23,21 +22,19 @@ export default {
 }
 ```
 
-WinJS
-默认按页拆包，从而有更快的页面加载速度，由于加载过程是异步的，所以往往你需要编写或引用类似[`nprogress`](https://www.npmjs.com/package/nprogress)
-来给项目添加加载样式，提升体验。
+WinJS splits bundles by page by default for faster page loading speeds. Since the loading process is asynchronous, you often need to write or reference something like [`nprogress`](https://www.npmjs.com/package/nprogress) to add loading styles to your project and improve the experience.
 
-::: tip 提示
-你可以在 Chrome Devtools > 网络 Tab 中将网络设置成低速，然后切换路由查看加载组件是否生效。
+::: tip Tip
+You can set the network to slow speed in Chrome Devtools > Network tab, then switch routes to check if component loading is working.
 :::
 
 ### path
 
 * Type: `string`
 
-`path` 只支持两种占位符配置，第一种是动态参数 `:id` 的形式，第二种是 `*` 通配符，通配符只能出现路由字符串的最后。
+`path` only supports two types of placeholder configurations: the first is dynamic parameters in the form of `:id`, and the second is `*` wildcards, which can only appear at the end of the route string.
 
-✅ 以下是目前***支持***的路由路径配置形式：
+✅ The following are currently ***supported*** route path configuration forms:
 
 ```txt
 /groups
@@ -48,7 +45,7 @@ WinJS
 /files/:id/*
 ```
 
-❌ 以下是目前***不支持***的路由路径配置形式：
+❌ The following are currently ***not supported*** route path configuration forms:
 
 ```txt
 /users/:id?
@@ -59,9 +56,9 @@ WinJS
 
 ### name
 
-命名路由
+Named routes
 
-除了 `path` 之外，你还可以为任何路由提供 `name`
+Besides `path`, you can also provide a `name` for any route:
 
 ```ts
 export default {
@@ -75,7 +72,7 @@ export default {
 }
 ```
 
-要链接到一个命名的路由，可以向 `router-link` 组件的 to 属性传递一个对象：
+To link to a named route, you can pass an object to the `router-link` component's `to` property:
 
 ```html
 
@@ -84,17 +81,17 @@ export default {
 </router-link>
 ```
 
-效果和命令式地调用 `router.push` 一致：
+This has the same effect as calling `router.push` imperatively:
 
 ```ts
 router.push({ name: 'user', params: { username: 'erina' } })
 ```
 
-在这方法都能导航到路径 `/user/erina`。
+Both methods can navigate to the path `/user/erina`.
 
 ### alias
 
-重定向是指当用户访问 `/home` 时，URL 会被 `/` 替换，然后匹配成 `/`。那么什么是别名呢？
+A redirect means that when a user visits `/home`, the URL will be replaced by `/`, and then matched as `/`. So what is an alias?
 
 将 `/` 别名为 `/home`，意味着当用户访问 `/home` 时，URL 仍然是 `/home`，但会被匹配为用户正在访问 `/`。
 

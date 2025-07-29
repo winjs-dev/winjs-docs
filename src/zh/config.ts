@@ -1,12 +1,12 @@
 import { defineAdditionalConfig } from 'vitepress';
 
 const nav = [
-  { text: '指南', link: '/guides/getting-started', activeMatch: `^/guides/` },
-  { text: '配置', link: '/config/config', activeMatch: `^/config/` },
-  { text: '插件', link: '/plugins/index', activeMatch: `^/plugins/` },
-  { text: 'API', link: '/api/api', activeMatch: `^/api/` },
-  { text: 'CLI', link: '/cli/commands', activeMatch: `^/cli/` },
-  { text: '博文', link: '/blog/migrating-create-project-to-win', activeMatch: `^/blog/` },
+  { text: '指南', link: '/zh/guides/getting-started', activeMatch: `^/guides/` },
+  { text: '配置', link: '/zh/config/config', activeMatch: `^/config/` },
+  { text: '插件', link: '/zh/plugins/index', activeMatch: `^/plugins/` },
+  { text: 'API', link: '/zh/api/api', activeMatch: `^/api/` },
+  { text: 'CLI', link: '/zh/cli/commands', activeMatch: `^/cli/` },
+  { text: '博文', link: '/zh/blog/migrating-create-project-to-win', activeMatch: `^/blog/` },
   {
     text: '了解更多',
     items: [
@@ -24,7 +24,7 @@ const nav = [
   }
 ];
 export const sidebar = {
-  '/guides/': [
+  '/zh/guides/': [
     {
       text: '开始',
       items: [
@@ -155,7 +155,7 @@ export const sidebar = {
       ]
     }
   ],
-  '/api/': [
+  '/zh/api/': [
     {
       text: 'API',
       items: [
@@ -170,7 +170,7 @@ export const sidebar = {
       ]
     }
   ],
-  '/plugins/': [
+  '/zh/plugins/': [
     {
       text: '插件介绍',
       items: [
@@ -283,7 +283,7 @@ export const sidebar = {
       ]
     }
   ],
-  '/config/': [
+  '/zh/config/': [
     {
       text: '配置',
       items: [
@@ -295,7 +295,7 @@ export const sidebar = {
       ]
     }
   ],
-  '/cli/': [
+  '/zh/cli/': [
     {
       text: 'CLI',
       items: [
@@ -306,7 +306,7 @@ export const sidebar = {
       ]
     }
   ],
-  '/other/': [
+  '/zh/other/': [
     {
       text: '其他',
       items: [
@@ -321,7 +321,7 @@ export const sidebar = {
       ]
     }
   ],
-  '/blog/': [
+  '/zh/blog/': [
     {
       text: '博文',
       items: [

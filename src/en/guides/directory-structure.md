@@ -2,12 +2,12 @@
 outline: deep
 ---
 
-# 目录结构 {#directory-structure}
+# Directory Structure {#directory-structure}
 
-这里罗列了 WinJS 项目中约定(或推荐)的目录结构，在项目开发中，请遵照这个目录结构组织代码。
+This lists the conventional (or recommended) directory structure in WinJS projects. Please organize your code according to this directory structure during project development.
 
-:::tip 提示
-WinJS 框架的设计原则之一是【[约定优于配置（Convention over Configuration）](https://en.wikipedia.org/wiki/Convention_over_configuration)】，多数情况下可以按约定直接写代码，不需要做任何配置。
+:::tip Tip
+One of the design principles of the WinJS framework is [Convention over Configuration](https://en.wikipedia.org/wiki/Convention_over_configuration). In most cases, you can write code directly according to conventions without any configuration.
 :::
 
 ```bash
@@ -30,9 +30,9 @@ WinJS 框架的设计原则之一是【[约定优于配置（Convention over Con
 │   ├── pages
 │   │   ├── index.less
 │   │   └── index.vue
-│   ├── utils // 推荐目录
+│   ├── utils // Recommended directory
 │   │   └── index.ts
-│   ├── services // 推荐目录
+│   ├── services // Recommended directory
 │   │   └── api.ts
 │   ├── app.(ts|tsx)
 │   ├── constant.(ts|js)

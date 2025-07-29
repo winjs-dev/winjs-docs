@@ -1,10 +1,10 @@
-# 代码拆分指南
+# Code Splitting Guide
 
-WinJS 默认 按页拆包、按需加载。
+WinJS defaults to page-based splitting and on-demand loading.
 
-### 使用分包策略
+### Using Splitting Strategies
 
-WinJS 内置了不同的代码拆分策略 ( [codeSplitting](../config/config#codesplitting) ) ，通过配置开启：
+WinJS has built-in different code splitting strategies ([codeSplitting](../config/config#codesplitting)), enabled through configuration:
 
 ```ts
 // .winrc.ts
@@ -15,35 +15,35 @@ export default {
 }
 ```
 
-这会按照一定的优化策略进行自动分包，若需手动进行更细致的分包，请参见下文。
+This will automatically split bundles according to certain optimization strategies. For more detailed manual splitting, please refer to the following sections.
 
-### 手动拆分
+### Manual Splitting
 
-当你的产物体积变大时，可进一步手动拆包。
+When your bundle size becomes large, you can perform further manual splitting.
 
-通常情况下，我们会手动拆分引用了较大第三方库的组件，实现按需加载。
+Typically, we manually split components that reference large third-party libraries to achieve on-demand loading.
 
-### 分析产物构成
+### Analyzing Bundle Composition
 
-通过指定 [ANALYZE](./env-variables#analyze) 环境变量可以分析产物构成，根据分析结果来修改代码和进一步决策。
+By specifying the [ANALYZE](./env-variables#analyze) environment variable, you can analyze bundle composition and modify code and make further decisions based on the analysis results.
 
-## 使用 Dynamic Import 拆包
+## Using Dynamic Import for Splitting
 
-除了 `chunkSplit` 配置，使用 dynamic import 拆包也是一项重要的优化手段，它可以有效减少首屏的包体积。
+Besides `chunkSplit` configuration, using dynamic import for splitting is also an important optimization technique that can effectively reduce the bundle size of the initial screen.
 
-:::tip 关于 dynamic import
-Dynamic import 是 ECMAScript 2020 引入的一个新特性，它允许你动态地加载一些 JavaScript 模块。
+:::tip About dynamic import
+Dynamic import is a new feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules.
 :::
 
-当打包工具遇到 `import()` 语法时，它会自动将相关的代码分割成一个新的 chunk，并在运行时按需加载。
+When bundling tools encounter `import()` syntax, they automatically split the related code into a new chunk and load it on-demand at runtime.
 
-例如，项目中有一个大的模块 `bigModule.ts`（也可以是一个第三方依赖），你可以使用 dynamic import 来按需加载它：
+For example, if there's a large module `bigModule.ts` in your project (which can also be a third-party dependency), you can use dynamic import to load it on-demand:
 
 ```js
-// 在某个需要使用 bigModule 的地方
+// Where you need to use bigModule
 import('./bigModule.ts').then((bigModule) => {
-  // 使用 bigModule
+  // Use bigModule
 });
 ```
 
-当你运行构建命令时，`bigModule.ts` 就会被自动分割成一个新的 chunk，并在运行时按需加载。
+When you run the build command, `bigModule.ts` will be automatically split into a new chunk and loaded on-demand at runtime.

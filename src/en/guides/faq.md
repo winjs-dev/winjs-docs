@@ -1,25 +1,26 @@
-# 常见问题 {#faq}
+# FAQ {#faq}
 
-## H5 离线包可以使用 Vite 作为构建工具输出吗？
+## Can H5 offline packages use Vite as the build tool for output?
 
-不可以。需要使用 webpack 作为构建工具输出部署物。
+No. You need to use webpack as the build tool for deployment output.
 
-这是因为 `Vite` 工具的特性决定的。原因如下：
+This is determined by the characteristics of the `Vite` tool. The reasons are as follows:
 
-Vite 没有为传统模块系统设计，默认输出 `<script type=module>`，也就是 ES Modules。ES Modules 是其特性基线。它是**不支持文件系统**访问的，需要使用一个 HTTP 服务器来提供脚本文件（也就是浏览器错误日志中的需要 http/https 的 scheme...） 。或者，可以在原生应用注入自定义 scheme 来使用内嵌页面（example-app:// 什么的），这样可以正常激活 ES Modules 特性，从一开始规避这个问题。
-如果实在希望使用 Vite 做开发，同时只能使用 `file:///`，可以使用 [@vitejs/plugin-legacy](https://www.npmjs.com/package/@vitejs/plugin-legacy) 生成 nomodule 的版本，然后对 dist/index.html 做如下改动：
+Vite is not designed for traditional module systems and outputs `<script type=module>` by default, which is ES Modules. ES Modules is its feature baseline. It **does not support file system** access and requires an HTTP server to provide script files (which is the need for http/https scheme in browser error logs...). Alternatively, you can inject a custom scheme in native applications to use embedded pages (example-app:// or similar), which can properly activate ES Modules features and avoid this problem from the start.
 
-- 移除 `<script type=module>` 元素
-- 移除其他 `<script>` 的 nomodule 属性
-- 移除 `<script id=vite-legacy-entry>` 元素的内容，并把 data-src 属性名改为 src
-- 移除 SystemJS loader 代码（那个压缩到一行的 `<script>`）
-- 修改所有资源地址为相对地址（例如把 /assets/index-legacy.xxxx.js 改为 ./assets/index-legacy.xxxx.js，注意还有 CSS 文件）
+If you really want to use Vite for development while only being able to use `file:///`, you can use [@vitejs/plugin-legacy](https://www.npmjs.com/package/@vitejs/plugin-legacy) to generate a nomodule version, then make the following changes to dist/index.html:
 
-综上所述，这种改动比较多，而且要测试充分。不推荐。
+- Remove `<script type=module>` elements
+- Remove the nomodule attribute from other `<script>` tags
+- Remove the content of `<script id=vite-legacy-entry>` element and change the data-src attribute name to src
+- Remove SystemJS loader code (that compressed `<script>` on one line)
+- Change all resource addresses to relative addresses (e.g., change /assets/index-legacy.xxxx.js to ./assets/index-legacy.xxxx.js, note CSS files as well)
+
+In summary, these changes are quite extensive and require thorough testing. Not recommended.
                      
 ## [Vue warn]: Missing ref owner context. ref cannot be used on hoisted vnodes. A vnode with ref must be created inside the render function. {#vue-warn-missing-ref}
 
-遇到上述问题，有可能是 Vue 重复导入所致。可以通过以下配置来解决：
+When encountering the above issue, it may be caused by duplicate Vue imports. This can be resolved with the following configuration:
 
 ```ts
 // .winrc
@@ -38,17 +39,17 @@ export default defineConfig({
 
 ```
 
-## 可以关闭 dynamicImport 吗？
+## Can dynamicImport be disabled?
 
-可以，但不建议关闭。
+Yes, but it's not recommended to disable it.
 
-1、安装依赖
+1. Install dependencies
 
 ```bash
   pnpm i babel-plugin-dynamic-import-node -D
 ```
 
-2、配置里加上 `extraBabelPlugins` ，但只针对 production 开启
+2. Add `extraBabelPlugins` to the configuration, but only enable it for production
 
 ```ts
 // .winrc.ts
@@ -58,15 +59,15 @@ export default {
     : []
 }
 ```
-::: tip 提示
+::: tip Tip
 
-何为 `dynamicImport`？
+What is `dynamicImport`?
 
-即，是否启用按需加载，即是否把构建产物进行拆分，在需要的时候下载额外的 JS 再执行。
+It refers to whether to enable on-demand loading, i.e., whether to split build artifacts and download additional JS when needed for execution.
 
-默认关闭时，只生成一个 js 和一个 css，即 win.js 和 win.css。优点是省心，部署方便；缺点是对用户来说初次打开网站会比较慢。
+When disabled by default, only one js and one css file are generated, namely win.js and win.css. The advantage is simplicity and easy deployment; the disadvantage is that the initial website loading will be slower for users.
 
-打包后通常是这样的，
+After packaging, it usually looks like this:
 
 ```bash
 + dist
@@ -76,9 +77,9 @@ export default {
   - index.html
 ```
 
-启用之后，需要考虑 publicPath 的配置，可能还需要考虑 runtimePublicPath，因为需要知道从哪里异步加载 JS、CSS 和图片等资源。
+After enabling, you need to consider the publicPath configuration, and possibly runtimePublicPath, because you need to know where to asynchronously load JS, CSS, and image resources.
 
-打包后通常是这样，
+After packaging, it usually looks like this:
 
 ```bash
 + dist
@@ -88,7 +89,7 @@ export default {
   - p__index.js
   - p__users__index.js
 ```  
-这里的 p__users_index.js 是路由组件所在路径 src/pages/users/index，其中 src 会被忽略，pages 被替换为 p。
+Here, p__users_index.js is the path where the route component is located: src/pages/users/index, where src is ignored and pages is replaced with p.
 :::
 
 ## Error evaluating function `round`: argument must be a number
