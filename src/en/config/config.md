@@ -1,16 +1,14 @@
-# 配置 {#config}
+# Configuration {#config}
 
-对于 WinJS 中能使用的自定义配置，你可以使用项目根目录的 `.winrc.ts` 文件或者 `config/config.ts`
-，值得注意的是这两个文件功能一致，仅仅是存在目录不同，2 选 1 ，`.winrc.ts` 文件优先级较高。
+For custom configurations that can be used in WinJS, you can use the `.winrc.ts` file in the project root directory or `config/config.ts`. It's worth noting that these two files have the same functionality, just in different directories. Choose one - the `.winrc.ts` file has higher priority.
 
-> 更多目录相关信息介绍，你可以在[目录结构](../guides/directory-structure)了解。
+> For more information about directories, you can learn about it in [Directory Structure](../guides/directory-structure).
 
-WinJS 的配置文件是一个正常的 node 模块，它在执行 WinJS [命令行](../cli/commands)的时候使用，并且不包含在浏览器端构建中。
+WinJS configuration files are normal Node.js modules that are used when executing WinJS [CLI commands](../cli/commands) and are not included in browser-side builds.
 
-> 关于浏览器端构建需要用到的一些配置，还有一些在样式表现上产生作用的一些配置，在 WinJS
-> 中被统一称为“运行时配置”，你可以在[运行时配置](./runtime-config)看到更多关于它的说明。
+> Some configurations needed for browser-side builds, as well as configurations that affect styling presentation, are collectively called "runtime configurations" in WinJS. You can see more about them in [Runtime Configuration](./runtime-config).
 
-这里有一个最简单的 WinJS 配置文件的范例：
+Here's an example of the simplest WinJS configuration file:
 
 ```ts
 import { defineConfig } from 'win';
@@ -20,13 +18,11 @@ export default defineConfig({
 });
 ```
 
-使用 `defineConfig` 包裹配置是为了在书写配置文件的时候，能得到更好的拼写联想支持。如果你不需要，直接 `export default {}`
-也可以。
+Using `defineConfig` to wrap the configuration provides better IntelliSense support when writing configuration files. If you don't need it, you can directly use `export default {}`.
 
-值得关注的是在你使用 WinJS 的时候，你不需要了解每一个配置的作用。你可以大致的浏览一下以下 WinJS
-支持的所有配置，然后在你需要的时候，再回来查看如何启用和修改你需要的内容。
+It's worth noting that when using WinJS, you don't need to understand every configuration option. You can roughly browse through all the configurations that WinJS supports below, and then come back to see how to enable and modify the content you need when necessary.
 
-> 为方便查找，以下配置项通过字母排序。
+> For easy reference, the following configuration options are sorted alphabetically.
 
 ## alias
 
@@ -2357,6 +2353,6 @@ export default {
 
 考虑到压缩包的文件名不能含有非法字符的情况，所以当 `name` 含有特殊字符时，会被替换为**空**。
 
-特殊字符的正则表达式：/[\[\]{};',./:"<>?!@#$%^&*()+【】、；‘，。、{}|：”“《》？！@#￥%……&*（）——+]*/g
+特殊字符的正则表达式：/[\[\]{};',./:"<>?!@#$%^&*()+【】、；'，。、{}|："“《》？！@#￥%……&*（）——+]*/g
 
 :::

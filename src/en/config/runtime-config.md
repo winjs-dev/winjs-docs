@@ -1,17 +1,17 @@
-# 运行时配置 {#runtimeConfig}
+# Runtime Configuration {#runtimeConfig}
 
-插件的配置分为**编译时**的和**运行时**的，编译时的配置是在 node 端执行，运行时的配置是在浏览器端执行。
+Plugin configurations are divided into **compile-time** and **runtime** configurations. Compile-time configurations are executed on the Node.js side, while runtime configurations are executed on the browser side.
 
-运行时的配置的值有很多类型，可以为数组、对象、函数等等，而且配置只有注册了才能使用。
+Runtime configuration values can be of many types, including arrays, objects, functions, etc., and configurations can only be used after they are registered.
 
-## 配置方式
-约定在 `src/app.ts|tsx|js` 文件中使用插件运行时的配置，这些配置需通过 `export` 导出，插件中才能读取到，来控制 vue 和 vue-router 相关的配置。
+## Configuration Method
+By convention, plugin runtime configurations are used in the `src/app.ts|tsx|js` file. These configurations need to be exported through `export` for plugins to read and control Vue and Vue Router related configurations.
 
-可以在这里写函数、tsx、`import` 一些依赖来完成某些配置，但是只能 `import` 浏览器端依赖，注意不能引入 node 依赖，否则会陷入死循环，造成异常情况发生。同时要切记所 `import` 依赖只能跟配置相关，如果要引起全局依赖，请在 `src/global.ts` 文件中引入。
+You can write functions, TSX, and `import` some dependencies here to complete certain configurations, but you can only `import` browser-side dependencies. Note that Node.js dependencies cannot be imported, otherwise it will cause infinite loops and abnormal situations. Also remember that imported dependencies should only be configuration-related. If you need to introduce global dependencies, please import them in the `src/global.ts` file.
 
-## TypeScript 提示
+## TypeScript Support
 
-如果你想在写配置时也有提示，可以通过 WinJS 的 defineApp 方法定义配置。
+If you want IntelliSense when writing configurations, you can define configurations using WinJS's defineApp method.
 
 ```js
 import { defineApp } from 'win';
@@ -32,19 +32,19 @@ export const layout: RuntimeConfig['layout'] = () => {
 };
 ```
 
-## 配置项
+## Configuration Options
 
-> 以下配置项按字母排序。
+> The following configuration options are sorted alphabetically.
         
 ### modifyClientRenderOpts(opts)
 
-修改 `clientRender` 参数。
+Modifies the `clientRender` parameters.
 
-- routes，路由配置信息
-- rootElement， 渲染的根节点，默认是 #root，可通过配置 mountElementId 修改。
-- callback，回调函数
+- routes: Route configuration information
+- rootElement: The root node for rendering, defaults to #root, can be modified through mountElementId configuration.
+- callback: Callback function
 
-比如在微前端里动态修改渲染根节点：
+For example, dynamically modifying the render root node in a micro-frontend:
 
 ```js
 let isSubApp = false;
@@ -59,7 +59,7 @@ export function modifyClientRenderOpts(opts) {
 
 ### onMounted(\{app, router\})
 
-Vue app mount 成功回调, 这里可以拿到 app 的实例及 router 的实例, 可以进行全局组件注册, 路由拦截器等。
+Vue app mount success callback. Here you can get the app instance and router instance for global component registration, route guards, etc.
 
 ```ts
 export function onMounted({ app, router }: any) {
@@ -69,7 +69,7 @@ export function onMounted({ app, router }: any) {
     w: 'word',
   });
   
-  // 路由拦截器
+  // Route guards
   router.beforeEach((to, from, next) => {
     next();
   })
@@ -84,15 +84,15 @@ export function patchRoutes({ routes, routeComponents }) {
 }
 ```
 
-- `routes`: 打平的路由列表。
+- `routes`: Flattened route list.
 
-- `routeComponents`: 路由对应的组件映射。
+- `routeComponents`: Route to component mapping.
 
 ### render(oldRender: `Function`)
 
-覆写 render。
+Overrides the render method.
 
-比如用于渲染之前做权限校验，
+For example, for permission verification before rendering:
 
 ```bash
 export function render(oldRender) {
@@ -108,7 +108,7 @@ export function render(oldRender) {
 
 ### router
 
-配置路由配置
+Configure router settings:
 
 ```ts
 // src/app.tsx
@@ -122,18 +122,18 @@ export const router: RouterConfig = {
 
 ### request
 
-如果你使用了 `import { request } from 'winjs';` 来请求数据，那么你可以通过该配置来自定义中间件、拦截器、错误处理适配等。具体参考 [request](../plugins/request) 插件配置。
+If you use `import { request } from 'winjs';` to request data, you can customize middleware, interceptors, error handling adapters, etc., through this configuration. For details, refer to the [request](../plugins/request) plugin configuration.
 
 ### rootContainer(lastRootContainer, args)
 
-修改交给 Vue 渲染时的根组件，默认是 `<router-view></router-view>`。
+Modifies the root component passed to Vue for rendering. The default is `<router-view></router-view>`.
 
-- lastRootContainer，最上层的根组件。
-- args，包含：
-  - routes，全量路由配置
-  - plugin，运行时插件机制
+- lastRootContainer: The topmost root component.
+- args: Contains:
+  - routes: Complete route configuration
+  - plugin: Runtime plugin mechanism
 
-比如用于在外面包一个 Provider。
+For example, to wrap with a Provider:
 
 ```js
 import { h } from 'vue'
@@ -143,6 +143,6 @@ export function rootContainer(container) {
 }
 ```
 
-## 更多配置
+## More Configurations
 
-WinJS 允许插件注册运行时配置，如果你使用插件，肯定会在插件里找到更多运行时的配置项。
+WinJS allows plugins to register runtime configurations. If you use plugins, you will definitely find more runtime configuration options in the plugins.
