@@ -1,26 +1,26 @@
-# 构建生产版本 {#build}
+# Building for Production {#build}
 
-## 构建
+## Build
 
-```bash [生产环境]
+```bash [Production]
 npm run build
 ```
 
-构建打包成功之后，会在项目根目录生成 `dist` 文件夹，里面是构建打包好的文件，同时生成含有 `.gz` 的文件。所以也需要服务器配置 `gzip` 的开启，这样用户访问时，会请求更小的 `.gz` 文件，加快页面的浏览访问。
+After successful build packaging, a `dist` folder will be generated in the project root directory, containing the built and packaged files, along with generated `.gz` files. Therefore, the server also needs to configure `gzip` to be enabled, so that when users access the site, they will request smaller `.gz` files, speeding up page browsing and access.
  
-## 本地预览
+## Local Preview
 
-`dist` 目录需要启动一个 HTTP 服务器来访问 (除非你已经将 publicPath 配置为了一个相对的值)，所以以 file:// 协议直接打开 dist/index.html 是不会工作的。 在本地预览生产环境构建最简单的方式，直接使用 `preview`
+The `dist` directory needs to be served over an HTTP server to access (unless you have configured publicPath to a relative value), so opening dist/index.html directly with the file:// protocol won't work. The simplest way to preview the production build locally is to use `preview` directly:
 
 ```bash
 npm run preview
 ```
 
-或者使用一个 Node.js 静态文件服务器，例如 serve：    
+Or use a Node.js static file server, such as serve:
 
 ```bash
 npm install -g serve
-# -s 参数的意思是将其架设在 Single-Page Application 模式下
-# 这个模式会处理即将提到的路由问题
+# The -s parameter means to serve it in Single-Page Application mode
+# This mode will handle the routing issues mentioned below
 serve -s dist
 ```

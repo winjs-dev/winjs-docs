@@ -1,43 +1,42 @@
-# 调试 {#debug}
+# Debugging {#debug}
 
-除了使用浏览器的调试工具来完成开发中的调试外，WinJS 还推荐以下调试方式来协助项目的调试。
+In addition to using browser debugging tools for development debugging, WinJS also recommends the following debugging methods to assist with project debugging.
 
-## 调试 dev 产物
+## Debugging dev build artifacts
 
-如果你需要在 dev 阶段调试项目的构建产物，以 `win.js` 举例。先将原来的 `win.js` 下载到当前项目根目录下。根据调试需要进行编辑后，刷新浏览器，项目使用的 `win.js` 就替换成了根目录下的 `win.js` 文件。调试完毕需要恢复就直接删除根目录的 `win.js` 即可。
+If you need to debug project build artifacts during the dev phase, take `win.js` as an example. First download the original `win.js` to the current project root directory. After editing according to debugging needs, refresh the browser, and the `win.js` used by the project will be replaced with the `win.js` file in the root directory. To restore after debugging, simply delete the `win.js` in the root directory.
 
-举例：
+Example:
 ```bash
-# 下载当前项目的 win.js
+# Download the current project's win.js
 $ curl http://127.0.0.1:8000/win.js -O
 
-# 增加想调试的内容，举例增加 "debug!!!" 弹窗
+# Add content you want to debug, for example add "debug!!!" alert
 $ echo -e  '\n;alert("debug!!!");\n' >> win.js
-# 打开浏览器就能看到 alert 弹窗
+# Open browser to see the alert popup
 
-# 退出调试，恢复到正常状态
+# Exit debugging and restore to normal state
 $ rm win.js
 ```
 
-以此类推即可调试其他的 JavaScript 文件。
+You can debug other JavaScript files in the same way.
 
-## bug 调试方法
+## Bug debugging methods
 
-在我们的开发中，由于对底层的不理解或者兼容性的问题，很有可能会出现白屏或者 Out Of Memory 的问题，也有一些问题没有任何可以 debug 着手的方式。这时候就要用到一些 debug 的方案。
+In our development, due to lack of understanding of underlying mechanisms or compatibility issues, we may encounter white screen or Out Of Memory problems. Some issues have no obvious debugging approach. This is when we need to use some debugging strategies.
 
-### 二分法定位
+### Binary search positioning
 
-二分法是 debug 中最常用也是最好用的方式，非常适用于我的代码昨天还是好的和各类 Out Of Memory 报错。我们可以程序逻辑一点点注释掉，不断地进行排错，完全能把问题可能出现的范围缩小，然后找出罪魁祸首。再用常规手段调试。
+Binary search is the most commonly used and effective debugging method, very suitable for situations like "my code was working yesterday" and various Out Of Memory errors. We can comment out program logic bit by bit and continuously troubleshoot, which can completely narrow down the possible range of problems, then find the culprit and debug using conventional methods.
 
-node 中 Out Of Memory 最常用的方式就是删除一半依赖，然后进行重试来不断缩小范围，直到找个问题所在。二分调试大法每次遇到棘手的 bug，基本上都能解决，程序员必备技能，无关语言。
+For Out Of Memory in Node, the most common approach is to delete half of the dependencies, then retry to continuously narrow down the range until finding where the problem lies. Binary search debugging can basically solve most tricky bugs every time we encounter them - it's an essential programmer skill, regardless of language.
 
-### 小黄鸭法
+### Rubber duck debugging
 
-又称为[小黄鸭调试法](https://zh.wikipedia.org/zh-hans/%E5%B0%8F%E9%BB%84%E9%B8%AD%E8%B0%83%E8%AF%95%E6%B3%95) 。
+Also known as [rubber duck debugging](https://en.wikipedia.org/wiki/Rubber_duck_debugging).
 
-处理 bug 的过程，最难的不是怎么解决问题，而是如何定位代码的 bug，如果实在是一筹莫展，尤其是算法类的问题。我们可以通过小黄鸭法来进行 debug。我们可以找任何物体也可以是同事讲一遍或者讨论一遍，当然上网发帖也是好方式。
+In the process of handling bugs, the hardest part is not how to solve the problem, but how to locate the bug in the code. If you're really at a loss, especially with algorithmic problems, we can use rubber duck debugging. We can find any object or colleague to explain or discuss the problem once, and posting online is also a good approach.
 
+### Rewrite from scratch
 
-### 重写一遍
-
-这个方法成本最高，适用于可以乱七八糟的代码，尤其是陈年代码，如果实在搞不懂修不了 bug，可以加好测试用例重新写一遍。毕竟很多的 bug 其实都是错别字。
+This method has the highest cost and is suitable for messy code, especially legacy code. If you really can't understand or fix the bug, you can add good test cases and rewrite it from scratch. After all, many bugs are actually just typos.

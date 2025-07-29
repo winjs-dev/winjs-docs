@@ -1,20 +1,20 @@
-# 快速上手 {#quick-start}
+# Getting Started {#quick-start}
 
-## 环境准备
+## Environment Setup
 
-在开始使用前，你需要安装 [Node.js](https://nodejs.org/)，并保证 Node.js 版本 18 或以上。
+Before you start, you need to install [Node.js](https://nodejs.org/) and ensure Node.js version 18 or above.
 
-有些模板需要依赖更高的 Node 版本才能正常运行，当你的包管理器发出警告时，请注意升级你的 Node.js 版本。
+Some templates require higher Node versions to run properly. When your package manager issues warnings, please pay attention to upgrading your Node.js version.
 
-你可以通过以下命令检查当前使用的 Node.js 版本：
+You can check the currently used Node.js version with the following command:
 
 ```bash
 node -v
 ```
 
-推荐用 [nvm](https://github.com/nvm-sh/nvm) 或 [fnm](https://github.com/Schniz/fnm) 来管理 Node.js 版本，Windows 下推荐用 [nvm-windows](https://github.com/coreybutler/nvm-windows)。
+It's recommended to use [nvm](https://github.com/nvm-sh/nvm) or [fnm](https://github.com/Schniz/fnm) to manage Node.js versions. For Windows, [nvm-windows](https://github.com/coreybutler/nvm-windows) is recommended.
 
-Mac 或 Linux 下安装 nvm。
+Installing nvm on Mac or Linux:
 
 ```bash
 $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -22,31 +22,31 @@ $ nvm -v
 0.39.1
 ```
 
-下面是通过 nvm 安装 Node.js 18 LTS 版本的例子：
+Here's an example of installing Node.js 18 LTS version through nvm:
 
 ```
-# 安装 Node.js 18 的长期支持版本
+# Install Node.js 18 long-term support version
 $ nvm install 18 --lts
 
-# 将刚安装的 Node.js 18 设置为默认版本
+# Set the newly installed Node.js 18 as the default version
 nvm alias default 18
 
-# 切换到刚安装的 Node.js 18
+# Switch to the newly installed Node.js 18
 nvm use 18
 ```
 
-:::tip 说明
-nvm 和 fnm 都是 Node.js 版本管理工具。相对来说，nvm 较为成熟和稳定，而 fnm 是使用 Rust 实现的，比 nvm 提供了更好的性能。
+:::tip Note
+Both nvm and fnm are Node.js version management tools. Relatively speaking, nvm is more mature and stable, while fnm is implemented in Rust and provides better performance than nvm.
 :::
 
-此外，在安装 nvm 或 fnm 后，然后只要仓库根目录下有内容为 `lts/hydrogen` 的 `.nvmrc` 文件，进入这个仓库时就会自动安装或切换到正确的 Node.js 版本。
+Additionally, after installing nvm or fnm, as long as there's a `.nvmrc` file with content `lts/hydrogen` in the repository root directory, entering this repository will automatically install or switch to the correct Node.js version.
 
-然后，需要包管理工具。Node.js 默认包含 npm，但也可以选择其他方案，
+Then, you need a package management tool. Node.js includes npm by default, but you can also choose other solutions:
 
 * [pnpm](https://pnpm.io/installation)
 * [Yarn](https://yarnpkg.com/getting-started/install)
 
-安装 pnpm。
+Installing pnpm:
 
 ```bash
 curl -fsSL https://get.pnpm.io/install.sh | sh -
@@ -54,13 +54,13 @@ $ pnpm -v
 7.3.0
 ```
 
-::: tip 提示
-WinJS 只支持 yarn 1.x / pnpm 6+ / npm 8+。
+::: tip Note
+WinJS only supports yarn 1.x / pnpm 6+ / npm 8+.
 :::
 
-## 创建项目
+## Creating a Project
 
-通过官方工具创建项目，
+Create a project using the official tool:
 
 ::: code-group
 
@@ -148,33 +148,33 @@ info  - generate files
 
 :::
 
-注：使用 bun 初始化项目会更快，需要 bun >= `0.4.0` 版本。
+Note: Using bun to initialize projects is faster, requires bun >= `0.4.0` version.
 
-这一步会自动安装依赖，同时安装成功后会自动执行 `win setup` 做一些文件预处理等工作。
+This step will automatically install dependencies, and after successful installation, it will automatically execute `win setup` to do some file preprocessing work.
 
-### 从模板创建项目
+### Creating Projects from Templates
 
 ```bash
-# 从 @winner-fed/taro-template 创建一个 taro 模板
+# Create a taro template from @winner-fed/taro-template
 yarn create @winner-fed/win --template taro
 ```
 
-### 参数选项
+### Parameter Options
 
-使用 `@winner-fed/create-win` 创建项目时，可用的参数如下：
+When using `@winner-fed/create-win` to create projects, the available parameters are as follows:
 
 
 |     option     | description                |
 | :--------------: | :--------------------------- |
-|   `--no-git`   | 创建项目，但不初始化 Git   |
-| `--no-install` | 创建项目，但不自动安装依赖 |
+|   `--no-git`   | Create project without initializing Git   |
+| `--no-install` | Create project without automatically installing dependencies |
     
 
-> 想了解更多模板的介绍，可以参考[脚手架](./boilerplate.md)   
+> For more template introductions, refer to [Boilerplate](./boilerplate.md)   
 
-## 启动项目
+## Starting the Project
 
-执行 `pnpm dev` 命令，
+Execute the `pnpm dev` command:
 
 ```bash
 $ pnpm dev
@@ -191,13 +191,13 @@ ready - ║  > Network: http://10.188.41.199:8000              ║
         ╚════════════════════════════════════════════════════╝
 ```
 
-在浏览器里打开 [http://localhost:8000/](http://localhost:8000/)，能看到以下界面，
+Open [http://localhost:8000/](http://localhost:8000/) in your browser to see the following interface:
 
 ![](/images/guide/quick-start.png)
 
-## 启用 Prettier（可选）
+## Enable Prettier (Optional)
 
-如果需要用 prettier 做项目代码的自动格式化，执行 `pnpm win g`，
+If you need to use prettier for automatic code formatting in your project, execute `pnpm win g`:
 
 ```bash
 $ pnpm win g
@@ -208,9 +208,9 @@ info  - Write .prettierignore
 info  - Install dependencies with pnpm
 ```
 
-## 部署发布
+## Build and Deploy
 
-执行 `pnpm build` 命令，
+Execute the `pnpm build` command:
 
 ```bash
 > win build
@@ -218,7 +218,7 @@ event - compiled successfully in 1179 ms (567 modules)
 event - build index.html
 ```
 
-产物默认会生成到 `./dist` 目录下，
+Build artifacts will be generated in the `./dist` directory by default:
 
 ```
 ./dist
@@ -227,46 +227,46 @@ event - build index.html
 └── win.js
 ```
 
-完成构建后，就可以把 dist 目录部署到服务器上了。
+After completing the build, you can deploy the dist directory to the server.
 
-## 浏览器支持
+## Browser Support
 
-本地开发：推荐使用 <SpecialRemark text="Chrome" /> 最新版浏览器。
+Local development: Recommended to use the latest version of <SpecialRemark text="Chrome" /> browser.
 
-生产环境： Web 及 H5 支持现代浏览器，
-其中 `Vue3` **不支持 <SpecialRemark text="IE" />**。详见[Vue 支持哪些浏览器](https://cn.vuejs.org/about/faq.html#what-browsers-does-vue-support)
+Production environment: Web and H5 support modern browsers,
+where `Vue3` **does not support <SpecialRemark text="IE" />**. See [What browsers does Vue support](https://vuejs.org/about/faq.html#what-browsers-does-vue-support)
 
-::: tip 注意
-使用 Vue 3.x 需要考虑更多的兼容性
+::: tip Note
+Using Vue 3.x requires considering more compatibility issues
 
-1. Vue3.x 不支持 ie11
-2. Vue3.x 不兼容安卓6以下 webview 的 Chrome 版本
+1. Vue3.x does not support IE11
+2. Vue3.x is not compatible with Chrome versions in Android 6 and below webviews
 
 :::
 
-具体如下：
+Details are as follows:
 
 - Vue3
-  - Web 端
+  - Web
   
   | <img src="https://cdn.jsdelivr.net/npm/@browser-logos/internet-explorer_9-11@1.1.16/internet-explorer_9-11_32x32.png" alt="internet-explorer_9-11"/><br />IE          | <img src="https://cdn.jsdelivr.net/npm/@browser-logos/edge/edge_32x32.png" alt="Edge"/><br />Edge            |  <img src="https://cdn.jsdelivr.net/npm/@browser-logos/firefox/firefox_32x32.png" alt="Firefox"/><br />Firefox         | <img src="https://cdn.jsdelivr.net/npm/@browser-logos/chrome/chrome_32x32.png" alt="Chrome"/><br />Chrome          | <img src="https://cdn.jsdelivr.net/npm/@browser-logos/safari/safari_32x32.png" alt="Safari"/><br />Safari          |
     | ----------- | --------------- | --------------- | --------------- | --------------- |
   | not support | last 2 versions | last 2 versions | last 2 versions、>=51 | last 2 versions |
   
-  - 移动端 H5
+  - Mobile H5
   
   | Android         | iOS           |
     | ---------- | --------------- |
   | >= 6.0 | >= 10.0 |
 
 - Vue2
-  - Web 端
+  - Web
   
     | <img src="https://cdn.jsdelivr.net/npm/@browser-logos/internet-explorer_9-11@1.1.16/internet-explorer_9-11_32x32.png" alt="internet-explorer_9-11"/><br />IE         | <img src="https://cdn.jsdelivr.net/npm/@browser-logos/edge/edge_32x32.png" alt="Edge"/><br />Edge            |  <img src="https://cdn.jsdelivr.net/npm/@browser-logos/firefox/firefox_32x32.png" alt="Firefox"/><br />Firefox         | <img src="https://cdn.jsdelivr.net/npm/@browser-logos/chrome/chrome_32x32.png" alt="Chrome"/><br />Chrome          | <img src="https://cdn.jsdelivr.net/npm/@browser-logos/safari/safari_32x32.png" alt="Safari"/><br />Safari |
     | ----------- | --------------- | --------------- | --------------- | --------------- |
     | >= 11 | last 2 versions | last 2 versions、>= 34 | last 2 versions、>=51 | last 2 versions |
   
-  - 移动端 H5
+  - Mobile H5
     | Android | iOS |
     |---------------------------------------------------------------------------------------------------------------------| --------------- |
-    | >= 6.0 | >= 10.0 |`
+    | >= 6.0 | >= 10.0 |
