@@ -6,7 +6,7 @@ All official WinJS packages currently use unified version numbers for release.
 
 | Package Name              | Version                                                                                                      |
 |---------------------------|--------------------------------------------------------------------------------------------------------------|
-| @winner-fed/create-win    | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fwinjs?style=flat-square&colorB=646cff)         |
+| @winjs-dev/create-win    | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fwinjs?style=flat-square&colorB=646cff)         |
 | @winner-fed/preset-vue    | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fpreset-vue?style=flat-square&colorB=646cff)    |
 | @winner-fed/preset-vue2   | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fpreset-vue2?style=flat-square&colorB=646cff)   |
 | @winner-fed/renderer-vue  | ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Frenderer-vue?style=flat-square&colorB=646cff)  |

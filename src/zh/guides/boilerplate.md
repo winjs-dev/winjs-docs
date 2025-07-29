@@ -16,7 +16,7 @@ pnpm create @winner-fed/win
 pnpm create @winner-fed/win my-winjs-app
 ```
 
-这个命令会安装 `@winner-fed/create-win` 脚手架并自动运行，运行后提供了三个可选项可以选择：
+这个命令会安装 `@winjs-dev/create-win` 脚手架并自动运行，运行后提供了三个可选项可以选择：
 
 1. Pick Win App Template - 选择应用程序（内置）模板
 

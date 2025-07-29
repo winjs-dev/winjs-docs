@@ -16,7 +16,7 @@ pnpm create @winner-fed/win
 pnpm create @winner-fed/win my-winjs-app
 ```
 
-This command will install the `@winner-fed/create-win` boilerplate and run it automatically. After running, it provides three optional items to choose from:
+This command will install the `@winjs-dev/create-win` boilerplate and run it automatically. After running, it provides three optional items to choose from:
 
 1. Pick Win App Template - Choose application (built-in) template
 

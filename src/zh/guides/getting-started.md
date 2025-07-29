@@ -65,8 +65,8 @@ WinJS 只支持 yarn 1.x / pnpm 6+ / npm 8+。
 ::: code-group
 
 ```bash [PNPM]
-$ pnpm dlx @winner-fed/create-win@latest
-✔ Install the following package: @winner-fed/create-win? (Y/n) · true
+$ pnpm dlx @winjs-dev/create-win@latest
+✔ Install the following package: @winjs-dev/create-win? (Y/n) · true
 ✔ Pick Npm Client › pnpm
 ✔ Pick Npm Registry › winner
 Write: .gitignore
@@ -83,7 +83,7 @@ info  - generate files
 ```
 
 ```bash [BUN]
-$ bunx @winner-fed/create-win
+$ bunx @winjs-dev/create-win
 ✔ Pick Win App Template › Simple App
 ✔ Pick Npm Client › pnpm
 ✔ Pick Npm Registry › winner
@@ -101,9 +101,9 @@ ready - Git initialized successfully
 ```
 
 ```bash [NPM]
-$ npx @winner-fed/create-win@latest
+$ npx @winjs-dev/create-win@latest
 Need to install the following packages:
-  @winner-fed/create-win@latest
+  @winjs-dev/create-win@latest
 Ok to proceed? (y) y
 ✔ Pick Win App Template › Simple App
 ✔ Pick Npm Client › npm
@@ -125,8 +125,8 @@ Copy:  typings.d.ts
 
 ```bash [YARN]
 $ yarn create @winner-fed/win
-success Installed "@winner-fed/create-win@0.0.3" with binaries:
-      - @winner-fed/create-win
+success Installed "@winjs-dev/create-win@0.0.3" with binaries:
+      - @winjs-dev/create-win
 ✔ Pick Win App Template › Simple App
 ✔ Pick Npm Client › yarn
 ✔ Pick Npm Registry › winner
@@ -161,7 +161,7 @@ yarn create @winner-fed/win --template taro
 
 ### 参数选项
 
-使用 `@winner-fed/create-win` 创建项目时，可用的参数如下：
+使用 `@winjs-dev/create-win` 创建项目时，可用的参数如下：
 
 
 |     option     | description                |
