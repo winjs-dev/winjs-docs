@@ -19,7 +19,7 @@ importers:
         version: 3.13.0
       vitepress:
         specifier: 2.0.0-alpha.9
-        version: 2.0.0-alpha.9(@types/node@22.16.5)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1)
+        version: 2.0.0-alpha.9(@types/node@22.17.0)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1)
       vue:
         specifier: ^3.2.45
         version: 3.5.18
@@ -29,7 +29,7 @@ importers:
         version: 14.1.2
       '@types/node':
         specifier: ^22.16.5
-        version: 22.16.5
+        version: 22.17.0
       '@winner-fed/prettier-config-win':
         specifier: ^1.0.0
         version: 1.0.0
@@ -41,7 +41,7 @@ importers:
         version: 5.43.1
       vitepress-plugin-group-icons:
         specifier: ^1.6.1
-        version: 1.6.1(markdown-it@14.1.0)(vite@7.0.6(@types/node@22.16.5)(terser@5.43.1))
+        version: 1.6.1(markdown-it@14.1.0)(vite@7.0.6(@types/node@22.17.0)(terser@5.43.1))
       vitepress-plugin-pagefind:
         specifier: ^0.4.14
         version: 0.4.14(pagefind@1.3.0)
@@ -503,8 +503,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@22.16.5':
-    resolution: {integrity: sha512-bJFoMATwIGaxxx8VJPeM8TonI8t579oRvgAuT8zFugJsJZgzqv0Fu8Mhp68iecjzG7cnN3mO2dJQ5uUM2EFrgQ==}
+  '@types/node@22.17.0':
+    resolution: {integrity: sha512-bbAKTCqX5aNVryi7qXVMi+OkB3w/OyblodicMbvE38blyAz7GxXf6XYhklokijuPwwVg9sDLKRxt0ZHXQwZVfQ==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -1846,7 +1846,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@22.16.5':
+  '@types/node@22.17.0':
     dependencies:
       undici-types: 6.21.0
 
@@ -1860,10 +1860,10 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitejs/plugin-vue@6.0.0(vite@7.0.6(@types/node@22.16.5)(terser@5.43.1))(vue@3.5.18)':
+  '@vitejs/plugin-vue@6.0.0(vite@7.0.6(@types/node@22.17.0)(terser@5.43.1))(vue@3.5.18)':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-beta.19
-      vite: 7.0.6(@types/node@22.16.5)(terser@5.43.1)
+      vite: 7.0.6(@types/node@22.17.0)(terser@5.43.1)
       vue: 3.5.18
 
   '@vue/compiler-core@3.5.18':
@@ -2976,7 +2976,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite@7.0.6(@types/node@22.16.5)(terser@5.43.1):
+  vite@7.0.6(@types/node@22.17.0)(terser@5.43.1):
     dependencies:
       esbuild: 0.25.8
       fdir: 6.4.6(picomatch@4.0.3)
@@ -2985,17 +2985,17 @@ snapshots:
       rollup: 4.45.1
       tinyglobby: 0.2.14
     optionalDependencies:
-      '@types/node': 22.16.5
+      '@types/node': 22.17.0
       fsevents: 2.3.3
       terser: 5.43.1
 
-  vitepress-plugin-group-icons@1.6.1(markdown-it@14.1.0)(vite@7.0.6(@types/node@22.16.5)(terser@5.43.1)):
+  vitepress-plugin-group-icons@1.6.1(markdown-it@14.1.0)(vite@7.0.6(@types/node@22.17.0)(terser@5.43.1)):
     dependencies:
       '@iconify-json/logos': 1.2.5
       '@iconify-json/vscode-icons': 1.2.23
       '@iconify/utils': 2.3.0
       markdown-it: 14.1.0
-      vite: 7.0.6(@types/node@22.16.5)(terser@5.43.1)
+      vite: 7.0.6(@types/node@22.17.0)(terser@5.43.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -3011,7 +3011,7 @@ snapshots:
       - '@vue/composition-api'
       - typescript
 
-  vitepress@2.0.0-alpha.9(@types/node@22.16.5)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1):
+  vitepress@2.0.0-alpha.9(@types/node@22.17.0)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1):
     dependencies:
       '@docsearch/css': 4.0.0-beta.5
       '@docsearch/js': 4.0.0-beta.5
@@ -3019,7 +3019,7 @@ snapshots:
       '@shikijs/core': 3.8.1
       '@shikijs/transformers': 3.8.1
       '@shikijs/types': 3.8.1
-      '@vitejs/plugin-vue': 6.0.0(vite@7.0.6(@types/node@22.16.5)(terser@5.43.1))(vue@3.5.18)
+      '@vitejs/plugin-vue': 6.0.0(vite@7.0.6(@types/node@22.17.0)(terser@5.43.1))(vue@3.5.18)
       '@vue/devtools-api': 7.7.7
       '@vue/shared': 3.5.18
       '@vueuse/core': 13.5.0(vue@3.5.18)
@@ -3028,7 +3028,7 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.1.2
       shiki: 3.8.1
-      vite: 7.0.6(@types/node@22.16.5)(terser@5.43.1)
+      vite: 7.0.6(@types/node@22.17.0)(terser@5.43.1)
       vue: 3.5.18
     optionalDependencies:
       postcss: 8.5.6
