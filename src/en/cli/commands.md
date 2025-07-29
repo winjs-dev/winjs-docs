@@ -1,14 +1,14 @@
-# 命令行 {#commands}
+# Command Line Interface {#commands}
 
-WinJS 提供了很多内置的命令行用于启动，构建项目，另外还有一些辅助开发的命令，如生成器等。
+WinJS provides many built-in CLI commands for starting and building projects, as well as some development assistance commands such as generators.
 
-要获取可用的命令列表，你可以在项目目录中运行 help 命令：
+To get a list of available commands, you can run the help command in your project directory:
 
 ```bash
 win help
 ```
 
-你应该能看到类似如下的日志：
+You should see output similar to the following:
 
 ```bash
 Usage: win <command> [options]
@@ -40,11 +40,11 @@ Run `win help <command>` for more information of specific commands.
 Visit https://winjs-dev.github.io/winjs-docs/ to learn more about WinJS.
 ```
 
-> 为方便查找，以下命令通过字母排序。
+> For easy reference, the following commands are sorted alphabetically.
 
 ## build
 
-构建项目，适用于生产环境的部署。
+Builds the project for production deployment.
 
 ```bash
 $ win build
@@ -52,9 +52,9 @@ $ win build
 
 ## config
 
-通过命令行快速查看和修改配置。
+Quickly view and modify configurations through the command line.
 
-查看配置，可以用 `list` 或 `get`。
+To view configurations, use `list` or `get`.
 
 ```bash
 $ win config list
@@ -65,7 +65,7 @@ $ win config get mfsu
  - [key: externals] { esbuild: true }
 ```
 
-修改配置，可以用 `set` 或 `remove`。
+To modify configurations, use `set` or `remove`.
 
 ```bash
 $ win config set polyfill false
@@ -77,15 +77,15 @@ remove config:polyfill on /private/tmp/sorrycc-wsYpty/.winrc.ts
 
 ## cache
 
-WinJS 将 `node_modules/.cache` 作为缓存目录，有时候需要手动清除缓存，例如改了 `node_modules` 里的文件想验证结果，或者 mf 报错清了缓存就好了。可以执行此命令清除缓存。
+WinJS uses `node_modules/.cache` as the cache directory. Sometimes you need to manually clear the cache, for example, when you've modified files in `node_modules` and want to verify the results, or when mf errors can be resolved by clearing the cache. You can execute this command to clear the cache.
 
 ```bash
 $ win cache clean
 ```
 
-也支持输出缓存目录树及大小，显示缓存文件夹信息，`--depth` 表示层数可选，默认值为 1 层，cache层为第 0 层
+It also supports outputting the cache directory tree and size, displaying cache folder information. `--depth` indicates the optional number of layers, with a default value of 1 layer, where the cache layer is level 0.
 
-执行以下命令：
+Execute the following command:
 ```bash
 win cache ls [--depth]
 ```
@@ -102,7 +102,7 @@ info  - [win cache] dir info
 
 ## deadcode
 
-用于查找 src 目录下未被引用的文件，并在根目录输出文件。
+Used to find unreferenced files in the src directory and output the results to a file in the root directory.
 
 ```bash
 $ win deadcode
@@ -114,7 +114,7 @@ $ win deadcode
 
 ## dev
 
-启动本地开发服务器，进行项目的开发与调试。
+Starts the local development server for project development and debugging.
 
 ```bash
 $ win dev
@@ -130,9 +130,9 @@ event - compiled successfully in 1051 ms (416 modules)
 
 ## ftp
 
-通过 FTP 工具将本地文件上传到目标服务器。通常在 package.json 的 `scripts.ftp` 里设置。
+Uploads local files to the target server through FTP tools. Usually set in `scripts.ftp` of package.json.
 
-默认读取 `.winrc.ts` 配置中的 ftpOptions 属性，该属性配置具体可以参考[配置 ftpOptions](../config/config#ftpoptions)。
+By default, it reads the ftpOptions property from the `.winrc.ts` configuration. For specific configuration details, refer to [configuring ftpOptions](../config/config#ftpoptions).
 
 ```bash
 {
@@ -143,9 +143,9 @@ event - compiled successfully in 1051 ms (416 modules)
 
 ## generate
 
-用于增量生成文件或启用功能，命令行别名是 `g`。
+Used for incremental file generation or enabling features. The command line alias is `g`.
 
-不加任何参数时会给交互式的生成器选择。
+When run without any parameters, it provides an interactive generator selection.
 
 ```bash
 $ win g
@@ -163,16 +163,16 @@ $ win generate
     Generate huipro -- Generate subsystem build tool for hui 1.0 pro
 ```
 
-也可以指定参数。
+You can also specify parameters.
 
 ```bash
-# 生成路由文件
+# Generate route files
 $ win g page index --typescript --less
 ```
 
 ## help
 
-查看帮助。
+Shows help information.
 
 ```bash
 $ win help
@@ -194,7 +194,7 @@ Run `win help <command>` for more information of specific commands.
 Visit https://winjs-dev.github.io/winjs-docs/ to learn more about WinJS.
 ```
 
-也可指定命令，查看特定命令的详细帮助。
+You can also specify a command to view detailed help for a specific command.
 
 ```bash
 $ win help build
@@ -213,7 +213,7 @@ Details:
 
 ## info   
 
-打印有关环境的调试信息
+Prints debugging information about your environment.
 
 ```
 $ win info
@@ -241,7 +241,7 @@ Usage: win info
 
 ## lint
 
-用于检查及修正代码是否符合规则。
+Used to check and fix code compliance with rules.
 
 ```bash
 $ win lint
@@ -263,16 +263,16 @@ Usage: win lint
 
 ## mfsu
 
-`win mfsu` 命令可以查看 MFSU 依赖信息、重新构建 MFSU 依赖和清除 MFSU 依赖。
+The `win mfsu` command can view MFSU dependency information, rebuild MFSU dependencies, and clear MFSU dependencies.
 
 
-获取 MFSU 命令帮忙
+Get MFSU command help
 
 ```bash
 $ win mfsu
 ```
 
-获取 MFSU 依赖列表
+Get MFSU dependency list
 ```bash
 $ win mfsu ls
 warning@0.0.3
@@ -288,7 +288,7 @@ lodash/concat@4.17.21
 ...
 ```
 
-重新构建 MFSU 依赖
+Rebuild MFSU dependencies
 
 ```bash
 $ win mfsu build
@@ -300,19 +300,19 @@ info  - [MFSU] buildDeps since cacheDependency has changed
 info  - [plugin: @winner-fed/preset-win/dist/commands/mfsu/mfsu] [MFSU][eager] build success
 ```
 
-清除 MFSU 依赖
+Clear MFSU dependencies
 ```bash
-$ # 删除依赖信息列表
+$ # Delete dependency information list
 $ win mfsu remove
-$ # 删除依赖信息列表和产物文件
+$ # Delete dependency information list and build artifacts
 $ win mfsu remove --all
 ```
 
 ## plugin
 
-插件相关操作，目前只支持 `list` 子命令。
+Plugin-related operations. Currently only supports the `list` subcommand.
 
-列出所有插件。
+List all plugins.
 
 ```bash
 $ win plugin list
@@ -331,29 +331,29 @@ $ win plugin list
 
 ## preview
 
-`win preview` 命令会在本地启动一个静态 Web 服务器，将 dist 文件夹运行在 http://127.0.0.1:4172, 用于预览构建后产物, 支持 proxy、mock 等设置。
+The `win preview` command starts a local static web server, serving the dist folder at http://127.0.0.1:4172 to preview build artifacts. It supports proxy, mock, and other settings.
 
-你可以通过 `--port` 参数来配置服务的运行端口。
+You can configure the service port using the `--port` parameter.
 
 ```bash
 $ win preview --port 9527
 ```
 
-现在 `preview` 命令会将服务器运行在 http://127.0.0.1:9527.
+Now the `preview` command will run the server at http://127.0.0.1:9527.
 
-通过 `--host` 参数来指定 配置服务运行的 hostname。
+Use the `--host` parameter to specify the hostname for the service.
 
-以下用户配置在 `preview` 时也会生效
+The following user configurations will also take effect during `preview`:
 
 * [https](../config/config#https)
 * [proxy](../guides/proxy)
 * [mock](../guides/mock)
 
-注意 `dist` 目录会随着配置 `outputPath` 的变更而变更。
+Note that the `dist` directory will change according to the `outputPath` configuration.
 
 ## run
 
-`win run` 命令可以让你像 node 运行 js 一样来运行 TypeScript 和 ESM 文件。你可以搭配 [zx](https://github.com/google/zx) 来更好的使用脚本命令。
+The `win run` command allows you to run TypeScript and ESM files just like running JavaScript with node. You can combine it with [zx](https://github.com/google/zx) for better script command usage.
 
 ```bash
 $ win run ./script.ts
@@ -361,7 +361,7 @@ $ win run ./script.ts
 
 ## setup
 
-初始化项目，会做临时文件的生成等操作。通常在 package.json 的 `scripts.postinstall` 里设置。
+Initializes the project and performs operations such as generating temporary files. Usually set in `scripts.postinstall` of package.json.
 
 ```bash
 {
@@ -371,13 +371,13 @@ $ win run ./script.ts
 
 ## see
 
-将构建后的静态资源生成 SEE 平台发布物。通常在 package.json 的 `scripts.see` 里设置。
+Generates SEE platform artifacts from built static resources. Usually set in `scripts.see` of package.json.
 
-::: tip 提示
-该命令只会以构建后输出目录下现有的静态资源做包，不会执行源码编译。
+::: tip Note
+This command only packages existing static resources in the build output directory and does not perform source code compilation.
 :::
 
-默认读取 `.winrc.ts` 配置中的 seeOptions 属性，该属性配置具体可以参考[配置 seeOptions](../config/config#seeoptions)。
+By default, it reads the seeOptions property from the `.winrc.ts` configuration. For specific configuration details, refer to [configuring seeOptions](../config/config#seeoptions).
 
 ```bash
 {
@@ -387,9 +387,9 @@ $ win run ./script.ts
 
 ## verify-commit
 
-验证 commit message 信息，通常和 [husky](https://github.com/typicode/husky) 搭配使用。
+Verifies commit message information, usually used in combination with [husky](https://github.com/typicode/husky).
 
-比如在 `.husky/commit-msg` 做如下配置，
+For example, configure in `.husky/commit-msg` as follows:
 
 ```bash
 #!/bin/sh
@@ -400,7 +400,7 @@ npx --no-install win verify-commit $1
 
 ## version
 
-查看 `win` 版本，等同于 `win -v`。
+View the `win` version, equivalent to `win -v`.
 
 ```bash
 $ win version
@@ -409,9 +409,9 @@ $ win version
 
 ## zip
 
-将指定的目录压缩成 zip 包。通常在 package.json 的 `scripts.zip` 里设置。
+Compresses the specified directory into a zip package. Usually set in `scripts.zip` of package.json.
 
-默认读取 `.winrc.ts` 配置中的 zipOptions 属性，该属性配置具体可以参考[配置 zipOptions](../config/config#zipoptions)。
+By default, it reads the zipOptions property from the `.winrc.ts` configuration. For specific configuration details, refer to [configuring zipOptions](../config/config#zipoptions).
 
 ```bash
 {
