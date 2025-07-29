@@ -1,16 +1,16 @@
-# 检测网页更新通知用户 {#webupdatenotification}
+# Web Update Detection and User Notification {#webupdatenotification}
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-web-update-notification?style=flat-square&colorB=646cff)
 
-「在网页有新版本更新或问题修复时，用户继续使用旧的版本，影响用户体验和后端数据准确性。也有可能会出现报错（文件404）、白屏的情况」，此问题在网页重新部署后，很常见。
+"When a web application has new version updates or bug fixes, users continuing to use the old version affects user experience and backend data accuracy. It may also cause errors (404 files) or blank screen issues." This problem is very common after web application redeployment.
 
-## 原理
+## Principle
 
-以 git commit hash (也支持 svn revision number、package.json version、build timestamp、custom) 为版本号，打包时将版本号写入一个 json 文件，同时注入客户端运行的代码。客户端轮询服务器上的版本号（浏览器窗口的visibilitychange、focus 事件辅助），和本地作比较，如果不相同则通知用户刷新页面。
+Uses git commit hash (also supports svn revision number, package.json version, build timestamp, custom) as the version number. During build, the version number is written to a JSON file while injecting client-side runtime code. The client polls the version number on the server (assisted by browser window visibilitychange and focus events), compares it with the local version, and notifies users to refresh the page if they differ.
 
-## 启用方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -31,7 +31,7 @@ $ bun add @winner-fed/plugin-web-update-notification -D
 ```
 :::
 
-2. 在 `package.json` 中引入依赖
+2. Add dependency in `package.json`
 
 ```json
 {
@@ -41,7 +41,7 @@ $ bun add @winner-fed/plugin-web-update-notification -D
 }
 ```
 
-3. 在配置文件中 `.winrc` 中开启该功能
+3. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -50,26 +50,26 @@ import type { Options as WebUpdateNotificationOptions } from '@winner-fed/plugin
 export default defineConfig({
   plugins: [require.resolve('@winner-fed/plugin-web-update-notification')],
   /**
-   * @name web-update-notification 插件
+   * @name web-update-notification plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/webupdatenotification.html
    */
   webUpdateNotification: {
     logVersion: true,
     checkInterval: 0.5 * 60 * 1000,
     notificationProps: {
-      title: '发现新版本',
-      description: '系统更新啦！请刷新后使用。',
-      buttonText: '刷新',
-      dismissButtonText: '忽略'
+      title: 'New Version Available',
+      description: 'System updated! Please refresh to use the latest version.',
+      buttonText: 'Refresh',
+      dismissButtonText: 'Dismiss'
     }
   } as WebUpdateNotificationOptions
 });
 ```
      
-## 效果
+## Preview
 ![web-update.png](/images/plugins/web-update.png)
   
-## 插件配置说明
+## Plugin Configuration
 
-1. [配置说明](https://github.com/GreatAuk/plugin-web-update-notification/blob/master/README.zh-CN.md#webupdatenotice-options)
+1. [Configuration Documentation](https://github.com/GreatAuk/plugin-web-update-notification/blob/master/README.zh-CN.md#webupdatenotice-options)
 2. https://juejin.cn/post/7209234917288886331

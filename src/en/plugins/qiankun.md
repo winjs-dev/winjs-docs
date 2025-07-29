@@ -1,12 +1,12 @@
-# 适配微前端-乾坤
+# Micro-Frontend Integration - Qiankun
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-qiankun?style=flat-square&colorB=646cff)
 
-构建的产物适配乾坤
+Build artifacts are adapted for Qiankun micro-frontend framework.
 
-## 开启方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -27,7 +27,7 @@ $ bun add @winner-fed/plugin-qiankun -D
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';

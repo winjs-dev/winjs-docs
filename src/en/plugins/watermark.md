@@ -1,12 +1,12 @@
-# 水印 {#watermark}
+# Watermark {#watermark}
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-watermark?style=flat-square&colorB=646cff)
 
-watermark 为页面添加水印效果
+Watermark adds watermark effects to pages.
 
-## 开启方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -27,7 +27,7 @@ $ bun add @winner-fed/plugin-watermark -D
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -35,21 +35,21 @@ import { defineConfig } from 'win';
 export default defineConfig({
   plugins: ['@winner-fed/plugin-watermark'],
   /**
-   * @name 水印插件
+   * @name Watermark plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/watermark.html
    */
   watermark: {},
 });
 ```
 
-3. 在项目中导入使用
+3. Import and use in your project
 
 ```ts
 import { Watermark, WatermarkOptions } from 'winjs';
 
 const watermark = new Watermark({
   container: document.body,
-  text: '测试水印',
+  text: 'Test Watermark',
 } as WatermarkOptions);
 
 watermark.show();
@@ -57,44 +57,44 @@ watermark.show();
 
 ## API
 
-### 基本参数
+### Basic Parameters
 
-|  **参数**  |  **说明**  |  **类型**  |  **默认值** |
+| **Parameter** | **Description** | **Type** | **Default** |
 | --- | --- | --- | --- |
-|  container  |  水印挂载节点  |  `HTMLElement` \| `string`  |  \-  |
-|  image  |  图片源，建议导出 2 倍或 3 倍图，优先使用图片渲染水印  |  `string`  |  \-  |
-|  text  |  水印文本, 为数组时表示多行水印  |  `string` \| `string\[\]`  |  \-  |
-|  zIndex  |  水印层级  |  `number`  |  `9999` |
-|  width  |  单个水印宽度  |  `number`  |  `120`  |
-|  height  |  单个水印高度  |  `number`  |  `64`  |
-|  opacity  |  水印透明度  |  `number`  |  `0.15` |
-|  rotate  |  旋转的角度  |  `number`  |  `-22`  |
-|  fontSize  |  设置字体大小  |  `number`  |  `16`  |
-|  fontWeight  |  设置字体粗细  |  `number` \| `string`  |  `normal` |
-|  fontStyle  |  规定字体样式  |  `string`  |  `normal` |
-|  fontVariant  |  规定字体变体  |  `string`  |  `normal` |
-|  fontColor  |  设置字体颜色  |  `string`  |  `#000` |
-|  fontFamily  |  设置水印文字的字体  |  `string`  |  `sans-serif` |
-|  blindText  |  盲水印文本  |  `string`  |  \-  |
-|  blindOpacity  |  盲水印透明度  |  `number`  |  `0.005` |
+| container | Watermark mount node | `HTMLElement` \| `string` | \- |
+| image | Image source, recommend exporting 2x or 3x images, image rendering takes priority | `string` | \- |
+| text | Watermark text, array indicates multi-line watermark | `string` \| `string\[\]` | \- |
+| zIndex | Watermark z-index | `number` | `9999` |
+| width | Single watermark width | `number` | `120` |
+| height | Single watermark height | `number` | `64` |
+| opacity | Watermark opacity | `number` | `0.15` |
+| rotate | Rotation angle | `number` | `-22` |
+| fontSize | Font size | `number` | `16` |
+| fontWeight | Font weight | `number` \| `string` | `normal` |
+| fontStyle | Font style | `string` | `normal` |
+| fontVariant | Font variant | `string` | `normal` |
+| fontColor | Font color | `string` | `#000` |
+| fontFamily | Watermark text font family | `string` | `sans-serif` |
+| blindText | Blind watermark text | `string` | \- |
+| blindOpacity | Blind watermark opacity | `number` | `0.005` |
 
-### 高级参数
+### Advanced Parameters
 
-|  **参数**  |  **说明**  |  **类型**  |  **默认值**  |
+| **Parameter** | **Description** | **Type** | **Default** |
 | --- | --- | --- | --- |
-|  monitor  |  是否开启保护模式  |  `boolean`  |  `true`  |
-|  mode  |  展示模式，interval 表示错行展示  |  `string`  |  `interval`  |
-|  gapX  |  水印之间的水平间距  |  `number`  |  `100`  |
-|  gapY  |  水印之间的垂直间距  |  `number`  |  `100`  |
-|  offsetLeft  |  水印在 canvas 画布上绘制的水平偏移量  |  `number`  |  `0`  |
-|  offsetTop  |  水印在 canvas 画布上绘制的垂直偏移量  |  `number`  |  `0`  |
-|  pack  |  是否使用水印组件包裹内容  |  `boolean`  |  `true`  |
+| monitor | Whether to enable protection mode | `boolean` | `true` |
+| mode | Display mode, interval means staggered display | `string` | `interval` |
+| gapX | Horizontal spacing between watermarks | `number` | `100` |
+| gapY | Vertical spacing between watermarks | `number` | `100` |
+| offsetLeft | Horizontal offset for watermark drawing on canvas | `number` | `0` |
+| offsetTop | Vertical offset for watermark drawing on canvas | `number` | `0` |
+| pack | Whether to use watermark component to wrap content | `boolean` | `true` |
 
-### 方法
+### Methods
 
-|  **名称**  |  **说明**  |  **类型**  |
+| **Name** | **Description** | **Type** |
 | --- | --- | --- |
-|  update  |  更新水印配置，并重新渲染  |  `(opts: WatermarkOptions) => void`  |
-|  show  |  显示水印  |  `() => void`  |
-|  hide  |  隐藏水印  |  `() => void`  |
-|  destroy  |  销毁水印  |  `() => void`  |
+| update | Update watermark configuration and re-render | `(opts: WatermarkOptions) => void` |
+| show | Show watermark | `() => void` |
+| hide | Hide watermark | `() => void` |
+| destroy | Destroy watermark | `() => void` |

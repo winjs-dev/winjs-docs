@@ -1,23 +1,23 @@
-# 安全增强插件
+# Security Enhancement Plugin
 
-一个为 WinJS 项目提供安全增强功能的插件，主要用于生成 SRI（Subresource Integrity）属性。
+A plugin that provides security enhancement features for WinJS projects, primarily used for generating SRI (Subresource Integrity) attributes.
 
-## 功能特性
+## Features
 
-- 自动为 HTML 文件中的 `<script>` 和 `<link>` 标签生成 SRI 属性
-- 支持 SHA-256、SHA-384、SHA-512 哈希算法（可配置）
-- 自动添加 `crossorigin="anonymous"` 属性以确保 SRI 正常工作
-- 仅在生产环境下生效，开发环境自动跳过
+- Automatically generates SRI attributes for `<script>` and `<link>` tags in HTML files
+- Supports SHA-256, SHA-384, SHA-512 hash algorithms (configurable)
+- Automatically adds `crossorigin="anonymous"` attribute to ensure SRI works properly
+- Only effective in production environment, automatically skipped in development
 
-## 安装
+## Installation
 
 ```bash
 pnpm add @winner-fed/plugin-security
 ```
 
-## 使用方法
+## Usage
 
-在你的 `.winrc.ts` 配置文件中添加插件配置：
+Add plugin configuration in your `.winrc.ts` configuration file:
 
 ```typescript
 import { defineConfig } from '@winner-fed/winjs';
@@ -25,39 +25,39 @@ import { defineConfig } from '@winner-fed/winjs';
 export default defineConfig({
   plugins: ['@winner-fed/plugin-security'],
   security: {
-    sri: true // 启用 SRI 功能
+    sri: true // Enable SRI functionality
   },
 });
 ```
 
-## 配置选项
+## Configuration Options
 
 ### `sri`
 
-- **类型**: `boolean | { algorithm: 'sha256' | 'sha384' | 'sha512' }`
-- **默认值**: 需要手动设置
-- **描述**: 是否启用 SRI（子资源完整性）功能，以及可选的哈希算法配置
+- **Type**: `boolean | { algorithm: 'sha256' | 'sha384' | 'sha512' }`
+- **Default**: Requires manual configuration
+- **Description**: Whether to enable SRI (Subresource Integrity) functionality and optional hash algorithm configuration
 
-当设置为 `true` 或 `{}` 时，插件会：
+When set to `true` or `{}`, the plugin will:
 
-1. 扫描构建后的 HTML 文件
-2. 为所有带有 `src` 属性的 `<script>` 标签添加 `integrity` 属性
-3. 为所有带有 `href` 属性的 `<link>` 标签添加 `integrity` 属性
-4. 自动添加 `crossorigin="anonymous"` 属性（如果不存在）
+1. Scan HTML files after build
+2. Add `integrity` attribute to all `<script>` tags with `src` attribute
+3. Add `integrity` attribute to all `<link>` tags with `href` attribute
+4. Automatically add `crossorigin="anonymous"` attribute (if not present)
 
-你也可以通过对象方式指定哈希算法：
+You can also specify the hash algorithm using object syntax:
 
 ```typescript
 security: {
   sri: {
-    algorithm: 'sha512' // 可选 'sha256' | 'sha384' | 'sha512'，默认 'sha512'
+    algorithm: 'sha512' // Options: 'sha256' | 'sha384' | 'sha512', default 'sha512'
   }
 }
 ```
 
-## 示例
+## Example
 
-### 输入 HTML
+### Input HTML
 
 ```html
 <!DOCTYPE html>
@@ -71,7 +71,7 @@ security: {
 </html>
 ```
 
-### 输出 HTML（启用 SRI 后）
+### Output HTML (After SRI enabled)
 
 ```html
 <!DOCTYPE html>
@@ -85,18 +85,18 @@ security: {
 </html>
 ```
 
-## 安全说明
+## Security Notes
 
-SRI（子资源完整性）是一种安全特性，允许浏览器验证获取的资源（例如从 CDN 获取的资源）没有被恶意修改。当浏览器加载资源时，会计算资源的哈希值并与 `integrity` 属性中指定的哈希值进行比较。如果哈希值不匹配，浏览器将拒绝加载该资源。
+SRI (Subresource Integrity) is a security feature that allows browsers to verify that fetched resources (such as resources from CDNs) have not been maliciously modified. When the browser loads a resource, it calculates the resource's hash value and compares it with the hash value specified in the `integrity` attribute. If the hash values don't match, the browser will refuse to load the resource.
 
-对于 `<script>` 标签来说，结果为拒绝执行其中的代码；对于 CSS links 来说，结果为不加载其中的样式。
+For `<script>` tags, the result is refusing to execute the code within; for CSS links, the result is not loading the styles within.
 
-关于 SRI 的更多内容，可以查看 [Subresource Integrity - MDN](https://developer.mozilla.org/zh-CN/docs/Web/Security/Subresource_Integrity)。
+For more information about SRI, see [Subresource Integrity - MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
 
-## 注意事项
+## Important Notes
 
-1. 此插件仅在生产构建时生效，开发环境会自动跳过
-2. 需要确保资源文件在构建输出目录中可访问
-3. `integrity` 属性必须与 `crossorigin` 属性配合使用才能正常工作
+1. This plugin only takes effect during production builds, development environment is automatically skipped
+2. Ensure resource files are accessible in the build output directory
+3. The `integrity` attribute must be used together with the `crossorigin` attribute to work properly
 
 

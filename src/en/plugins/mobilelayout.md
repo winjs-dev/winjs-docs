@@ -1,18 +1,18 @@
-# 移动端布局 {#mobilelayout}
+# Mobile Layout {#mobilelayout}
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-mobile-layout?style=flat-square&colorB=646cff)
    
 
-为了进一步降低研发成本，我们将布局利用 WinJS 插件的方式内置，只需通过简单的配置即可拥有布局，包括移动端H5常见的顶部标题栏，中间内容区域以及底部的标签栏。从而做到使用者无需关心布局。
-::: tip 说明
+To further reduce development costs, we have built-in layout functionality through WinJS plugins. With simple configuration, you can have a complete layout including common mobile H5 elements: top title bar, middle content area, and bottom tab bar. This allows users to focus on business logic without worrying about layout implementation.
+::: tip Note
 
-此方案只适用于 Vue3。由于底层依赖了 Vant 的部分组件，因此在使用此插件时，需要安装 Vant。
+This solution is only compatible with Vue 3. Since it depends on some Vant components at the underlying level, you need to install Vant when using this plugin.
 
 :::
 
-## 启用方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -33,7 +33,7 @@ $ bun add @winner-fed/plugin-mobile-layout -D
 ```
 :::
 
-2. 在 `package.json` 中引入依赖
+2. Add dependency in `package.json`
 
 ```json
 {
@@ -43,7 +43,7 @@ $ bun add @winner-fed/plugin-mobile-layout -D
 }
 ```
 
-3. 在配置文件中 `.winrc` 中开启该功能
+3. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -51,20 +51,20 @@ import { defineConfig } from 'win';
 export default defineConfig({
   plugins: [require.resolve('@winner-fed/plugin-mobile-layout')],
   /**
-   * @name mobileLayout 插件
+   * @name mobileLayout plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/mobilelayout.html
    */
   mobileLayout: {}
 });
 ```
 
-## 配置
+## Configuration
 
-### 运行时配置
+### Runtime Configuration
 
-可以在 `src/app.(j|t)[s]x` 中配置页面底部导航标签栏、所有页面的默认 title、页面的 title、页面头部导航栏。
+You can configure the bottom navigation tab bar, default title for all pages, page titles, and page header navigation bar in `src/app.(j|t)[s]x`.
 
-通过 export `mobileLayout` 对象将作为配置传递给 WinJS 移动端布局组件。如下所示：
+By exporting the `mobileLayout` object, it will be passed as configuration to the WinJS mobile layout component. As shown below:
 
 ```ts
 // app.ts
@@ -76,91 +76,91 @@ export const mobileLayout = {
 };
 ```
 
-| 属性            | 类型              | 必填 | 描述          |
-|---------------|-----------------|----|-------------|
-| tabBar        | TabBarProps     | 否  | 定义页面底部导航标签栏 |
-| navBar        | _NavBarProps    | 否  | 定义页面头部导航栏   |
-| documentTitle | string          | 否  | 定义所有页面的默认标题 |
-| titleList     | TitleListItem[] | 否  | 定义页面的标题     |
+| Property      | Type            | Required | Description                    |
+|---------------|-----------------|----------|--------------------------------|
+| tabBar        | TabBarProps     | No       | Define bottom navigation tab bar |
+| navBar        | _NavBarProps    | No       | Define page header navigation bar |
+| documentTitle | string          | No       | Define default title for all pages |
+| titleList     | TitleListItem[] | No       | Define page titles             |
 
-### 定义页面底部导航标签栏
+### Define Bottom Navigation Tab Bar
 
-`tabBar` 的类型 `TabBarProps` 定义如下：
+The `TabBarProps` type for `tabBar` is defined as follows:
 
-| 属性              | 类型                                                                     | 必填 | 描述                                     |
-|-----------------|------------------------------------------------------------------------|----|----------------------------------------|
-| color           | string                                                                 | 是  | 导航标签的文字默认颜色                            |
-| selectedColor   | string                                                                 | 是  | 导航标签的文字选中时的颜色                          |
-| backgroundColor | string                                                                 | 是  | 导航标签的背景色                               |
-| tabBarItem      | TabBarItem[]                                                           | 是  | 导航标签的列表                                |
-| tabBeforeChange | (navigator: any, name: number \| string) => void \| Promise\<boolean\> | 否  | 切换标签前的回调函数，返回 false 可阻止切换，支持返回 Promise |
-| tabChange       | (navigator: any, name: number \| string) => void                       | 否  | 切换标签时触发                                |
+| Property        | Type                                                                   | Required | Description                                                    |
+|-----------------|------------------------------------------------------------------------|----------|----------------------------------------------------------------|
+| color           | string                                                                 | Yes      | Default text color of navigation tabs                          |
+| selectedColor   | string                                                                 | Yes      | Text color of navigation tabs when selected                    |
+| backgroundColor | string                                                                 | Yes      | Background color of navigation tabs                            |
+| tabBarItem      | TabBarItem[]                                                           | Yes      | List of navigation tabs                                        |
+| tabBeforeChange | (navigator: any, name: number \| string) => void \| Promise\<boolean\> | No       | Callback before tab switch, return false to prevent switch, supports Promise |
+| tabChange       | (navigator: any, name: number \| string) => void                       | No       | Triggered when tab is switched                                 |
 
-`tabBar.tabBarItem` 的类型 `TabBarItem` 定义如下：
+The `TabBarItem` type for `tabBar.tabBarItem` is defined as follows:
 
-| 属性               | 类型                                                                | 必填 | 说明                    |
-|------------------|-------------------------------------------------------------------|----|-----------------------|
-| pagePath         | string                                                            | 是  | 页面路径，必须在 pages 中先定义   |
-| text             | string                                                            | 否  | 导航标签的文字               |
-| iconPath         | string                                                            | 否  | 导航标签图标路径              |
-| selectedIconPath | string                                                            | 否  | 导航标签选中时的图标路径          |
-| dot              | boolean                                                           | 否  | 是否显示图标右上角小红点，默认 false |
-| badge            | string                                                            | 否  | 导航标签图标右上角显示数值 （微标数）   |
-| onPress          | (navigator: any, data?: TabBarItem) => void \| Promise\<boolean\> | 否  | 导航标签点击回调              |
-| title            | string                                                            | 否  | 页面标题                  |
-| icon             | object \| string                                                  | 否  | 自定义导航标签               |
-| selectedIcon     | object \| string                                                  | 否  | 自定义选中的导航标签            |
+| Property         | Type                                                              | Required | Description                                      |
+|------------------|-------------------------------------------------------------------|----------|--------------------------------------------------|
+| pagePath         | string                                                            | Yes      | Page path, must be defined in pages first       |
+| text             | string                                                            | No       | Text of navigation tab                           |
+| iconPath         | string                                                            | No       | Icon path of navigation tab                      |
+| selectedIconPath | string                                                            | No       | Icon path when navigation tab is selected        |
+| dot              | boolean                                                           | No       | Whether to show red dot on top-right of icon, default false |
+| badge            | string                                                            | No       | Number displayed on top-right of navigation tab icon (badge) |
+| onPress          | (navigator: any, data?: TabBarItem) => void \| Promise\<boolean\> | No       | Navigation tab click callback                    |
+| title            | string                                                            | No       | Page title                                       |
+| icon             | object \| string                                                  | No       | Custom navigation tab                            |
+| selectedIcon     | object \| string                                                  | No       | Custom selected navigation tab                   |
 
-### 定义页面头部导航栏
+### Define Page Header Navigation Bar
 
-`navBar` 的类型 `NavBarProps` 定义如下：
+The `NavBarProps` type for `navBar` is defined as follows:
 
-| 属性           | 说明                   | 类型                  | 默认值                         |
-|--------------|----------------------|---------------------|-----------------------------|
-| mode         | 风格模式                 | string              | 'dark' 'dark', 'light'      |
-| icon         | 头部导航左侧，返回区域的图标       | object \| string    | 不在 tabsBar 中定义的页面，会有默认左返回图标 |
-| leftContent  | 头部导航左侧的返回区域的右侧内容     | any                 | 无                           |
-| rightContent | 头部导航右侧内容             | any                 | 无                           |
-| leftText     | 头部导航左侧的返回文案          | string              | 无                           |
-| onLeftClick  | 头部导航左侧的返回区域点击回调      | (navigator) => void | 有左侧回退图标的默认事件是返回上一页          |
-| hideNavBar   | 隐藏 NavBar，默认有 NarBar | boolean             | false                       |
-| pageTitle    | 页面标题                 | string              | 无，优先级最高                     |
-| navList      | 单独设置某些页面的 navbar     | NarBarListItem      | 无                           |
+| Property     | Description                              | Type                | Default                                    |
+|--------------|------------------------------------------|---------------------|--------------------------------------------|
+| mode         | Style mode                               | string              | 'dark' 'dark', 'light'                    |
+| icon         | Icon in the left return area of header navigation | object \| string    | Pages not defined in tabsBar will have default left return icon |
+| leftContent  | Content on the right side of left return area | any                 | None                                       |
+| rightContent | Right content of header navigation       | any                 | None                                       |
+| leftText     | Left return text of header navigation    | string              | None                                       |
+| onLeftClick  | Click callback for left return area     | (navigator) => void | Default event with left return icon is to go back to previous page |
+| hideNavBar   | Hide NavBar, NavBar is shown by default | boolean             | false                                      |
+| pageTitle    | Page title                               | string              | None, highest priority                     |
+| navList      | Set navbar for specific pages separately | NarBarListItem      | None                                       |
 
-`navList` 的类型 `NavBarListItem` 定义如下：
+The `NavBarListItem` type for `navList` is defined as follows:
 
-| 属性       | 类型          | 默认值 | 说明                  |
-|----------|-------------|-----|---------------------|
-| pagePath | string      | 无   | 页面路径，必须在 pages 中先定义 | 
-| navBar   | NavBarProps | 无   | 当前路由的 navBar        |
+| Property | Type        | Default | Description                               |
+|----------|-------------|---------|-------------------------------------------|
+| pagePath | string      | None    | Page path, must be defined in pages first |
+| navBar   | NavBarProps | None    | NavBar for current route                  |
 
-### 定义页面的标题
+### Define Page Titles
 
-`titleList` 的类型 `TitleListItem[]` 定义如下：
+The `TitleListItem[]` type for `titleList` is defined as follows:
 
-| 属性       | 类型     | 必填 | 说明                  |
-|----------|--------|----|---------------------|
-| pagePath | string | 是  | 页面路径，必须在 pages 中先定义 |
-| title    | string | 否  | 页面标题                |
+| Property | Type   | Required | Description                               |
+|----------|--------|----------|-------------------------------------------|
+| pagePath | string | Yes      | Page path, must be defined in pages first |
+| title    | string | No       | Page title                                |
 
-### 定义所有页面的默认标题
+### Define Default Title for All Pages
 
 ```ts
 export const mobileLayout = {
-  documentTitle: '默认标题',
+  documentTitle: 'Default Title',
 };
 ```
 
-#### 页面标题的设置优先级
+#### Page Title Setting Priority
 
-`titleList` 的 `title`> `tabBar` 中 `list` 的 `title` > `documentTitle`。
+`titleList`'s `title` > `tabBar`'s `list`'s `title` > `documentTitle`.
 
-## 完整示例
+## Complete Example
 
-举个例子，如下所示：
+Here's an example:
 
 ```ts
-// 自定义 TabarIcon
+// Custom TabarIcon
 import TabbarIcon from '@/components/TabbarIcon';
 
 import type {
@@ -175,19 +175,19 @@ import type {
 const titleList: TitleListItem[] = [
   {
     pagePath: '/',
-    title: '报名',
+    title: 'Registration',
   },
   {
     pagePath: '/signIn',
-    title: '签到',
+    title: 'Sign In',
   },
   {
     pagePath: '/query',
-    title: '查询',
+    title: 'Query',
   },
   {
     pagePath: '/other',
-    title: '其他',
+    title: 'Other',
   },
 ];
 
@@ -219,31 +219,31 @@ const navBar: NavBarProps = {
 const tabList: TabBarItem[] = [
   {
     pagePath: '/',
-    text: '报名',
+    text: 'Registration',
     icon: <TabbarIcon icon - name = "icon-sign-up" / >,
     selectedIcon: <TabbarIcon icon - name = "icon-sign-up" / >,
-    title: '报名',
+    title: 'Registration',
   },
   {
     pagePath: '/signIn',
-    text: '签到',
+    text: 'Sign In',
     icon: <TabbarIcon icon - name = "icon-sign-in" / >,
     selectedIcon: <TabbarIcon icon - name = "icon-sign-in" / >,
-    title: '签到'
+    title: 'Sign In'
   },
   {
     pagePath: '/query',
-    text: '查询',
+    text: 'Query',
     icon: <TabbarIcon icon - name = "icon-query" / >,
     selectedIcon: <TabbarIcon icon - name = "icon-query" / >,
-    title: '查询'
+    title: 'Query'
   },
   {
     pagePath: '/other',
-    text: '其他',
+    text: 'Other',
     icon: <TabbarIcon icon - name = "icon-other" / >,
     selectedIcon: <TabbarIcon icon - name = "icon-other" / >,
-    title: 'other'
+    title: 'Other'
   },
 ];
 const tabBar: TabBarProps = {
@@ -278,25 +278,25 @@ defineProps({
 </template>
 ```
 
-具体属性配置说明：
+Detailed property configuration description:
 
 ```ts
 export interface TitleListItem {
-  // 页面路由
+  // Page route
   pagePath: string;
-  // 标题
+  // Title
   title: string;
 }
 
 export interface TabBarItem {
   pagePath: string;
-  // 标签栏底部文字
+  // Tab bar bottom text
   text?: string;
   iconPath?: string;
   selectedIconPath?: string;
-  // 是否显示图标右上角小红点
+  // Whether to show red dot on top-right of icon
   dot?: boolean;
-  // 图标右上角徽标的内容
+  // Content of badge on top-right of icon
   badge?: number | string;
   title?: string;
   icon?: string;
@@ -305,14 +305,14 @@ export interface TabBarItem {
 }
 
 export interface TabBarProps {
-  // 是否固定在底部
+  // Whether to fix at bottom
   fixed?: boolean;
-  // 未选中标签的颜色
+  // Color of unselected tabs
   color?: string;
-  // 选中标签的颜色
+  // Color of selected tabs
   selectedColor?: string;
   tabBarItem?: TabBarItem[];
-  // 切换标签前的回调函数，返回 false 可阻止切换，支持返回 Promise
+  // Callback before tab switch, return false to prevent switch, supports Promise
   tabBeforeChange?: (
     navigator: any,
     name: number | string,

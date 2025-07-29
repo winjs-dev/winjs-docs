@@ -1,12 +1,12 @@
-# 移除 console
+# Remove Console
 
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-remove-console?style=flat-square&colorB=646cff)
 
-在 **生产模式(production mode)** 下自动移除构建产物的`[log|warn|error|info|debug]` 和 `debugger`。
+Automatically removes `[log|warn|error|info|debug]` and `debugger` statements from build artifacts in **production mode**.
 
-## 开启方式
+## Setup
 
-1. 安装插件
+1. Install the plugin
 
 ::: code-group
 
@@ -27,7 +27,7 @@ $ bun add @winner-fed/plugin-remove-console -D
 ```
 :::
 
-2. 在配置文件中 `.winrc` 中开启该功能
+2. Enable the plugin in the `.winrc` configuration file
 
 ```ts
 import { defineConfig } from 'win';
@@ -38,7 +38,7 @@ export default defineConfig({
 });
 ```
 
-## 配置
+## Configuration
 
 ```js
 removeConsole({
