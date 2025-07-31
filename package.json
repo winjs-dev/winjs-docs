@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "WinJS 开发说明文档",
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.14.0",
   "scripts": {
     "dev": "vitepress",
     "build": "vitepress build && node scripts/generateLLms.cjs",
