@@ -83,7 +83,9 @@ export default defineConfig({
     siteTitle: 'WinJS',
     logo: '/images/logo.png',
 
-    outline: 'deep'
+    outline: {
+      level: 'deep'
+    }
   },
 
   locales: {
