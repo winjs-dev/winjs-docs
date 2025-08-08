@@ -1,0 +1,83 @@
+[build]
+  publish = ".vitepress/dist"
+  command = "pnpm install && pnpm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "10.13.1"
+  # 设置 base URL
+  # 部署到自定义域名根目录: VITE_BASE_URL = "/"
+  # 部署到 Netlify 子域根目录: VITE_BASE_URL = "/"
+  # 部署到 GitHub Pages 仓库: VITE_BASE_URL = "/仓库名/"
+  # 部署到子路径: VITE_BASE_URL = "/子路径/"
+  VITE_BASE_URL = "/"
+
+# 生产环境配置 (main 分支)
+[context.production.environment]
+  VITE_BASE_URL = "/"
+
+# 预览环境配置 (其他分支的 deploy preview)
+[context.deploy-preview.environment]
+  VITE_BASE_URL = "/"
+
+# 开发分支配置 (develop 分支)
+[context.branch-deploy.environment]
+  VITE_BASE_URL = "/"
+
+# 示例：如果你需要为特定分支设置不同的 base URL
+# [context."feature-branch".environment]
+#   VITE_BASE_URL = "/feature/"
+
+# 示例：如果你需要部署到 GitHub Pages
+# [context.production.environment]
+#   VITE_BASE_URL = "/winjs-docs/"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
+    X-XSS-Protection = "1; mode=block"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "max-age=604800, immutable"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "max-age=604800, immutable"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "max-age=604800, immutable"
+
+[[headers]]
+  for = "*.ico"
+  [headers.values]
+    Cache-Control = "max-age=604800, immutable"
+
+# SPA fallback for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# Security redirects
+[[redirects]]
+  from = "/.env"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/.git/*"
+  to = "/404.html"
+  status = 404

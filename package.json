@@ -1,0 +1,40 @@
+{
+  "name": "winjs-docs",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "WinJS 开发说明文档",
+  "packageManager": "pnpm@10.13.1",
+  "scripts": {
+    "dev": "vitepress",
+    "build": "vitepress build && node scripts/generateLLms.cjs",
+    "serve": "vitepress serve",
+    "zhlint": "zhlint 'src/{api,blog,cli,config,guide,plugins}/**/*.md'",
+    "clean": "rm -rf .vitepress/dist",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "keywords": [
+    "winjs",
+    "document"
+  ],
+  "dependencies": {
+    "dynamics.js": "^1.1.5",
+    "element-plus": "^2.2.9",
+    "gsap": "^3.9.0",
+    "vitepress": "2.0.0-alpha.9",
+    "vue": "^3.2.45"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.0.0",
+    "@types/node": "^22.16.5",
+    "@winner-fed/prettier-config-win": "^1.0.0",
+    "glob": "^11.0.1",
+    "vitepress-plugin-group-icons": "^1.6.1",
+    "vitepress-plugin-pagefind": "^0.4.14",
+    "terser": "^5.14.2",
+    "zhlint": "^0.8.0"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10.13.0"
+  }
+}

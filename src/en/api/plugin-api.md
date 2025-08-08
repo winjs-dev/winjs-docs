@@ -1,0 +1,1104 @@
+# Plugin API {#pluginApi}
+
+WinJS's core lies in its plugin mechanism. Based on WinJS's plugin mechanism, you can gain the ability to extend your project's compile-time and runtime capabilities. The following lists all the plugin APIs we provide for you to help you write plugins freely.
+
+Before using the WinJS plugin API, we recommend you first read the [Plugins](../guides/plugins) section to understand the mechanisms and principles of WinJS plugins, which will help you better use the plugin APIs.
+
+> For easy reference, the following content is sorted alphabetically.
+
+## Core APIs
+
+Methods defined in service and PluginAPI.
+
+### applyPlugins
+
+```ts
+api.applyPlugins({ key: string, type? : api.ApplyPluginsType, initialValue? : any, args? : any })
+```
+
+Gets the data from the execution of hooks registered by `register()`. This is an asynchronous function, so it returns a Promise. For examples and detailed explanations of this method, see the [register](#register) API.
+
+### describe
+
+```ts
+api.describe({ key? : string, config? : { default, schema, onChange }, enableBy? })
+```
+
+Executed during the plugin registration stage (initPresets or initPlugins stage), used to describe the plugin or plugin set's key, configuration information, and enablement method.
+
+- `key` is the key name for this plugin's configuration in the config
+- `config.default` is the default value of the plugin configuration. When the user hasn't configured the key in the configuration, the default configuration will take effect.
+- `config.schema` is used to declare the configuration type, based on [joi](https://joi.dev/). **This is required if you want users to configure it**, otherwise user configuration will be invalid
+- `config.onChange` is the handling mechanism when configuration is modified in dev mode. The default value is `api.ConfigChangeType.reload`, which means the dev process will restart when the configuration item is modified in dev mode. You can also change it to `api.ConfigChangeType.regenerateTmpFiles`, which means only temporary files will be regenerated. You can also pass in a method to customize the handling mechanism.
+- `enableBy` is the plugin enablement method. The default is `api.EnableBy.register`, which means registration enablement, i.e., the plugin will be enabled as long as it's registered. Can be changed to `api.EnableBy.config`, which means configuration enablement, the plugin is only enabled when the plugin's configuration item is configured. You can also customize a method that returns a boolean value (true for enabled) to determine its enablement timing, which is usually used to implement dynamic enabling.
+
+e.g.
+
+```ts
+api.describe({
+  key: 'foo',
+  config: {
+    schema(joi) {
+      return joi.string();
+    },
+    onChange: api.ConfigChangeType.regenerateTmpFiles,
+  },
+  enableBy: api.EnableBy.config,
+})
+```
+
+In this example, the plugin's `key` is `foo`, so the key name in the configuration is `foo`, the configuration type is string, when the `foo` configuration changes, dev will only regenerate temporary files. This plugin will only be enabled after the user configures `foo`.
+
+### isPluginEnable
+
+```ts
+api.isPluginEnable(key：string)
+```
+
+Determines whether a plugin is enabled. The parameter passed in is the plugin's key.
+
+### register
+
+```ts
+api.register({ key: string, fn, before? : string, stage? : number })
+```
+
+Registers hooks for use by `api.applyPlugins`.
+
+- `key` is the category name of the registered hook. You can use `register` multiple times to register hooks to the same `key`, and they will be executed in sequence. This `key` is also the same `key` used when using `applyPlugins` to collect hooks data. Note: **this key has no relationship with the plugin's key.**
+- `fn` is the hook definition, which can be synchronous or asynchronous (just return a Promise)
+- `stage` is used to adjust execution order, default is 0. Set to -1 or less will execute earlier, set to 1 or more will execute later.
+- `before` is also used to adjust execution order, the value passed in is the name of the registered hook. Note: **the name of the hook registered by `register` is the id of the WinJS plugin it belongs to.** For more usage of stage and before, refer to [tapable](https://github.com/webpack/tapable)
+
+The writing of fn needs to be determined in combination with the type parameter of the applyPlugins that will be used:
+
+- `api.ApplyPluginsType.add` `applyPlugins` will concatenate their return values into an array according to hook order. At this time, `fn` needs to have a return value, and `fn` will receive the `args` parameter of `applyPlugins` as its own parameter. The `initialValue` of `applyPlugins` must be an array, with a default value of empty array. When `key` starts with `'add'` and no `type` is explicitly declared, `applyPlugins` will execute according to this type by default.
+- `api.ApplyPluginsType.modify` `applyPlugins` will sequentially modify the `initialValue` received by `applyPlugins` according to hook order, so **`initialValue` is required** at this time. At this time, `fn` needs to receive a `memo` as its first parameter, and will take the `args` parameter of `applyPlugins` as its second parameter. `memo` is the result of the previous series of hooks modifying `initialValue`, and `fn` needs to return the modified `memo`. When `key` starts with `'modify'` and no `type` is explicitly declared, `applyPlugins` will execute according to this type by default.
+- `api.ApplyPluginsType.event` `applyPlugins` will execute sequentially according to hook order. At this time, there's no need to pass in `initialValue`. `fn` doesn't need to have a return value, and will take the `args` parameter of `applyPlugins` as its own parameter. When `key` starts with `'on'` and no `type` is explicitly declared, `applyPlugins` will execute according to this type by default.
+
+e.g.1 add type
+
+```ts
+api.register({
+  key: 'addFoo',
+  // synchronous
+  fn: (args) => args
+});
+
+api.register({
+  key: 'addFoo',
+  // asynchronous
+  fn: async (args) => args * 2
+})
+
+api.applyPlugins({
+  key: 'addFoo',
+  // key is add type, no need to explicitly declare as api.ApplyPluginsType.add
+  args: 1
+}).then((data) => {
+  console.log(data); // [1,2]
+})
+```
+
+e.g.2 modify type
+
+```ts
+api.register({
+  key: 'foo',
+  fn: (memo, args) => ({ ...memo, a: args })
+})
+api.register({
+  key: 'foo',
+  fn: (memo) => ({ ...memo, b: 2 })
+})
+api.applyPlugins({
+  key: 'foo',
+  type: api.ApplyPluginsType.modify,
+  // initialValue is required
+  initialValue: {
+    a: 0,
+    b: 0
+  },
+  args: 1
+}).then((data) => {
+  console.log(data); // { a: 1, b: 2 }
+});
+```
+
+### registerCommand
+
+```ts
+api.registerCommand({
+  name: string,
+  description? : string,
+  options? : string,
+  details? : string,
+  fn,
+  alias? : string | string[]
+  resolveConfigMode? : 'strict' | 'loose'
+})
+```
+
+Registers a command.
+
+- `alias` is an alias, such as the alias `g` for generate
+- The parameter of `fn` is `{ args }`, args format is the same as [yargs](https://github.com/yargs/yargs) parsing result. Note that the command itself in `_` has been removed, for example, when executing `win generate page foo`, `args._` is `['page','foo']`
+- The `resolveConfigMode` parameter controls the configuration parsing method when executing commands. In `strict` mode, it strictly validates the WinJS project's configuration file content, and interrupts command execution if there's illegal content; in `loose` mode, it doesn't perform configuration file validation checks.
+
+### registerMethod
+
+```ts
+api.registerMethod({ name: string, fn? })
+```
+
+往 api 上注册一个名为 `'name'` 的方法。
+
+- 当传入了 fn 时，执行 fn
+- 当没有传入 fn 时，`registerMethod` 会将 `name` 作为 `api.register` 的 `key` 并且将其柯里化后作为 `fn`。这种情况下相当于注册了一个
+  `register` 的快捷调用方式，便于注册 hook。
+
+注意：
+
+- 通常不建议注册额外的方法，因为它们不会有 ts 提示，直接使用 `api.register()` 是一个更安全的做法。
+
+e.g.1
+
+```ts
+api.registerMethod({
+  name: foo,
+  // 有 fn
+  fn: (args) => {
+    console.log(args);
+  }
+})
+api.foo('hello, win!'); // hello, win!
+```
+
+该例子中，我们往api上注册了一个 foo 方法，该方法会把参数 console 到控制台。
+
+e.g.2
+
+```ts
+import api from './api';
+
+api.registerMethod({
+  name: 'addFoo'
+  // 没有 fn
+})
+
+api.addFoo(args => args);
+api.addFoo(args => args * 2);
+
+api.applyPlugins({
+  key: 'addFoo',
+  args: 1
+}).then((data) => {
+  console.log(data); // [ 1, 2 ]
+});
+```
+
+该例子中，我们没有向 `api.registerMethod` 中传入 fn。此时，我们相当于往 api 上注册了一个"注册器"：`addFoo`。每次调用该方法都相当于调用了
+`register({ key: 'addFoo', fn })`。因此当我们使用 `api.applyPlugins` 的时候（由于我们的方法是 add 型的，可以不用显式声明其
+type ）就可以获取刚刚注册的 hook 的值。
+
+### registerPresets
+
+```ts
+api.registerPresets(presets
+:
+string[]
+)
+```
+
+注册插件集，参数为路径数组。该 api 必须在 initPresets stage 执行，即只可以在 preset 中注册其他 presets
+
+e.g.
+
+```ts
+api.registerPresets([
+  './preset',
+  require.resolve('./preset_foo')
+])
+```
+
+### registerPlugins
+
+```ts
+api.registerPlugins(plugins
+:
+string[]
+)
+```
+
+注册插件，参数为路径数组。该 api 必须在 initPresets 和 initPlugins stage 执行。
+
+e.g.
+
+```ts
+api.registerPlugins([
+  './plugin',
+  require.resolve('./plugin_foo')
+])
+```
+
+注意：只允许传入插件的路径。
+
+### registerGenerator
+
+注册微生成器用来快捷生成模板代码。
+
+示例：
+
+```ts
+import { GeneratorType } from '@winner-fed/core';
+import { logger } from '@winner-fed/utils';
+import { join } from 'path';
+import { writeFileSync } from 'fs';
+
+api.registerGenerator({
+  key: 'editorconfig',
+  name: 'Create .editorconfig',
+  description: 'Setup editorconfig config',
+  type: GeneratorType.generate,
+  fn: () => {
+    const configFilePath = join(api.cwd, '.editorconfig')
+    if (existsSync(configFilePath)) {
+      logger.info(`The .editorconfig file already exists.`)
+      return
+    }
+    writeFileSync(
+      configFilePath,
+      `
+# 🎨 http://editorconfig.org
+root = true
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+[*.md]
+trim_trailing_whitespace = false
+`.trimStart(),
+      'utf-8'
+    )
+    logger.info(`Generate .editorconfig file successful.`)
+  }
+})
+```
+
+### skipPlugins
+
+```ts
+api.skipPlugins(keys
+:
+string[]
+)
+```
+
+声明哪些插件需要被禁用，参数为插件 key 的数组
+
+## 扩展方法
+
+通过`api.registerMethod()` 扩展的方法，它们的作用都是注册一些 hook 以供使用，因此都需要接收一个 fn。这些方法中的大部分都按照
+`add-` `modify-` `on-` 的方式命名，它们分别对应了 `api.ApplyPluginsType`的三种方式，不同方式接收的 fn
+不太相同，详见 [register](#register) 一节。
+
+注意： 下文提到的所有 fn 都可以是同步的或者异步的（返回一个 Promise 即可）。fn 都可以被
+
+```ts
+{
+  fn,
+    name ? : string,
+    before ? : string | string[],
+    stage
+:
+  number,
+}
+
+```
+
+代替。其中各个参数的作用详见 [tapable](https://github.com/webpack/tapable)
+
+### addBeforeBabelPlugins
+
+增加额外的 Babel 插件。传入的 fn 不需要参数，且需要返回一个 Babel 插件或插件数组。
+
+```ts
+api.addBeforeBabelPlugins(() => {
+  // 返回一个 Babel 插件（来源于 Babel 官网的例子）
+  return () => {
+    visitor: {
+      Identifier(path)
+      {
+        const name = path.node.name;
+        path.node.name = name.split("").reverse().join("");
+      }
+    }
+  }
+})
+```
+
+### addBeforeBabelPresets
+
+增加额外的 Babel 插件集。传入的 fn 不需要参数，且需要返回一个 Babel 插件集( presets )或插件集数组。
+
+```ts
+api.addBeforeBabelPresets(() => {
+  // 返回一个 Babel 插件集
+  return () => {
+    return {
+      plugins: ["Babel_Plugin_A", "Babel_Plugin_B"]
+    }
+  }
+})
+```
+
+### addBeforeMiddlewares
+
+在 webpack-dev-middleware 之前添加中间件。传入的 fn 不需要参数，且需要返回一个 express 中间件或其数组。
+
+```ts
+api.addBeforeMiddlewares(() => {
+  return (req, res, next) => {
+    if (false) {
+      res.end('end');
+    }
+    next();
+  }
+})
+```
+
+### addEntryCode
+
+在入口文件的最后面添加代码（render 后）。传入的 fn 不需要参数，且需要返回一个 string 或者 string 数组。
+
+```ts
+api.addEntryCode(() => `console.log('I am after render!')`);
+```
+
+### addEntryCodeAhead
+
+在入口文件的最前面添加代码（render 前，import 后）。传入的 fn 不需要参数，且需要返回一个 string 或者 string 数组。
+
+```ts
+api.addEntryCodeAhead(() => `console.log('I am before render!')`)
+```
+
+### addEntryImports
+
+在入口文件中添加 import 语句 （import 最后面）。传入的 fn 不需要参数，其需要返回一个 `{source: string, specifier?: string}`
+或其数组。
+
+```ts
+api.addEntryImports(() => ({
+  source: '/modulePath/xxx.js',
+  specifier: 'moduleName'
+}))
+```
+
+### addEntryImportsAhead
+
+在入口文件中添加 import 语句 （import 最前面）。传入的 fn 不需要参数，其需要返回一个 `{source: string, specifier?: string}`
+或其数组。
+
+```ts
+api.addEntryImportsAhead(() => ({
+  source: 'anyPackage'
+}))
+```
+
+### addExtraBabelPlugins
+
+添加额外的 Babel 插件。 传入的 fn 不需要参数，且需要返回一个 Babel 插件或插件数组。
+
+### addExtraBabelPresets
+
+添加额外的 Babel 插件集。传入的 fn 不需要参数，且需要返回一个 Babel 插件集或其数组。
+
+### addHTMLHeadScripts
+
+往 HTML 的 `<head>` 元素里添加 Script。传入的 fn 不需要参数，且需要返回一个 string（想要加入的代码） 或者
+`{ async?: boolean, charset?: string, crossOrigin?: string | null, defer?: boolean, src?: string, type?: string, content?: string }`
+或者它们的数组。
+
+```ts
+api.addHTMLHeadScripts(() => `console.log('I am in HTML-head')`)
+```
+
+### addHTMLLinks
+
+往 HTML 里添加 Link 标签。 传入的 fn 不需要参数，返回的对象或其数组接口如下：
+
+```ts
+{
+  as ? : string, crossOrigin
+:
+  string | null,
+    disabled ? : boolean,
+    href ? : string,
+    hreflang ? : string,
+    imageSizes ? : string,
+    imageSrcset ? : string,
+    integrity ? : string,
+    media ? : string,
+    referrerPolicy ? : string,
+    rel ? : string,
+    rev ? : string,
+    target ? : string,
+    type ? : string
+}
+```
+
+### addHTMLMetas
+
+往 HTML 里添加 Meta 标签。 传入的 fn 不需要参数，返回的对象或其数组接口如下：
+
+```ts
+{
+  content ? : string,
+    'http-equiv' ? : string,
+    name ? : string,
+    scheme ? : string
+}
+```
+
+例如，
+
+```js
+api.addHTMLMetas(() => [
+  {
+    'http-equiv': 'Cache-Control',
+    'content': 'no-store, no-cache, must-revalidate'
+  },
+  {
+    'http-equiv': 'Pragma',
+    'content': 'no-cache'
+  },
+  {
+    'http-equiv': 'Expires',
+    'content': '0'
+  }
+]);
+```
+
+### addHTMLScripts
+
+往 HTML 尾部添加 Script。 传入的 fn 不需要参数，返回的对象接口同 [addHTMLHeadScripts](#addhtmlheadscripts)
+
+### addHTMLStyles
+
+往 HTML 里添加 Style 标签。 传入的 fn 不需要参数，返回一个 string （style 标签里的代码）或者
+`{ type?: string, content?: string }`，或者它们的数组。
+
+### addLayouts
+
+添加全局 layout 组件。 传入的 fn 不需要参数，返回 `{ id?: string, file: string }`
+
+### addMiddlewares
+
+添加中间件，在 route 中间件之后。 传入的 fn 不需要参数，返回 express 中间件。
+
+### addPolyfillImports
+
+添加补丁 import，在整个应用的最前面执行。 传入的 fn 不需要参数，返回 `{ source: string, specifier?:string }`
+
+### addPrepareBuildPlugins
+
+### addRuntimePlugin
+
+添加运行时插件，传入的 fn 不需要参数，返回 string ，表示插件的路径。
+
+### addRuntimePluginKey
+
+添加运行时插件的 Key， 传入的 fn 不需要参数，返回 string ，表示插件的路径。
+
+### addTmpGenerateWatcherPaths
+
+添加监听路径，变更时会重新生成临时文件。传入的 fn 不需要参数，返回 string，表示要监听的路径。
+
+### addOnDemandDeps
+
+添加按需安装的依赖，他们会在项目启动时检测是否安装：
+
+```ts
+  api.addOnDemandDeps(() => [{ name: '@swc/core', version: '^1.0.0', dev: true }])
+```
+
+### chainWebpack
+
+通过 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 的方式修改 webpack 配置。传入一个fn，该 fn
+不需要返回值。它将接收两个参数：
+
+- `memo` 对应 webpack-chain 的 config
+- `args:{ webpack, env }`  `arg.webpack` 是 webpack 实例， `args.env` 代表当前的运行环境。
+
+e.g.
+
+```ts
+api.chainWebpack((memo, { webpack, env }) => {
+  // set alias
+  memo.resolve.alias.set('a', 'path/to/a');
+  // Delete progess bar plugin
+  memo.plugins.delete('progess');
+})
+```
+
+### modifyAppData
+
+修改 app 元数据。传入的 fn 接收 appData 并且返回它。
+
+```ts
+api.modifyAppData((memo) => {
+  memo.foo = 'foo';
+  return memo;
+})
+```
+
+### modifyBundlerChain
+
+`modifyBundlerChain` 用于调用 rspack-chain 来修改 Rspack 的配置。
+`rspack-chain` 是一个用于配置 Rspack 的工具库。它提供了链式 API，使得配置 Rspack 变得更加灵活。通过使用 `rspack-chain`
+，你可以更方便地修改和扩展 Rspack 配置，而不需要直接操作复杂的配置对象。
+
+可以参考 [配置 Rspack](https://rsbuild.dev/zh/guide/basic/configure-rspack#toolsbundlerchain)。
+
+- **类型：**
+
+```ts
+type ModifyBundlerChainUtils = {
+  environment: EnvironmentContext;
+  env: NodeEnv;
+  isDev: boolean;
+  isProd: boolean;
+  target: RsbuildTarget;
+  isServer: boolean;
+  isWebWorker: boolean;
+  CHAIN_ID: ChainIdentifier;
+  HtmlPlugin: typeof import('html-rspack-plugin');
+  bundler: {
+    BannerPlugin: rspack.BannerPlugin;
+    DefinePlugin: rspack.DefinePlugin;
+    IgnorePlugin: rspack.IgnorePlugin;
+    ProvidePlugin: rspack.ProvidePlugin;
+    HotModuleReplacementPlugin: rspack.HotModuleReplacementPlugin;
+  };
+};
+
+function ModifyBundlerChain(
+  callback: (
+    chain: RspackChain,
+    utils: ModifyBundlerChainUtils,
+  ) => Promise<void> | void,
+): void;
+```
+
+- **示例：**
+
+```ts
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+
+api.modifyBundlerChain((chain, utils) => {
+  if (utils.env === 'development') {
+    chain.devtool('eval');
+  }
+  
+  chain.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
+});
+```
+
+### modifyConfig
+
+修改配置，相较于用户的配置，这份是最终传给 WinJS 使用的配置。传入的 fn 接收 config 作为第一个参数，并且返回它。另外 fn 可以接收
+`{ paths }` 作为第二个参数。`paths` 保存了 WinJS 的各个路径。
+
+```ts
+api.modifyConfig((memo, { paths }) => {
+  memo.alias = {
+    ...memo.alias,
+    '@': paths.absSrcPath
+  }
+  return memo;
+})
+```
+
+### modifyDefaultConfig
+
+修改默认配置。传入的 fn 接收 config 并且返回它。
+
+### modifyHTML
+
+修改 HTML，基于 cheerio 的 ast。传入的 fn 接收 cheerioAPI 并且返回它。另外 fn 还可以接收`{ path }` 作为它的第二个参数，该参数代表路由的
+path
+
+```ts
+api.modifyHTML(($, { path }) => {
+  $('h2').addClass('welcome');
+  return $;
+})
+```
+
+### modifyHTMLFavicon
+
+修改 HTML 的 favicon 路径。 传入的 fn 接收原本的 favicon 路径(string 类型)并且返回它。
+
+### modifyPaths
+
+修改 paths，比如 absOutputPath、absTmpPath。传入的 fn 接收 paths 并且返回它。
+
+paths 的接口如下：
+
+```ts
+paths:{
+  cwd ? : string;
+  absSrcPath ? : string;
+  absPagesPath ? : string;
+  absTmpPath ? : string;
+  absNodeModulesPath ? : string;
+  absOutputPath ? : string;
+}
+```
+
+### modifyRendererPath
+
+修改 renderer path。传入的 fn 接收原本的 path （string 类型）并且返回它。
+
+### modifyServerRendererPath
+
+修改 server renderer path。传入的 fn 接收原本的 path （string 类型）并且返回它。
+
+### modifyRoutes
+
+修改路由。 传入的 fn 接收 id-route 的 map 并且返回它。其中 route 的接口如下：
+
+```ts
+interface IRoute {
+  path: string;
+  file?: string;
+  id: string;
+  parentId?: string;
+  
+  [key: string]: any;
+}
+```
+
+e.g.
+
+```ts
+api.modifyRoutes((memo) => {
+  Object.keys(memo).forEach((id) => {
+    const route = memo[id];
+    if (route.path === '/') {
+      route.path = '/redirect'
+    }
+  });
+  return memo;
+})
+```
+
+### modifyRsbuildConfig
+
+修改传递给 Rsbuild 的配置项，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
+
+可以参考 [配置 Rsbuild](https://rsbuild.dev/zh/guide/basic/configure-rsbuild)。
+
+- **类型：**
+
+```ts
+import { RsbuildConfig, Rspack, rspack } from '@rsbuild/core';
+
+export enum Env {
+  development = 'development',
+  production = 'production',
+}
+
+function ModifyRsbuildConfig(
+  callback: (
+    config: RsbuildConfig,
+    args: {
+      env: Env;
+      rspack: typeof rspack
+    },
+  ) => MaybePromise<RsbuildConfig | void>,
+): void;
+```
+
+- **示例：** 为某个配置项设置一个默认值：
+
+```ts
+api.modifyRsbuildConfig((config) => {
+  config.html ||= {};
+  config.html.title = 'My Default Title';
+  
+  return config;
+});
+```
+
+### modifyRspackConfig
+
+修改最终的 Rspack 配置，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
+
+可以参考 [配置 Rspack](https://rsbuild.dev/zh/guide/basic/configure-rspack)。
+
+- **类型：**
+
+```ts
+type ModifyRspackConfigUtils = {
+  environment: EnvironmentContext;
+  env: NodeEnv;
+  isDev: boolean;
+  isProd: boolean;
+  target: RsbuildTarget;
+  isServer: boolean;
+  isWebWorker: boolean;
+  rspack: Rspack;
+};
+
+function ModifyRspackConfig(
+  callback: (
+    config: RspackConfig,
+    utils: ModifyRspackConfigUtils,
+  ) => Promise<RspackConfig | void> | RspackConfig | void,
+): void;
+```
+
+- **示例：**
+
+```ts
+api.modifyRspackConfig((config, utils) => {
+  if (utils.env === 'development') {
+    config.devtool = 'eval-cheap-source-map';
+  }
+});
+```
+
+### modifyTSConfig
+
+修改临时目录下的 tsconfig 文件内容。
+
+```ts
+api.modifyTSConfig((memo) => {
+  memo.compilerOptions.paths['foo'] = ['bar'];
+  return memo;
+});
+```
+
+### modifyViteConfig
+
+修改 vite 最终配置。 传入的 fn 接收 vite 的 Config 对象作为第一个参数并且返回它。另外 fn 还可以接收 `{ env }`
+作为第二个参数，可以通过该参数获取当前的环境。
+
+```ts
+api.modifyViteConfig((memo, { env }) => {
+  if (env === 'development') {
+    // do something
+  }
+  return memo;
+})
+```
+
+### modifyWebpackConfig
+
+修改 webpack 最终配置。传入的 fn 接收 webpack 的 Config 对象作为第一个参数并且返回它。另外 fn 还可以接收
+`{ webpack, env }` 作为第二个参数，其中 webpack 是 webpack 实例，env 代表当前环境。
+
+```ts
+api.modifyWebpackConfig((memo, { webpack, env }) => {
+  // do something
+  
+  return memo;
+})
+```
+
+### onBeforeCompiler
+
+generate 之后，webpack / vite / rsbuild compiler 之前。传入的 fn 不接收任何参数。
+
+### onBeforeMiddleware
+
+提供在服务器内部执行所有其他中间件之前执行自定义中间件的能力, 这可以用来定义自定义处理程序， 例如:
+
+```ts
+api.onBeforeMiddleware(({ app }) => {
+  app.get('/some/path', function (req, res) {
+    res.json({ custom: 'response' });
+  });
+});
+```
+
+### onBuildComplete
+
+build 完成时。传入的 fn 接收 `{ isFirstCompile: boolean, stats, time: number, err?: Error }` 作为参数。
+
+### onBuildHtmlComplete
+
+build 完成且 html 完成构建之后。传入的 fn 接收的参数接口如下：
+
+```ts
+args: {
+  htmlFiles ? : Array<{ path: string, content: string }>
+}
+```
+
+- **path**： `html` 文件路径
+- **content**: `html`文件内容
+
+如：
+
+```ts
+htmlFiles: [
+  {
+    path: 'index.html',
+    content: '<!DOCTYPE html><html lang="zh-CN"><head>\n' +
+      '<meta charset="utf-8">\n' +
+      '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">\n' +
+      '<meta http-equiv="X-UA-Compatible" content="ie=edge">\n' +
+      '<meta name="renderer" content="webkit">\n' +
+      '<meta name="mobile-web-app-capable" content="yes">\n' +
+      '<meta name="apple-mobile-web-app-status-bar-style" content="black">\n' +
+      '<meta name="telephone=no" content="format-detection">\n' +
+      '<meta name="email=no" content="format-detection">\n' +
+      '<style>\n' +
+      '  html,\n' +
+      '  body,\n' +
+      '  #root {\n' +
+      '      height: 100%;\n' +
+      '      margin: 0;\n' +
+      '      padding: 0;\n' +
+      '  }</style>\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '\n' +
+      '  <div id="root">\n' +
+      '<div style="\n' +
+      '          display: flex;\n' +
+      '          flex-direction: column;\n' +
+      '          align-items: center;\n' +
+      '          justify-content: center;\n' +
+      '          height: 100%;\n' +
+      '          min-height: 362px;\n' +
+      '        ">\n' +
+      '    <div class="loading-title">\n' +
+      '      正在加载资源\n' +
+      '    </div>\n' +
+      '    <div class="loading-sub-title">\n' +
+      '      初次加载资源可能需要较多时间 请耐心等待\n' +
+      '    </div>\n' +
+      '</div>\n' +
+      '</div>\n' +
+      '\n' +
+      '<script src="/win.js"></script>\n' +
+      '\n' +
+      '</body></html>'
+  }
+]
+```
+
+### onCheck
+
+检查时，在 onStart 之前执行。传入的 fn 不接收任何参数
+
+### onCheckCode
+
+检查代码时。传入的 fn 接收的参数接口如下：
+
+```ts
+args: {
+  file: string;
+  code: string;
+  isFromTmp: boolean;
+  imports: {
+    source: string;
+    loc: any;
+  default:
+    string;
+    namespace: string;
+    kind: babelImportKind;
+    specifiers: Record<string, { name: string; kind: babelImportKind }>;
+  }
+  [];
+  exports: any[];
+  cjsExports: string[];
+}
+```
+
+### onCheckConfig
+
+检查 config 时。传入的 fn 接收 `{ config, userConfig }`作为参数，它们分别表示实际的配置和用户的配置。
+
+### onCheckPkgJSON
+
+检查 package.json 时。传入的 fn 接收 `{origin?, current}` 作为参数。它们的类型都是 package.json 对象
+
+### onDevCompileDone
+
+dev 完成时。传入的 fn 接收的参数接口如下：
+
+```ts
+args: {
+  isFirstCompile: boolean;
+  stats: any;
+  time: number;
+}
+```
+
+### onGenerateFiles
+
+生成临时文件时，随着文件变化会频繁触发，有缓存。 传入的 fn 接收的参数接口如下：
+
+```ts
+args: {
+  isFirstTime ? : boolean;
+  files ? : {
+    event: string;
+    path: string;
+  } | null;
+}
+```
+
+### onPatchRoute
+
+匹配单个路由，可以修改路由，给路由打补丁
+
+### onPkgJSONChanged
+
+package.json 变更时。传入的 fn 接收 `{origin?, current}` 作为参数。它们的类型都是 package.json 对象
+
+### onPrepareBuildSuccess
+
+### onStart
+
+启动时。传入的 fn 不接收任何参数。
+
+### writeTmpFile
+
+`api.writeTmpFile()`的 type 参数的类型。
+
+- content: 写入的文本内容，有内容就不会使用模板。
+- context: 模板上下文。
+- noPluginDir: 是否使用插件名做为目录。
+- path: 写入文件的路径。
+- tpl: 使用模板字符串，没有模板路径会使用它。
+- tplPath: 使用模板文件的路径。
+
+## 属性
+
+从 api 可以直接访问到的属性，这些属性有一部分来自于 service
+
+### appData
+
+### args
+
+命令行参数，这里去除了命令本身。
+
+e.g.
+
+- `$ win dev --foo`, args 为 `{ _:[], foo: true }`
+- `$ win g page index --typescript --less` , args 为 `{ _: [ 'page', 'index''], typescript: true, less: true }`
+
+### config
+
+最终的配置（取决于你访问的时机，可能是当前收集到的最终配置）
+
+### cwd
+
+当前路径
+
+### env
+
+即 `process.env.NODE_ENV` 可能有 `development`、`production` 和 `test`
+
+### logger
+
+插件日志对象，包含 `{ log, info, debug, error, warn, profile }`，他们都是方法。其中 `api.logger.profile` 可用于性能耗时记录。
+
+```ts
+api.logger.profile('barId');
+setTimeout(() => {
+  api.logger.profile('barId');
+})
+// profile - barId Completed in 6254ms
+```
+
+### name
+
+当前命令的名称，例如 `$ win dev `， `name` 就是 `dev`
+
+### paths
+
+项目相关的路径：
+
+- `absNodeModulesPath`，node_modules 目录绝对路径
+- `absOutputPath`，输出路径，默认是 ./dist
+- `absPagesPath`，pages 目录绝对路径
+- `absSrcPath`，src 目录绝对路径，需注意 src 目录是可选的，如果没有 src 目录，absSrcPath 等同于 cwd
+- `absTmpPath`，临时目录绝对路径
+- `cwd`，当前路径
+
+注意： 注册阶段不能获取到。因此不能在插件里直接获取，要在 hook 里使用。
+
+### pkg
+
+当前项目的 `package.json` 对象
+
+### pkgPath
+
+当前项目的 `package.json` 的绝对路径。
+
+### plugin
+
+当前插件的对象。
+
+- `type` 插件类型，有 preset 和 plugin 两种
+- `path` 插件路径
+- `id` 插件 id
+- `key` 插件 key
+- `config` 插件的配置
+- `enableBy` 插件的启用方式
+
+注意： 注册阶段使用的 plugin 对象是你 `describe` 之前的对象。
+
+### service
+
+WinJS 的 `Service` 实例。通常不需要用到，除非你知道为什么。
+
+### userConfig
+
+用户的配置，从 `.winrc` 或 `config/config` 中读取的内容，没有经过 defaultConfig 以及插件的任何处理。可以在注册阶段使用。
+
+### ApplyPluginsType
+
+`api.applyPlugins()` 的 type 参数的类型。包含
+
+- add
+- modify
+- event
+
+### ConfigChangeType
+
+为 `api.describe()` 提供 `config.onChange` 的类型，目前包含两种：
+
+- restart，重启 dev 进程，是默认值
+- regenerateTmpFiles，重新生成临时文件
+
+### EnableBy
+
+插件的启用方式，包含三种：
+
+- register
+- config
+
+### ServiceStage
+
+WinJS service 的运行阶段。有如下阶段：
+
+- uninitialized
+- init
+- initPresets
+- initPlugins
+- resolveConfig
+- collectAppData
+- onCheck
+- onStart
+- runCommand
