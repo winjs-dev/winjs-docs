@@ -44,7 +44,7 @@ WinJS is a scalable frontend application framework, forked from UmiJS and specif
 ### Prerequisites
 
 - Node.js >= 18
-- pnpm >= 7.4.0 (recommended) / npm >= 8 / yarn >= 1.x
+- pnpm >= 10 (recommended) / npm >= 8 / yarn >= 1.x
 
 ### Create Project
 
@@ -93,7 +93,7 @@ src/
 
 ### Environment Setup
 
-Ensure Node.js 18+ and pnpm 7.4+ are installed.
+Ensure Node.js 18+ and pnpm 10+ are installed.
 
 ### Install Dependencies
 
