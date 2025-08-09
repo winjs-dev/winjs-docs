@@ -45,7 +45,7 @@ WinJS 是一个可扩展的前端应用框架，Fork 自 UmiJS，专为 Vue.js �
 ### 环境要求
 
 - Node.js >= 18
-- pnpm >= 7.4.0 (推荐) / npm >= 8 / yarn >= 1.x
+- pnpm >= 10 (推荐) / npm >= 8 / yarn >= 1.x
 
 ### 创建项目
 
@@ -94,7 +94,7 @@ src/
 
 ### 环境准备
 
-确保已安装 Node.js 18+ 和 pnpm 7.4+。
+确保已安装 Node.js 18+ 和 pnpm 10+。
 
 ### 安装依赖
 
