@@ -13,7 +13,7 @@ importers:
         version: 1.1.5
       element-plus:
         specifier: ^2.2.9
-        version: 2.10.4(vue@3.5.18)
+        version: 2.10.6(vue@3.5.18)
       gsap:
         specifier: ^3.9.0
         version: 3.13.0
@@ -84,8 +84,8 @@ packages:
   '@docsearch/js@4.0.0-beta.6':
     resolution: {integrity: sha512-paUB2D7JryaacNS3HJRc6PvsbZu9x07ZhL1c8p3OSeP/tyJN0jzdG4Wsd6Z8Me563kEM5VTVSrDi/kaUpwWosA==}
 
-  '@element-plus/icons-vue@2.3.1':
-    resolution: {integrity: sha512-XxVUZv48RZAd87ucGS48jPf6pKu0yV5UCg9f4FFwtrYxXOwWuVJo6wOvSLKEoMQKjv8GsX/mhP6UsC1lRwbUWg==}
+  '@element-plus/icons-vue@2.3.2':
+    resolution: {integrity: sha512-OzIuTaIfC8QXEPmJvB4Y4kw34rSXdCJzxcD1kFStBvr8bK6X1zQAYDo0CNMjojnfTqRQCJ0I7prlErcoRiET2A==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -245,11 +245,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@floating-ui/core@1.7.2':
-    resolution: {integrity: sha512-wNB5ooIKHQc+Kui96jE/n69rHFWAVoxn5CAzL1Xdd8FG03cgY3MLO+GF9U3W737fYDSgPWA6MReKhBQBop6Pcw==}
+  '@floating-ui/core@1.7.3':
+    resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
 
-  '@floating-ui/dom@1.7.2':
-    resolution: {integrity: sha512-7cfaOQuCS27HD7DX+6ib2OrnW+b4ZBwDNnCcT0uTyidcmyWb03FnQqJybDBoCnpdxwBSfA94UAYlRCt7mV+TbA==}
+  '@floating-ui/dom@1.7.3':
+    resolution: {integrity: sha512-uZA413QEpNuhtb3/iIKoYMSK07keHPYeXF02Zhd6e213j+d1NamLix/mCLxBUDW/Gx52sPH2m+chlUsyaBs/Ag==}
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
@@ -756,8 +756,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  element-plus@2.10.4:
-    resolution: {integrity: sha512-UD4elWHrCnp1xlPhbXmVcaKFLCRaRAY6WWRwemGfGW3ceIjXm9fSYc9RNH3AiOEA6Ds1p9ZvhCs76CR9J8Vd+A==}
+  element-plus@2.10.6:
+    resolution: {integrity: sha512-N1XfO+x46p9Df9KNHeRQiHW4ilt4k+Jh6jeA1Ip9WpVzwDW8CRz+NqaLLDEZmnez62bBdCuWGfV7lIRq3+FQyg==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -1532,7 +1532,7 @@ snapshots:
 
   '@docsearch/js@4.0.0-beta.6': {}
 
-  '@element-plus/icons-vue@2.3.1(vue@3.5.18)':
+  '@element-plus/icons-vue@2.3.2(vue@3.5.18)':
     dependencies:
       vue: 3.5.18
 
@@ -1614,13 +1614,13 @@ snapshots:
   '@esbuild/win32-x64@0.25.8':
     optional: true
 
-  '@floating-ui/core@1.7.2':
+  '@floating-ui/core@1.7.3':
     dependencies:
       '@floating-ui/utils': 0.2.10
 
-  '@floating-ui/dom@1.7.2':
+  '@floating-ui/dom@1.7.3':
     dependencies:
-      '@floating-ui/core': 1.7.2
+      '@floating-ui/core': 1.7.3
       '@floating-ui/utils': 0.2.10
 
   '@floating-ui/utils@0.2.10': {}
@@ -2074,11 +2074,11 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  element-plus@2.10.4(vue@3.5.18):
+  element-plus@2.10.6(vue@3.5.18):
     dependencies:
       '@ctrl/tinycolor': 3.6.1
-      '@element-plus/icons-vue': 2.3.1(vue@3.5.18)
-      '@floating-ui/dom': 1.7.2
+      '@element-plus/icons-vue': 2.3.2(vue@3.5.18)
+      '@floating-ui/dom': 1.7.3
       '@popperjs/core': '@sxzz/popperjs-es@2.11.7'
       '@types/lodash': 4.17.20
       '@types/lodash-es': 4.17.12
