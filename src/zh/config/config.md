@@ -1109,6 +1109,8 @@ hash 是友好的。
 
 配置 `<head>` 中的额外 script。
 
+1. 当 `headScripts` 对象的值为字符串时, 会自动区分配置支持内联样式和外联样式路径 后者通过是否以 `https?://` 开头来判断。
+
 比如，
 
 ```js
@@ -1127,7 +1129,26 @@ export default {
 <script src="https://a.com/b.js"></script>
 ```
 
-如果需要额外属性，切换到对象格式，比如，
+2. 当 `headScripts` 对象的值为对象时，可以配置额外的属性。
+
+类型定义：
+
+```ts
+export interface Script {
+  // 外联脚本
+  src?: string;
+  // 内联脚本
+  content?: string;
+  type?: string;
+  charset?: string;
+  defer?: boolean;
+  async?: boolean;
+  crossOrigin?: string;
+  integrity?: string;
+}
+```
+
+举个例子，
 
 ```js
 export default {
@@ -1136,6 +1157,17 @@ export default {
     { content: `alert('你好');`, charset: 'utf-8' }
   ]
 };
+```
+
+会生成 HTML，
+
+```html
+<head>
+  <script src="/foo.js" defer></script>
+  <script charset="utf-8">
+    alert('你好');
+  </script>
+</head>
 ```
 
 ## history
@@ -1334,7 +1366,7 @@ legacy: {
 - **类型**：`Link[]`
 - **默认值**：`[]`
 
-配置额外的 link 标签。
+配置额外的 link 标签。通过数组对象的形式, 会将该对象的 key: value 映射为 link 标签的属性 link 属性详见 [MDN link](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Elements/link)。
 
 示例，
 
@@ -1342,6 +1374,14 @@ legacy: {
 export default {
   links: [{ href: '/foo.css', rel: 'preload' }],
 }
+```
+
+会生成 HTML，
+
+```html
+<head>
+  <link href="/foo.css" rel="preload">
+</head>
 ```
 
 ## manifest
@@ -1370,7 +1410,7 @@ rsbuild 的相关插件可以参考：[@rsbuild/plugin-mdx](https://github.com/r
 - **类型**：`Meta[]`
 - **默认值**：`[]`
 
-配置额外的 meta 标签。
+配置额外的 meta 标签。meta 属性详见 [MDN meta](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/meta)。
 
 比如，
 
@@ -1812,7 +1852,8 @@ export default {
 - **默认值**：`[]`
 
 配置 `<body>` 中额外的 script 标签。
-
+ 
+1. 当值为字符串时，会自动区分配置支持内联样式和外联样式路径 后者通过是否以 https?:// 开头来判断。
 比如，
 
 ```js
@@ -1831,7 +1872,26 @@ export default {
 <script src="https://a.com/b.js"></script>
 ```
 
-如果需要额外属性，切换到对象格式，比如，
+2. 如果需要额外属性，切换到对象格式。 
+
+类型：
+
+```ts
+export interface Script {
+  // 外联脚本
+  src?: string;
+  // 内联脚本
+  content?: string;
+  type?: string;
+  charset?: string;
+  defer?: boolean;
+  async?: boolean;
+  crossOrigin?: string;
+  integrity?: string;
+}
+```
+
+比如，
 
 ```js
 export default {
@@ -1840,6 +1900,17 @@ export default {
     { content: `alert('你好');`, charset: 'utf-8' },
   ],
 }
+```
+
+会生成 HTML，
+
+```html
+<body>
+  <script src="/foo.js" defer></script>
+  <script charset="utf-8">
+    alert('你好');
+  </script>
+</body>
 ```
 
 ## sassLoader
@@ -1871,7 +1942,7 @@ export default {
 
 配置额外的 CSS。
 
-配置项支持内联样式和外联样式路径，后者通过是否以 `https?://` 开头来判断。
+1. 当为字符串时，配置项支持内联样式和外联样式路径，后者通过是否以 `https?://` 开头来判断。
 
 插入的样式会前置，优先级低于项目内用户编写样式。
 
@@ -1893,6 +1964,47 @@ export default {
   }
 </style>
 <link rel="stylesheet" href="https://a.com/b.css" />
+```
+
+2. 当需要配置额外的属性时，可以使用对象的形式。
+
+比如，
+
+```js
+export default {
+  styles: [
+    {
+      // 外联样式
+      src: 'https://a.com/b.css',
+      // 添加额外属性
+      crossorigin: 'anonymous',
+      media: 'screen and (min-width: 900px)'
+    },
+    {
+      // 内联样式
+      content: 'body { color: red }',
+      // 添加额外属性
+      media: 'print',
+      'data-dark': true
+    }
+  ],
+}
+```
+
+会生成以下 HTML，
+
+```html
+
+<link
+  rel="stylesheet"
+  href="https://a.com/b.css"
+  crossorigin="anonymous"
+  media="screen and (min-width: 900px" />
+<style media="print" data-theme>
+  body {
+    color: red;
+  }
+</style>
 ```
 
 ## srcTranspiler
