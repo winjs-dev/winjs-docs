@@ -6,7 +6,7 @@ const nav = [
   { text: '插件', link: '/zh/plugins/introduction', activeMatch: `^/plugins/` },
   { text: 'API', link: '/zh/api/api', activeMatch: `^/api/` },
   { text: 'CLI', link: '/zh/cli/commands', activeMatch: `^/cli/` },
-  { text: '博文', link: '/zh/blog/migrating-create-project-to-win', activeMatch: `^/blog/` },
+  { text: '博文', link: '/zh/blog/migrating-create-project-to-winjs', activeMatch: `^/blog/` },
   {
     text: '了解更多',
     items: [
@@ -324,8 +324,8 @@ export const sidebar = {
         text: '博文',
         items: [
           {
-            text: '迁移 create-project 到 win',
-            link: 'migrating-create-project-to-win'
+            text: '迁移 create-project 到 winjs',
+            link: 'migrating-create-project-to-winjs'
           }
         ]
       }

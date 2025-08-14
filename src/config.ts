@@ -6,7 +6,7 @@ const nav = [
   { text: 'Plugin', link: '/plugins/introduction', activeMatch: `^/plugins/` },
   { text: 'API', link: '/api/api', activeMatch: `^/api/` },
   { text: 'CLI', link: '/cli/commands', activeMatch: `^/cli/` },
-  { text: 'Blog', link: '/blog/migrating-create-project-to-win', activeMatch: `^/blog/` },
+  { text: 'Blog', link: '/blog/migrating-create-project-to-winjs', activeMatch: `^/blog/` },
   {
     text: 'Learn More',
     items: [
