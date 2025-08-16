@@ -18,8 +18,8 @@ importers:
         specifier: ^3.9.0
         version: 3.13.0
       vitepress:
-        specifier: 2.0.0-alpha.10
-        version: 2.0.0-alpha.10(@types/node@22.17.2)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1)
+        specifier: 2.0.0-alpha.11
+        version: 2.0.0-alpha.11(@types/node@22.17.2)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1)
       vue:
         specifier: ^3.2.45
         version: 3.5.18
@@ -1447,8 +1447,8 @@ packages:
     peerDependencies:
       pagefind: ^1.1.0
 
-  vitepress@2.0.0-alpha.10:
-    resolution: {integrity: sha512-RqnglVOngEHB74pv4Ho/RqOPhqaxN8KBvZkdKFj2hfvrG30QXhQQ/5qk31uuTVuCG+2qXj/c4kpHCPEJKGQMDw==}
+  vitepress@2.0.0-alpha.11:
+    resolution: {integrity: sha512-l3FFkGtcB3u3iMlpnvkCR+MdOYqNaz2z+xPRlgZZnx8Xne4XLgQR0yfEfTqY/UyloTymXwxvRvu443Yo9Cr8pA==}
     hasBin: true
     peerDependencies:
       markdown-it-mathjax3: ^4
@@ -3011,7 +3011,7 @@ snapshots:
       - '@vue/composition-api'
       - typescript
 
-  vitepress@2.0.0-alpha.10(@types/node@22.17.2)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1):
+  vitepress@2.0.0-alpha.11(@types/node@22.17.2)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1):
     dependencies:
       '@docsearch/css': 4.0.0-beta.6
       '@docsearch/js': 4.0.0-beta.6
