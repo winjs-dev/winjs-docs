@@ -127,6 +127,27 @@ const router = getRouter();
 router.push('/hello');
 ```
 
+### getRoute
+
+- **Version**：<VersionTag version="0.17.4" />
+
+Return the current routing object information of the router. It is equivalent to using $route in the template syntax and is only applicable to vue-router 3.x.
+
+Type definition：
+```ts
+getRoute(): Route
+```
+
+```ts
+import { getRoute } from 'winjs';
+
+export const getCurrentRoute = () => {
+  const route = getRoute();
+  console.log('current route:', route?.path);
+  return route;
+};
+```
+
 ### onBeforeRouteUpdate
 
 Adds a navigation guard that is triggered whenever the current location is updated. Similar to `beforeRouteUpdate`, but can be used in any component. The guard is removed when the component is unmounted.

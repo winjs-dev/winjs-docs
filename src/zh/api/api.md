@@ -127,6 +127,27 @@ const router = getRouter();
 router.push('/hello');
 ```
 
+### getRoute
+
+- **版本**：<VersionTag version="0.17.4" />
+
+返回路由器 router 的当前路由对象信息，相当于在模板语法中使用 $route，只适用于 vue-router 3.x。
+
+类型定义如下：
+```ts
+getRoute(): Route
+```
+
+```ts
+import { getRoute } from 'winjs';
+
+export const getCurrentRoute = () => {
+  const route = getRoute();
+  console.log('当前路由:', route?.path);
+  return route;
+};
+```
+
 ### onBeforeRouteUpdate
 
 添加一个导航守卫，不论当前位置何时被更新都会触发。类似于 `beforeRouteUpdate`，但可以在任何组件中使用。当组件被卸载时，该守卫会被移除。
