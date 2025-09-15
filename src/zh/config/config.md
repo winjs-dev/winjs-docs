@@ -2376,6 +2376,68 @@ export default {
 }
 ```
 
+## vue
+
+- **类型**：`object`
+- **默认值**：`{}`
+- **bundler**：`webpack`、`rsbuild`
+
+使用 Vue3 时，开发者可以针对 [`vue-loader`](https://vue-loader.vuejs.org/zh/options.html) 进行配置。
+
+示例，
+
+```js
+export default {
+  vue: {
+    vueLoaderOptions: {
+      compilerOptions: {
+        preserveWhitespace: true,
+        directives: {
+          html(node, directiveMeta) {
+            // XSS防护逻辑
+            (node.props || (node.props = [])).push({
+              name: 'innerHTML',
+              value: `DOMPurify.sanitize(_s(${directiveMeta.value}))`
+            });
+          }
+        }
+      }
+    },
+  }
+}
+```
+
+## vue2
+
+- **类型**：`object`
+- **默认值**：`{}`
+- **bundler**：`webpack`、`rsbuild`
+
+使用 Vue2 时，开发者可以针对 [`vue-loader`](https://vue-loader.vuejs.org/zh/options.html) 进行配置。
+
+示例，
+
+```js
+export default {
+  vue2: {
+    vueLoaderOptions: {
+      compilerOptions: {
+        preserveWhitespace: true,
+        directives: {
+          html(node, directiveMeta) {
+            // XSS防护逻辑
+            (node.props || (node.props = [])).push({
+              name: 'innerHTML',
+              value: `DOMPurify.sanitize(_s(${directiveMeta.value}))`
+            });
+          }
+        }
+      }
+    },
+  }
+}
+```
+
 ## writeToDisk
 
 - **类型**：`boolean`

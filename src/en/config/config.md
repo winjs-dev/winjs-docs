@@ -1,4 +1,4 @@
-# Configuration {#config}
+# Configuration
 
 For custom configurations that can be used in WinJS, you can use the `.winrc.ts` file in the project root directory or `config/config.ts`. It's worth noting that these two files have the same functionality, just in different directories. Choose one - the `.winrc.ts` file has higher priority.
 
@@ -154,7 +154,8 @@ window.MY_APP_CONFIG = {
 };
 ```
 
-### Custom Global Variable Name <Badge type="tip" text="^0.14.4" />
+### Custom Global Variable Name `<Badge type="tip" text="^0.14.4" />`
+
 ```typescript
 // .winrc.ts
 import { defineConfig } from '@winner-fed/winjs';
@@ -198,8 +199,9 @@ You can use the base configuration when deploying a WinJS project under a non-ro
 The base configuration allows you to set a route prefix for your application. For example, if you have routes `/` and `/users`, after setting base to `/foo/`, you can access the previous routes via `/foo/` and `/foo/users`.
 
 > Note: The base configuration must be set at build time and cannot be changed without rebuilding, as this value is inlined in the client bundle.
-              
-## banner <Badge  type="tip" text=">=0.15.0" />
+
+## banner `<Badge  type="tip" text=">=0.15.0" />`
+
 - **Type**: `object | boolean | undefined`
 - **Default**: `undefined`
 - **bundler**: `webpack`, `rsbuild`, `vite`
@@ -229,22 +231,26 @@ export default {
 ### Configuration Options
 
 #### content
+
 - Type: `string | (() => string)`
 - Default: `''`
 - Description: Custom banner content, can be a string or a function that returns a string
 
 #### position
+
 - Type: `'header' | 'footer'`
 - Default: `'header'`
 - Description: Banner insertion position
 - Note: Vite build tool does not support `footer` position. If set to `footer`, it will show a warning and downgrade to `header`
 
 #### include
+
 - Type: `('js' | 'css')[]`
 - Default: `['js', 'css']`
 - Description: File types that need to add banner, supports JS and CSS files
 
 #### exclude
+
 - Type: `string[]`
 - Default: `[]`
 - Description: File patterns to exclude, supports wildcards
@@ -312,7 +318,7 @@ export default {
 
 ::: warning Note
 Vite does not support `position: 'footer'`. If you set `position: 'footer'` in Vite, it will show a warning and automatically downgrade to `header`.
-::: 
+:::
 
 ## cacheDirectoryPath
 
@@ -361,10 +367,10 @@ export default {
   chainWebpack(memo, { env, webpack }) {
     // Set alias
     memo.resolve.alias.set('foo', '/tmp/to/foo');
-    
+  
     // Add additional plugins
     memo.plugin('hello').use(Plugin, [...args]);
-    
+  
     // Remove WinJS built-in plugins
     memo.plugins.delete('hmr');
   },
@@ -488,16 +494,16 @@ When the value of `convertToRem` is an `object` type, WinJS will perform rem pro
 
 Options:
 
-| Name                       | Type        | Default Value                                                                                                                                                                                                             | Description                                                                      |
-|--------------------------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| enableRuntime            | `boolean` | `true`                                                                                                                                                                                                          | Whether to automatically generate runtime code to dynamically calculate root element font size and inline runtime code into HTML files                 |
-| rootFontSize             | `number`  | `37.5`                                                                                                                                                                                                          | Root element font value                                                                  |
-| maxRootFontSize          | `number`  | `64`                                                                                                                                                                                                            | Maximum root element font value                                                                |
-| widthQueryKey            | `string`  | `'' `                                                                                                                                                                                                           | Get client width from url query according to widthQueryKey value                          |
-| screenWidth              | `number`  | `375`                                                                                                                                                                                                           | UI design width                                                                |
-| supportLandscape         | `boolean` | `false`                                                                                                                                                                                                         | Use height to calculate rem in landscape mode                                                     |
-| useRootFontSizeBeyondMax | `boolean` | `false`                                                                                                                                                                                                         | Whether to use rootFontSize when exceeding maxRootFontSize                                  |
-| pxtorem                  | `object`  | <ul><li>rootValue: defaults to same as rootFontSize </li><li>unitPrecision: 2, precision digits </li><li>propList: ['height', 'line-height', 'width','padding','margin', 'top','left','right','bottom','font-size'], supported CSS properties for conversion</li></ul> | [postcss-pxtorem](https://github.com/cuth/postcss-pxtorem#options) plugin properties |
+| Name                     | Type        | Default Value                                                                                                                                                                                                                                                                          | Description                                                                                                                            |
+| ------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| enableRuntime            | `boolean` | `true`                                                                                                                                                                                                                                                                               | Whether to automatically generate runtime code to dynamically calculate root element font size and inline runtime code into HTML files |
+| rootFontSize             | `number`  | `37.5`                                                                                                                                                                                                                                                                               | Root element font value                                                                                                                |
+| maxRootFontSize          | `number`  | `64`                                                                                                                                                                                                                                                                                 | Maximum root element font value                                                                                                        |
+| widthQueryKey            | `string`  | `'' `                                                                                                                                                                                                                                                                                | Get client width from url query according to widthQueryKey value                                                                       |
+| screenWidth              | `number`  | `375`                                                                                                                                                                                                                                                                                | UI design width                                                                                                                        |
+| supportLandscape         | `boolean` | `false`                                                                                                                                                                                                                                                                              | Use height to calculate rem in landscape mode                                                                                          |
+| useRootFontSizeBeyondMax | `boolean` | `false`                                                                                                                                                                                                                                                                              | Whether to use rootFontSize when exceeding maxRootFontSize                                                                             |
+| pxtorem                  | `object`  | `<ul><li>`rootValue: defaults to same as rootFontSize `</li><li>`unitPrecision: 2, precision digits `</li><li>`propList: ['height', 'line-height', 'width','padding','margin', 'top','left','right','bottom','font-size'], supported CSS properties for conversion`</li></ul>` | [postcss-pxtorem](https://github.com/cuth/postcss-pxtorem#options) plugin properties                                                      |
 
 ### Example
 
@@ -510,7 +516,7 @@ export default {
     }
   }
 };
-``` 
+```
 
 ## copy
 
@@ -645,7 +651,7 @@ Specify a custom public path for external resources such as images and files in 
 - **Default**: `{}`
 - **bundler**: `webpack`
 
-Configure css-loader, see [css-loader > options](https://github.com/webpack-contrib/css-loader#options) for details.
+Configure css-loader, see [css-loader &gt; options](https://github.com/webpack-contrib/css-loader#options) for details.
 
 ## cssLoaderModules
 
@@ -653,7 +659,7 @@ Configure css-loader, see [css-loader > options](https://github.com/webpack-cont
 - **Default**: `{}`
 - **bundler**: `webpack`
 
-Configure the behavior of CSS modules, see [css-loader > modules](https://github.com/webpack-contrib/css-loader#modules) for details.
+Configure the behavior of CSS modules, see [css-loader &gt; modules](https://github.com/webpack-contrib/css-loader#modules) for details.
 
 For example:
 
@@ -865,7 +871,7 @@ export default {
 `rsbuild` reuses this configuration just to maintain configuration consistency, corresponding to [include](https://rsbuild.dev/config/source/include). It also corresponds to the `include` configuration option of `@rsbuild/plugin-babel`.
 :::
 
-## extraBabelExcludes <Badge type="tip" text=">=0.14.6" />
+## extraBabelExcludes `<Badge type="tip" text=">=0.14.6" />`
 
 - **Type**: `Array<string | RegExp>`
 - **Default**: `[]`
@@ -873,8 +879,7 @@ export default {
 
 When the size of a `js` file in the project exceeds the code generator's 500KB limit, the following warning will appear:
 
-`[BABEL] Note: The code generator has deoptimised the styling of /Volumes/liwb-ssd/xxx/with-vue2/src/assets/js/NIM_Web_SDK_v8.9.0.js as it exceeds the max of 500KB.
-`
+`[BABEL] Note: The code generator has deoptimised the styling of /Volumes/liwb-ssd/xxx/with-vue2/src/assets/js/NIM_Web_SDK_v8.9.0.js as it exceeds the max of 500KB. `
 
 Considering that such js files don't actually need to go through babel compilation, this configuration has been added. It's used for NPM packages or directories that don't need Babel compilation.
 
@@ -896,7 +901,6 @@ export default {
 ::: tip Note
 `rsbuild` reuses this configuration just to maintain configuration consistency, corresponding to [exclude](https://rsbuild.dev/config/source/exclude). It also corresponds to the `exclude` configuration option of `@rsbuild/plugin-babel`.
 :::
-
 
 ## extraBabelPlugins
 
@@ -1566,9 +1570,11 @@ export default {
   }
 }
 ```
+
 ::: tip Note
 Not applicable to `pnpm`.
 This is because pnpm uses a strict dependency management mechanism that creates a non-flattened node_modules structure and manages dependencies through symbolic links. In pnpm:
+
 1. Dependencies are installed in a centralized storage location
 2. Project's direct dependencies are placed in the node_modules directory via symbolic links
 3. Non-direct dependencies are not placed in the project's top-level node_modules directory
@@ -1730,7 +1736,7 @@ Configure webpack's publicPath and rsbuild's [output.assetPrefix](https://rsbuil
 
 Configure routes. For more information, see [Configure Routes](../guides/routes#configure-routes)
 
-## rsbuild <Badge type="tip" text=">=0.9.4" />
+## rsbuild `<Badge type="tip" text=">=0.9.4" />`
 
 - **Type**:
   `{ removeConsole: boolean | ConsoleType[], lightningcssLoader: boolean | Rspack.LightningcssLoaderOptions | Function, config: RsbuildConfig }`
@@ -1740,7 +1746,7 @@ Switch to rsbuild build packaging tool. Related configuration options for rsbuil
 
 - removeConsole: Whether to automatically remove `console.[methodName]` from code during production build phase. Defaults to `false`. When removeConsole is set to true, all types of `console.[methodName]` will be removed.
 - lightningcssLoader: See [lightningcssLoader](https://rsbuild.dev/config/tools/lightningcss-loader). Defaults to `true`.
-- config(<Badge type="tip" text=">=0.11.20" />):
+- config(`<Badge type="tip" text=">=0.11.20" />`):
   Complete and official [rsbuild config](https://rsbuild.dev/guide/basic/configure-rsbuild), can be used to override other configurations with higher priority than other configurations. This configuration is made available considering potential future custom rsbuild configurations.
 
 ```js
@@ -1796,7 +1802,7 @@ export default {
 - **Default**: `[]`
 
 Configure additional script tags in the `<body>`.
- 
+
 1. When the value is a string, it automatically distinguishes configuration support for inline scripts and external script paths. The latter is determined by whether it starts with `https?://`.
 
 For example:
@@ -1863,7 +1869,7 @@ Will generate HTML:
 - **Type**: `object`
 - **Default**: `{}`
 
-Configure sass-loader, see [sass-loader > options](https://github.com/webpack-contrib/sass-loader#options) for details
+Configure sass-loader, see [sass-loader &gt; options](https://github.com/webpack-contrib/sass-loader#options) for details
 
 ## styleLoader
 
@@ -1878,7 +1884,7 @@ Enable style loader functionality to inline CSS in JS without outputting additio
 - **Default**: `{}`
 - **bundler**: `webpack`, `rsbuild`
 
-Configure stylus-loader, see [stylus-loader > options](https://github.com/webpack-contrib/stylus-loader#options) for details
+Configure stylus-loader, see [stylus-loader &gt; options](https://github.com/webpack-contrib/stylus-loader#options) for details
 
 ## styles
 
@@ -2034,7 +2040,8 @@ export default {
 
 Configure global page title, currently only supports static Title.
 
-## transformImport <Badge type="tip" text="^0.14.3" />
+## transformImport `<Badge type="tip" text="^0.14.3" />`
+
 - **Type:**
 
 ```ts
@@ -2060,7 +2067,7 @@ Transform import paths, can be used for modular imports of third-party package s
 
 When using the antd component library (versions below v5), you can configure on-demand component imports as follows:
 
-```ts [config/config.ts]
+```ts
 export default defineConfig({
   transformImport: [
     {
@@ -2071,7 +2078,9 @@ export default defineConfig({
   ],
 });
 ```
+
 Source code:
+
 ```ts
 import { Button } from 'antd';
 ```
@@ -2086,7 +2095,7 @@ import 'antd/es/button/style';
 - On-demand import of lodash
   When using lodash, you can use `transformImport` to automatically reference sub-paths, reducing bundle size.
 
-```ts [config/config.ts]
+```ts
 export default defineConfig({
   transformImport: [
     {
@@ -2102,6 +2111,7 @@ Source code:
 ```ts
 import { get } from 'lodash';
 ```
+
 Will be transformed to:
 
 ```ts
@@ -2114,21 +2124,26 @@ Please avoid the following usage, otherwise all lodash code will be imported:
 import _ from 'lodash';
 import lodash from 'lodash';
 ```
+
 ### Scope of Application
+
 `transformImport` only applies to modules compiled through bundler. Note that WinJS does not compile JavaScript files located in the node_modules directory by default. This means that code within the node_modules directory will not be processed by `transformImport`.
 If you want to process code in node_modules through `transformImport`, please add the relevant modules to the [extraBabelIncludes](#extrababelincludes) configuration.
 
 ### libraryName
+
 - **Type:**  `string`
 
 Used to specify the module name that needs on-demand loading. When WinJS traverses the code, if it encounters an import statement for the corresponding module, it will transform it.
 
 ### libraryDirectory
+
 - **Type:**  `string`
 - **Default:** `'lib'`
   Used to splice the transformed path, with the splicing rule being `${libraryName}/${libraryDirectory}/${member}`, where member is the imported member.
 
 Example:
+
 ```ts
 import { Button } from 'foo';
 ```
@@ -2140,6 +2155,7 @@ import Button from 'foo/lib/button';
 ```
 
 ### style
+
 - **Type:**  `string`
 - **Default:** `undefined`
 
@@ -2176,7 +2192,7 @@ import Button from 'foo/lib/button';
 import 'foo/styles/button';
 ```
 
-###  camelToDashComponentName
+### camelToDashComponentName
 
 - **Type:**  `boolean`
 - **Default:** `true`
@@ -2197,7 +2213,7 @@ import ButtonGroup from 'foo/button-group';
 import ButtonGroup from 'foo/ButtonGroup';
 ```
 
-###  transformToDefaultImport
+### transformToDefaultImport
 
 - **Type:**  `boolean`
 - **Default:** `true`
@@ -2219,7 +2235,7 @@ import Button from 'foo/button';
 import { Button } from 'foo/button';
 ```
 
-###  customName
+### customName
 
 - **Type:**  `string`
 - **Default:** `undefined`
@@ -2227,7 +2243,7 @@ import { Button } from 'foo/button';
 Customize the transformed import path.
 For example, the configuration below will transform `import { foo } from 'my-lib'` to `import foo from 'my-lib/foo'`.
 
-```ts [config/config.ts]
+```ts
 export default defineConfig({
   transformImport: [
     {
@@ -2237,7 +2253,9 @@ export default defineConfig({
   ]
 })
 ```
+
 Additionally, you can declare the transformed path format, for example, setting it to `camelCase member` to convert member to camelCase format.
+
 - `kebabCase`: lowercase letters, words connected with hyphens. Example: `my-variable-name`.
 - `snakeCase`: lowercase letters, words connected with underscores. Example: `my_variable_name`.
 - `camelCase`: first letter lowercase, first letter of each subsequent word capitalized. Example: `myVariableName`.
@@ -2245,7 +2263,8 @@ Additionally, you can declare the transformed path format, for example, setting 
 - `lowerCase`: letters lowercase, other characters unchanged. Example: `my-variable-name`.
 
 For example:
-```ts [config/config.ts]
+
+```ts
 export default defineConfig({
   transformImport: [
     {
@@ -2312,6 +2331,68 @@ export default {
   // Change temporary file path to node_modules/.bin/.vite folder
   vite: {
     cacheDir: 'node_modules/.bin/.vite',
+  }
+}
+```
+
+## vue
+
+- **Type**: `object`
+- **Default**: `{}`
+- **bundler**: `webpack`, `rsbuild`
+
+When using Vue3, developers can configure [`vue-loader`](https://vue-loader.vuejs.org/options.html).
+
+Example:
+
+```js
+export default {
+  vue: {
+    vueLoaderOptions: {
+      compilerOptions: {
+        preserveWhitespace: true,
+        directives: {
+          html(node, directiveMeta) {
+            // XSS protection logic
+            (node.props || (node.props = [])).push({
+              name: 'innerHTML',
+              value: `DOMPurify.sanitize(_s(${directiveMeta.value}))`
+            });
+          }
+        }
+      }
+    },
+  }
+}
+```
+
+## vue2
+
+- **Type**: `object`
+- **Default**: `{}`
+- **bundler**: `webpack`, `rsbuild`
+
+When using Vue2, developers can configure [`vue-loader`](https://vue-loader.vuejs.org/options.html).
+
+Example:
+
+```js
+export default {
+  vue2: {
+    vueLoaderOptions: {
+      compilerOptions: {
+        preserveWhitespace: true,
+        directives: {
+          html(node, directiveMeta) {
+            // XSS protection logic
+            (node.props || (node.props = [])).push({
+              name: 'innerHTML',
+              value: `DOMPurify.sanitize(_s(${directiveMeta.value}))`
+            });
+          }
+        }
+      }
+    },
   }
 }
 ```
