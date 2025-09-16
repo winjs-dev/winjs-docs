@@ -34,6 +34,8 @@ Explicitly install the required Vue2 version in the project (the specific versio
 
 ### Configure Preset
 
+> Note: Starting from version `0.18.0`, WinJS no longer requires **explicit configuration** of presets for Vue2 and Vue3, so the configuration below can be removed.
+
 ```ts
 // In .winrc.ts or config/config.ts
 export default {

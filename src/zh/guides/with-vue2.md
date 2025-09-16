@@ -34,6 +34,8 @@ pnpm add vue@">=2.7.14"
 
 ### 配置预设
 
+注意：从 `0.18.0` 开始，WinJS 不用**显示配置**有关 Vue2 和 Vue3 的预设，因此下面这段配置可以移除。
+
 ```ts
 // .winrc.ts or config/config.ts 中
 export default {
