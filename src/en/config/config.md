@@ -154,7 +154,7 @@ window.MY_APP_CONFIG = {
 };
 ```
 
-### Custom Global Variable Name `<Badge type="tip" text="^0.14.4" />`
+### Custom Global Variable Name <Badge type="tip" text="^0.14.4" />
 
 ```typescript
 // .winrc.ts
@@ -200,7 +200,7 @@ The base configuration allows you to set a route prefix for your application. Fo
 
 > Note: The base configuration must be set at build time and cannot be changed without rebuilding, as this value is inlined in the client bundle.
 
-## banner `<Badge  type="tip" text=">=0.15.0" />`
+## banner <Badge  type="tip" text=">=0.15.0" />
 
 - **Type**: `object | boolean | undefined`
 - **Default**: `undefined`
@@ -871,7 +871,7 @@ export default {
 `rsbuild` reuses this configuration just to maintain configuration consistency, corresponding to [include](https://rsbuild.dev/config/source/include). It also corresponds to the `include` configuration option of `@rsbuild/plugin-babel`.
 :::
 
-## extraBabelExcludes `<Badge type="tip" text=">=0.14.6" />`
+## extraBabelExcludes <Badge type="tip" text=">=0.14.6" />
 
 - **Type**: `Array<string | RegExp>`
 - **Default**: `[]`
@@ -1736,7 +1736,7 @@ Configure webpack's publicPath and rsbuild's [output.assetPrefix](https://rsbuil
 
 Configure routes. For more information, see [Configure Routes](../guides/routes#configure-routes)
 
-## rsbuild `<Badge type="tip" text=">=0.9.4" />`
+## rsbuild <Badge type="tip" text=">=0.9.4" />
 
 - **Type**:
   `{ removeConsole: boolean | ConsoleType[], lightningcssLoader: boolean | Rspack.LightningcssLoaderOptions | Function, config: RsbuildConfig }`
@@ -1746,7 +1746,7 @@ Switch to rsbuild build packaging tool. Related configuration options for rsbuil
 
 - removeConsole: Whether to automatically remove `console.[methodName]` from code during production build phase. Defaults to `false`. When removeConsole is set to true, all types of `console.[methodName]` will be removed.
 - lightningcssLoader: See [lightningcssLoader](https://rsbuild.dev/config/tools/lightningcss-loader). Defaults to `true`.
-- config(`<Badge type="tip" text=">=0.11.20" />`):
+- config(<Badge type="tip" text=">=0.11.20" />):
   Complete and official [rsbuild config](https://rsbuild.dev/guide/basic/configure-rsbuild), can be used to override other configurations with higher priority than other configurations. This configuration is made available considering potential future custom rsbuild configurations.
 
 ```js
@@ -2040,7 +2040,7 @@ export default {
 
 Configure global page title, currently only supports static Title.
 
-## transformImport `<Badge type="tip" text="^0.14.3" />`
+## transformImport <Badge type="tip" text="^0.14.3" />
 
 - **Type:**
 
