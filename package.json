@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "WinJS 开发说明文档",
-  "packageManager": "pnpm@10.14.0",
+  "packageManager": "pnpm@10.16.1",
   "scripts": {
     "dev": "vitepress",
     "build": "vitepress build && node scripts/generateLLms.cjs",
@@ -20,7 +20,7 @@
     "dynamics.js": "^1.1.5",
     "element-plus": "^2.2.9",
     "gsap": "^3.9.0",
-    "vitepress": "2.0.0-alpha.11",
+    "vitepress": "2.0.0-alpha.12",
     "vue": "^3.2.45"
   },
   "devDependencies": {
