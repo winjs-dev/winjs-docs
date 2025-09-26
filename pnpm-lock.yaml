@@ -13,7 +13,7 @@ importers:
         version: 1.1.5
       element-plus:
         specifier: ^2.2.9
-        version: 2.11.2(vue@3.5.18)
+        version: 2.11.4(vue@3.5.18)
       gsap:
         specifier: ^3.9.0
         version: 3.13.0
@@ -756,8 +756,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  element-plus@2.11.2:
-    resolution: {integrity: sha512-sTMDXtgeqy17TUsBSH/DL3h1/5sqIOVUUgXFoVbdD8lWWYssKrDX50CEYy4k29tYJhPHKZyFSwcLJsIajr+dDA==}
+  element-plus@2.11.4:
+    resolution: {integrity: sha512-sLq+Ypd0cIVilv8wGGMEGvzRVBBsRpJjnAS5PsI/1JU1COZXqzH3N1UYMUc/HCdvdjf6dfrBy80Sj7KcACsT7w==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -2075,7 +2075,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  element-plus@2.11.2(vue@3.5.18):
+  element-plus@2.11.4(vue@3.5.18):
     dependencies:
       '@ctrl/tinycolor': 3.6.1
       '@element-plus/icons-vue': 2.3.2(vue@3.5.18)
