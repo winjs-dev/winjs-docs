@@ -11,6 +11,8 @@ import VersionTag from './components/VersionTag.vue';
 import SpecialRemark from './components/SpecialMark.vue';
 import ImagePreview from './components/ImagePreview.vue';
 import 'virtual:group-icons.css';
+import CopyOrDownloadAsMarkdownButtons
+  from 'vitepress-plugin-llms/vitepress-components/CopyOrDownloadAsMarkdownButtons.vue';
 
 import './styles/vars.css';
 import type { EnhanceAppContext } from 'vitepress/dist/client';
@@ -30,5 +32,6 @@ export default Object.assign({}, Theme, {
     ctx.app.component('VersionTag', VersionTag);
     ctx.app.component('SpecialRemark', SpecialRemark);
     ctx.app.component('ImagePreview', ImagePreview);
+    ctx.app.component('CopyOrDownloadAsMarkdownButtons', CopyOrDownloadAsMarkdownButtons);
   }
 });

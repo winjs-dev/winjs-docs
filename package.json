@@ -6,7 +6,7 @@
   "packageManager": "pnpm@10.18.1",
   "scripts": {
     "dev": "vitepress",
-    "build": "vitepress build && node scripts/generateLLms.cjs",
+    "build": "vitepress build",
     "serve": "vitepress serve",
     "zhlint": "zhlint 'src/{api,blog,cli,config,guide,plugins}/**/*.md'",
     "clean": "rm -rf .vitepress/dist",
@@ -30,6 +30,7 @@
     "glob": "^11.0.1",
     "vitepress-plugin-group-icons": "^1.6.1",
     "vitepress-plugin-pagefind": "^0.4.14",
+    "vitepress-plugin-llms": "^1.8.0",
     "terser": "^5.14.2",
     "zhlint": "^0.8.0"
   },

@@ -3,6 +3,7 @@ import path from 'path';
 import { defineConfig, resolveSiteDataByRoute, type HeadConfig } from 'vitepress';
 import { chineseSearchOptimize, pagefindPlugin } from 'vitepress-plugin-pagefind';
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
+import llmstxt, { copyOrDownloadAsMarkdownButtons } from 'vitepress-plugin-llms'
 import { headerPlugin } from './headerMdPlugin';
 import { baseURL } from './meta';
 
@@ -97,6 +98,7 @@ export default defineConfig({
     config(md) {
       md.use(headerPlugin);
       md.use(groupIconMdPlugin);
+      md.use(copyOrDownloadAsMarkdownButtons);
     }
   },
 
@@ -148,11 +150,15 @@ export default defineConfig({
         customIcon: {
           cloudflare: 'logos:cloudflare-workers-icon'
         }
+      }),
+      llmstxt({
+        ignoreFiles: ['src/index.md', 'README.md', 'zh/**/*'],
+        description: 'WinJS - A Plugin-based Frontend Application Framework',
+        details: `\
+- WinJS is an extensible frontend application framework. Built on a routing foundation, it supports both configured and conventional routing, ensuring comprehensive routing functionality for feature extensions. It also features a comprehensive plugin system with full lifecycle support, covering every stage from source code to build artifacts, supporting various functional extensions and business requirements.
+        `
       })
-    ],
-    experimental: {
-      enableNativePlugin: true
-    }
+    ]
   },
 
   transformPageData: prod
