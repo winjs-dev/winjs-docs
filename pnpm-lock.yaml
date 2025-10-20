@@ -41,7 +41,7 @@ importers:
         version: 5.43.1
       vitepress-plugin-group-icons:
         specifier: ^1.6.1
-        version: 1.6.3(markdown-it@14.1.0)(vite@7.1.5(@types/node@22.18.11)(terser@5.43.1))
+        version: 1.6.4(markdown-it@14.1.0)(vite@7.1.5(@types/node@22.18.11)(terser@5.43.1))
       vitepress-plugin-llms:
         specifier: ^1.8.0
         version: 1.8.0
@@ -57,8 +57,8 @@ packages:
   '@antfu/install-pkg@1.1.0':
     resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
 
-  '@antfu/utils@9.2.0':
-    resolution: {integrity: sha512-Oq1d9BGZakE/FyoEtcNeSwM7MpDO2vUBi11RWBZXf75zPsbUVWmUs03EqkRFrcgbXyKTas0BdZWC1wcuSoqSAw==}
+  '@antfu/utils@9.3.0':
+    resolution: {integrity: sha512-9hFT4RauhcUzqOE4f1+frMKLZrgNog5b06I7VmZQV1BkvwvqrbC8EBZf3L1eEL2AKb6rNKjER0sEvJiSP1FXEA==}
 
   '@babel/helper-string-parser@7.27.1':
     resolution: {integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==}
@@ -263,14 +263,14 @@ packages:
   '@iconify-json/simple-icons@1.2.47':
     resolution: {integrity: sha512-wa/2O7G4sBmwSEWWLh5C+HeY00lVOoWYRKJOYQtk7lAbQrHUReD1ijiGOyTynV1YavxtNueL1CBA1UZmYJfOrQ==}
 
-  '@iconify-json/vscode-icons@1.2.29':
-    resolution: {integrity: sha512-ByqO3YPYs0n7hakQ/ZUXltJQnYibeOv41H1AdciOs7Pmba5/OsKKK1/oOjcBmvXrYuENO+IvIzORYkl6sFXgqA==}
+  '@iconify-json/vscode-icons@1.2.32':
+    resolution: {integrity: sha512-UzZmL6hF02YGu/qEbpskEVnstlNJG+c+0PNzNYTIBf/dXylWHLUVufhOXqAzuGRjkUZ2q7rPpOEwLUPkhkFHUA==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
-  '@iconify/utils@3.0.1':
-    resolution: {integrity: sha512-A78CUEnFGX8I/WlILxJCuIJXloL0j/OJ9PSchPAfCargEIKmUBWvvEMmKWB5oONwiUqlNt+5eRufdkLxeHIWYw==}
+  '@iconify/utils@3.0.2':
+    resolution: {integrity: sha512-EfJS0rLfVuRuJRn4psJHtK2A9TqVnkxPpHY6lYHiB9+8eSuudsxbwMiavocG45ujOo6FJ+CIRlRnlOGinzkaGQ==}
 
   '@isaacs/balanced-match@4.0.1':
     resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
@@ -734,8 +734,8 @@ packages:
   dayjs@1.11.18:
     resolution: {integrity: sha512-zFBQ7WFRvVRhKcWoUh+ZA1g2HVgUbsZm9sbddh8EC5iv93sui8DVVz1Npvz+r6meo9VKfa8NyLWBsQK1VvIKPA==}
 
-  debug@4.4.1:
-    resolution: {integrity: sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ==}
+  debug@4.4.3:
+    resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
     engines: {node: '>=6.0'}
     peerDependencies:
       supports-color: '*'
@@ -939,8 +939,8 @@ packages:
   linkify-it@5.0.0:
     resolution: {integrity: sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==}
 
-  local-pkg@1.1.1:
-    resolution: {integrity: sha512-WunYko2W1NcdfAFpuLUoucsgULmgDBRkdxHxWQ7mK0cQqwPiy8E1enjuRBrhLtZkB5iScJ1XIPdhVEFK8aOLSg==}
+  local-pkg@1.1.2:
+    resolution: {integrity: sha512-arhlxbFRmoQHl33a0Zkle/YWlmNwoyt6QNZEIJcqNbdrsix5Lvc4HyyI3EnwxTYlZYc32EbYrQ8SzEZ7dqgg9A==}
     engines: {node: '>=14'}
 
   lodash-es@4.17.21:
@@ -1221,8 +1221,8 @@ packages:
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
 
-  mlly@1.7.4:
-    resolution: {integrity: sha512-qmdSIPC4bDJXgZTCR7XosJiNKySV7O215tsPtDN9iEO/7q/76b/ijtgRu/+epFXSJhijtTCCGp3DWS549P3xKw==}
+  mlly@1.8.0:
+    resolution: {integrity: sha512-l8D9ODSRWLe2KHJSifWGwBqpTZXIXTeo8mlKjY+E2HAakaTeNpqAyBZ8GSqLzHgw4XmHmC8whvpjJNMbFZN7/g==}
 
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
@@ -1253,8 +1253,8 @@ packages:
   package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
 
-  package-manager-detector@1.3.0:
-    resolution: {integrity: sha512-ZsEbbZORsyHuO00lY1kV3/t72yp6Ysay6Pd17ZAlNGuGwmWDLCJxFpRs0IzfXfj1o4icJOkUEioexFHzyPurSQ==}
+  package-manager-detector@1.5.0:
+    resolution: {integrity: sha512-uBj69dVlYe/+wxj8JOpr97XfsxH/eumMt6HqjNTmJDf/6NO9s+0uxeOneIz3AsPt2m6y9PqzDzd3ATcU17MNfw==}
 
   pagefind@1.3.0:
     resolution: {integrity: sha512-8KPLGT5g9s+olKMRTU9LFekLizkVIu9tes90O1/aigJ0T5LmyPqTzGJrETnSw3meSYg58YH7JTzhTTW/3z6VAw==}
@@ -1291,8 +1291,8 @@ packages:
   pkg-types@1.3.1:
     resolution: {integrity: sha512-/Jm5M4RvtBFVkKWRu2BLUTNP8/M2a+UwuAX+ae4770q1qVGtfjG+WTCupoZixokjmHiry8uI+dlY8KXYV5HVVQ==}
 
-  pkg-types@2.2.0:
-    resolution: {integrity: sha512-2SM/GZGAEkPp3KWORxQZns4M+WSeXbC2HEvmOIJe3Cmiv6ieAJvdVhDldtHqM5J1Y7MrR1XhkBT/rMlhh9FdqQ==}
+  pkg-types@2.3.0:
+    resolution: {integrity: sha512-SIqCzDRg0s9npO5XQ3tNZioRY1uK06lA41ynBC1YmFTmnY6FjUjVt6s4LoADmwoig1qqD0oK8h1p/8mlMx8Oig==}
 
   postcss@8.5.6:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
@@ -1309,8 +1309,8 @@ packages:
     resolution: {integrity: sha512-uxFIHU0YlHYhDQtV4R9J6a52SLx28BCjT+4ieh7IGbgwVJWO+km431c4yRlREUAsAmt/uMjQUyQHNEPf0M39CA==}
     engines: {node: '>=6'}
 
-  quansync@0.2.10:
-    resolution: {integrity: sha512-t41VRkMYbkHyCYmOvx/6URnN80H7k4X0lLdBMGsz+maAwrJQYB1djpV6vHrQIBE0WBSGqhtEHrK9U3DWWH8v7A==}
+  quansync@0.2.11:
+    resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
 
   regex-recursion@6.0.2:
     resolution: {integrity: sha512-0YCaSCq2VRIebiaUviZNs0cBz1kg5kVS2UKUfNIx8YVs1cN3AV7NTctO5FOKBA+UT2BPJIWZauYHPqJODG50cg==}
@@ -1558,8 +1558,8 @@ packages:
       yaml:
         optional: true
 
-  vitepress-plugin-group-icons@1.6.3:
-    resolution: {integrity: sha512-bvPD4lhraLJw3rPtLhUIVsOvNfnHnF+F1LH7BKHekEzeZ4uqdTdqnwEyaT580AoKjjT6/F8En6hVJj7takPKDA==}
+  vitepress-plugin-group-icons@1.6.4:
+    resolution: {integrity: sha512-YCFH0G2zTX/me51wooWy4SvaaA6VKjIxLoWDU9ON4rFx9907Yf9ZpCpa4JpwloVuvm5+82fqLXSuZ98EJ92UUQ==}
     peerDependencies:
       markdown-it: '>=14'
       vite: '>=3'
@@ -1645,10 +1645,10 @@ snapshots:
 
   '@antfu/install-pkg@1.1.0':
     dependencies:
-      package-manager-detector: 1.3.0
+      package-manager-detector: 1.5.0
       tinyexec: 1.0.1
 
-  '@antfu/utils@9.2.0': {}
+  '@antfu/utils@9.3.0': {}
 
   '@babel/helper-string-parser@7.27.1': {}
 
@@ -1770,22 +1770,22 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/vscode-icons@1.2.29':
+  '@iconify-json/vscode-icons@1.2.32':
     dependencies:
       '@iconify/types': 2.0.0
 
   '@iconify/types@2.0.0': {}
 
-  '@iconify/utils@3.0.1':
+  '@iconify/utils@3.0.2':
     dependencies:
       '@antfu/install-pkg': 1.1.0
-      '@antfu/utils': 9.2.0
+      '@antfu/utils': 9.3.0
       '@iconify/types': 2.0.0
-      debug: 4.4.1
+      debug: 4.4.3
       globals: 15.15.0
       kolorist: 1.8.0
-      local-pkg: 1.1.1
-      mlly: 1.7.4
+      local-pkg: 1.1.2
+      mlly: 1.8.0
     transitivePeerDependencies:
       - supports-color
 
@@ -2197,7 +2197,7 @@ snapshots:
 
   dayjs@1.11.18: {}
 
-  debug@4.4.1:
+  debug@4.4.3:
     dependencies:
       ms: 2.1.3
 
@@ -2411,11 +2411,11 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
-  local-pkg@1.1.1:
+  local-pkg@1.1.2:
     dependencies:
-      mlly: 1.7.4
-      pkg-types: 2.2.0
-      quansync: 0.2.10
+      mlly: 1.8.0
+      pkg-types: 2.3.0
+      quansync: 0.2.11
 
   lodash-es@4.17.21: {}
 
@@ -2908,7 +2908,7 @@ snapshots:
   micromark@3.2.0:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.1
+      debug: 4.4.3
       decode-named-character-reference: 1.2.0
       micromark-core-commonmark: 1.1.0
       micromark-factory-space: 1.1.0
@@ -2930,7 +2930,7 @@ snapshots:
   micromark@4.0.2:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.1
+      debug: 4.4.3
       decode-named-character-reference: 1.2.0
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.3
@@ -2969,7 +2969,7 @@ snapshots:
 
   mitt@3.0.1: {}
 
-  mlly@1.7.4:
+  mlly@1.8.0:
     dependencies:
       acorn: 8.15.0
       pathe: 2.0.3
@@ -2996,7 +2996,7 @@ snapshots:
 
   package-json-from-dist@1.0.1: {}
 
-  package-manager-detector@1.3.0: {}
+  package-manager-detector@1.5.0: {}
 
   pagefind@1.3.0:
     optionalDependencies:
@@ -3031,10 +3031,10 @@ snapshots:
   pkg-types@1.3.1:
     dependencies:
       confbox: 0.1.8
-      mlly: 1.7.4
+      mlly: 1.8.0
       pathe: 2.0.3
 
-  pkg-types@2.2.0:
+  pkg-types@2.3.0:
     dependencies:
       confbox: 0.2.2
       exsolve: 1.0.7
@@ -3052,7 +3052,7 @@ snapshots:
 
   punycode.js@2.3.1: {}
 
-  quansync@0.2.10: {}
+  quansync@0.2.11: {}
 
   regex-recursion@6.0.2:
     dependencies:
@@ -3371,11 +3371,11 @@ snapshots:
       fsevents: 2.3.3
       terser: 5.43.1
 
-  vitepress-plugin-group-icons@1.6.3(markdown-it@14.1.0)(vite@7.1.5(@types/node@22.18.11)(terser@5.43.1)):
+  vitepress-plugin-group-icons@1.6.4(markdown-it@14.1.0)(vite@7.1.5(@types/node@22.18.11)(terser@5.43.1)):
     dependencies:
       '@iconify-json/logos': 1.2.9
-      '@iconify-json/vscode-icons': 1.2.29
-      '@iconify/utils': 3.0.1
+      '@iconify-json/vscode-icons': 1.2.32
+      '@iconify/utils': 3.0.2
       markdown-it: 14.1.0
       vite: 7.1.5(@types/node@22.18.11)(terser@5.43.1)
     transitivePeerDependencies:
