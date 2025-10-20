@@ -1,0 +1,37 @@
+---
+globs: *.css,*.vue
+---
+
+# 主题样式开发指南
+
+## VitePress 主题结构
+主题样式文件位于 [.vitepress/theme/styles/](mdc:.vitepress/theme/styles/) 目录：
+
+### 样式文件组织
+- **入口文件**：[index.css](mdc:.vitepress/theme/styles/index.css) - 导入所有样式
+- **变量定义**：[vars.css](mdc:.vitepress/theme/styles/vars.css) - CSS 自定义属性
+- **页面样式**：[pages.css](mdc:.vitepress/theme/styles/pages.css)
+- **组件样式**：各个专用的 CSS 文件
+
+### 主题色系统
+使用 VitePress CSS 变量：
+```css
+--vp-c-brand: #646cff;           /* 主品牌色 */
+--vp-c-brand-light: #747bff;     /* 浅色变体 */
+--vp-c-brand-dark: #535bf2;      /* 深色变体 */
+--vp-c-brand-lighter: #9499ff;   /* 更浅变体 */
+--vp-c-brand-darker: #454ce1;    /* 更深变体 */
+```
+
+### 样式开发规范
+1. **使用 CSS 变量**：优先使用 VitePress 提供的 CSS 变量
+2. **响应式设计**：考虑移动端和桌面端适配
+3. **深色模式**：使用 `.dark` 类选择器
+4. **模块化**：每个组件创建独立的 CSS 文件
+5. **导入顺序**：在 [index.css](mdc:.vitepress/theme/styles/index.css) 中按依赖关系导入
+
+### 组件样式示例
+参考 [markdown-buttons.css](mdc:.vitepress/theme/styles/markdown-buttons.css) 的实现方式，展示了如何：
+- 使用主题变量
+- 支持深色模式
+- 实现响应式交互效果

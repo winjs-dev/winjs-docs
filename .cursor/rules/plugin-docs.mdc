@@ -1,0 +1,66 @@
+---
+description: 插件文档编写和维护指南
+---
+
+# WinJS 插件文档编写指南
+
+## 插件文档结构
+所有插件文档位于 [src/plugins/](mdc:src/plugins/) 和 [src/zh/plugins/](mdc:src/zh/plugins/) 目录。
+
+### 标准文档模板
+每个插件文档应包含以下部分：
+
+```markdown
+# @winner-fed/plugin-name
+
+Brief description in English.
+
+## 安装 (Installation)
+\`\`\`bash
+npm add @winner-fed/plugin-name -D
+\`\`\`
+
+## 使用 (Usage)
+配置示例：
+\`\`\`ts
+// .winrc.ts
+export default {
+  plugins: ['@winner-fed/plugin-name'],
+  pluginName: {
+    // 配置选项
+  }
+};
+\`\`\`
+
+## 配置选项 (Options)
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+
+## 示例 (Examples)
+实际使用案例和代码示例
+```
+
+### 文档维护要求
+1. **双语同步**：英文和中文版本内容保持一致
+2. **API 文档**：所有配置参数必须有详细说明
+3. **示例代码**：提供完整可运行的示例
+4. **版本信息**：显示 npm 版本和下载量徽章
+5. **外部依赖**：明确说明基于的第三方库
+
+### 参考示例
+- **完整示例**：[viewport.md](mdc:src/plugins/viewport.md) - 展示了完整的插件文档结构
+- **配置表格**：详细的参数说明表格
+- **多语言支持**：中英文对照的配置说明
+
+### 配置参数文档化
+对于复杂的配置对象：
+1. **分层说明**：主要参数 → 子属性 → 具体选项
+2. **类型定义**：明确参数类型和默认值
+3. **使用场景**：说明何时使用该配置
+4. **相关链接**：引用官方文档或源码
+
+### 文档质量检查
+- ✅ 所有配置参数都有说明
+- ✅ 代码示例可以直接使用
+- ✅ 中英文版本内容一致
+- ✅ 链接和引用正确有效

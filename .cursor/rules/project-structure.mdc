@@ -1,0 +1,26 @@
+---
+alwaysApply: true
+---
+
+# WinJS 文档项目结构与语言设置
+
+## 项目概述
+这是一个 VitePress 驱动的 WinJS 框架文档网站，支持中英文双语。
+
+## 核心文件结构
+- 主配置：[.vitepress/config.ts](mdc:.vitepress/config.ts)
+- 主题样式：[.vitepress/theme/styles/](mdc:.vitepress/theme/styles/)
+- 英文文档：[src/](mdc:src/) 目录
+- 中文文档：[src/zh/](mdc:src/zh/) 目录
+
+## 重要约定
+1. **语言设置**：始终使用中文回答用户问题
+2. **双语结构**：英文内容在 `src/`，中文内容在 `src/zh/`
+3. **配置参数**：所有配置都应该有英文和中文两版本的说明
+4. **主题色**：使用 VitePress 主题变量，主品牌色为 `#646cff`
+
+## 文档类型
+- **指南**：[src/guides/](mdc:src/guides/) 和 [src/zh/guides/](mdc:src/zh/guides/)
+- **插件**：[src/plugins/](mdc:src/plugins/) 和 [src/zh/plugins/](mdc:src/zh/plugins/)
+- **API**：[src/api/](mdc:src/api/) 和 [src/zh/api/](mdc:src/zh/api/)
+- **配置**：[src/config/](mdc:src/config/) 和 [src/zh/config/](mdc:src/zh/config/)

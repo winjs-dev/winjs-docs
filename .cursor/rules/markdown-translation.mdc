@@ -1,0 +1,36 @@
+---
+globs: *.md
+---
+
+# Markdown 文档翻译指南
+
+## 翻译原则
+当进行中英文翻译时，请遵循以下规则：
+
+### 术语保持一致
+- **WinJS** → 保持不变
+- **插件化** → Plugin-based
+- **前端应用框架** → Frontend Application Framework
+- **配置式路由** → Configured routing
+- **约定式路由** → Conventional routing
+- **生命周期** → Lifecycle
+
+### 技术术语处理
+1. **代码块和配置参数名称**：保持原样，不翻译
+2. **URL 和链接**：保持原样
+3. **示例代码**：注释可以翻译，代码本身不变
+
+### 文档结构
+- 保持原有的 Markdown 格式和层级结构
+- 表格结构保持一致
+- 代码块的语言标识符保持不变
+
+### 质量要求
+1. 保持技术准确性
+2. 语言自然流畅
+3. 专业术语使用标准译法
+4. 避免过度翻译技术名词
+
+## 参考文件
+- 已翻译示例：[src/plugins/viewport.md](mdc:src/plugins/viewport.md)
+- VitePress 配置：[.vitepress/config.ts](mdc:.vitepress/config.ts)

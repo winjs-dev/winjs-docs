@@ -1,0 +1,53 @@
+---
+globs: .vitepress/*.ts,*.config.ts,config.ts
+---
+
+# VitePress 配置开发指南
+
+## 主要配置文件
+- **核心配置**：[.vitepress/config.ts](mdc:.vitepress/config.ts)
+- **元数据**：[.vitepress/meta.ts](mdc:.vitepress/meta.ts)  
+- **Markdown 插件**：[.vitepress/headerMdPlugin.ts](mdc:.vitepress/headerMdPlugin.ts)
+
+## 多语言配置
+在 [config.ts](mdc:.vitepress/config.ts) 中配置多语言支持：
+
+```typescript
+locales: {
+  root: { label: 'English' },
+  zh: { label: '简体中文' }
+},
+
+rewrites: {
+  'en/:rest*': ':rest*'  // 英文为默认路径
+}
+```
+
+## 关键配置项
+### 1. 插件系统
+- **搜索插件**：pagefindPlugin 配置中英文搜索
+- **图标插件**：groupIconVitePlugin 和 groupIconMdPlugin
+- **LLMs 插件**：llmstxt 用于 AI 友好的文档导出
+
+### 2. 主题配置
+```typescript
+themeConfig: {
+  siteTitle: 'WinJS',
+  logo: '/images/logo.png',
+  outline: { level: 'deep' }
+}
+```
+
+### 3. 构建配置
+- **Vite 配置**：优化依赖、SSR 排除项
+- **Markdown 配置**：自定义插件链
+- **头部标签**：SEO 和图标设置
+
+## 配置修改注意事项
+1. **类型安全**：使用 TypeScript 确保配置正确
+2. **插件顺序**：注意 Markdown 插件的加载顺序
+3. **路径配置**：确保资源路径正确
+4. **多语言一致性**：英文和中文配置保持同步
+
+## 开发调试
+使用 `pnpm dev` 启动开发服务器，配置更改会自动热重载。

@@ -1,0 +1,144 @@
+---
+description: Git 提交规范和最佳实践
+---
+
+# Git 提交规范
+
+## 提交信息格式
+使用语义化提交信息格式，支持中英文：
+
+```
+<类型>(<范围>): <描述>
+
+[可选的正文]
+
+[可选的脚注]
+```
+
+### 提交类型 (Type)
+| 类型 | 说明 | 示例 |
+|------|------|------|
+| `feat` | 新功能 | `feat: 添加插件配置说明` |
+| `fix` | 修复 | `fix: 修复配置文件类型错误` |
+| `docs` | 文档更新 | `docs: 翻译 viewport.md 为英文` |
+| `style` | 样式修改 | `style: 更新按钮 hover 样式` |
+| `refactor` | 重构 | `refactor: 重构主题样式结构` |
+| `i18n` | 国际化 | `i18n: 添加中文配置说明` |
+| `config` | 配置修改 | `config: 更新 VitePress 配置` |
+| `chore` | 构建/工具 | `chore: 更新依赖版本` |
+
+### 范围 (Scope)
+根据修改的文件类型或功能模块：
+
+| 范围 | 说明 | 文件路径示例 |
+|------|------|-------------|
+| `config` | 配置文件 | [.vitepress/config.ts](mdc:.vitepress/config.ts) |
+| `theme` | 主题样式 | [.vitepress/theme/](mdc:.vitepress/theme/) |
+| `plugins` | 插件文档 | [src/plugins/](mdc:src/plugins/) |
+| `guides` | 指南文档 | [src/guides/](mdc:src/guides/) |
+| `api` | API 文档 | [src/api/](mdc:src/api/) |
+| `zh` | 中文文档 | [src/zh/](mdc:src/zh/) |
+| `en` | 英文文档 | [src/](mdc:src/) |
+
+## 提交示例
+
+### 文档翻译
+```bash
+# 好的示例
+docs(plugins): 翻译 viewport.md 为英文
+i18n(guides): 添加快速开始中文版本
+
+# 避免
+update viewport
+translate file
+```
+
+### 样式修改
+```bash
+# 好的示例
+style(theme): 重置 markdown 按钮 hover 颜色
+feat(theme): 添加深色模式支持
+
+# 避免
+fix css
+update styles
+```
+
+### 配置更改
+```bash
+# 好的示例  
+config(vitepress): 添加 llmstxt 插件配置
+fix(config): 修复 TypeScript 类型错误
+
+# 避免
+update config
+fix error
+```
+
+## 提交前检查清单
+
+### 📋 必检项目
+- [ ] **文件完整性**：确保所有修改的文件都已暂存
+- [ ] **语法检查**：运行 `pnpm lint` 检查代码质量
+- [ ] **构建测试**：运行 `pnpm build` 确保构建成功
+- [ ] **双语同步**：如修改文档，确保中英文版本保持一致
+
+### 📝 文档类提交
+- [ ] **链接有效性**：检查所有内部和外部链接
+- [ ] **代码示例**：验证代码示例可以正常运行
+- [ ] **格式一致性**：保持 Markdown 格式规范
+- [ ] **术语统一**：使用项目术语对照表
+
+### 🎨 样式类提交
+- [ ] **响应式测试**：在不同屏幕尺寸下测试
+- [ ] **深色模式**：确保深色模式显示正常
+- [ ] **浏览器兼容**：在主流浏览器中验证
+- [ ] **CSS 变量**：优先使用 VitePress 主题变量
+
+## 提交频率建议
+
+### 🔄 及时提交
+- **单一功能**：完成一个功能点立即提交
+- **文档翻译**：翻译完一个文件就提交
+- **样式调整**：完成一个组件样式修改就提交
+- **配置更改**：配置修改并验证后立即提交
+
+### 🚫 避免的提交模式
+- **大批量提交**：一次性提交多个不相关的更改
+- **模糊描述**：使用 "fix", "update", "change" 等模糊词汇
+- **中英文混用**：提交信息语言不一致
+- **缺少范围**：没有明确指出修改的范围
+
+## 分支管理
+
+### 主要分支
+- **main**：稳定的生产版本
+- **develop**：开发分支，功能集成
+- **feature/**：功能分支，如 `feature/zh-translation`
+- **fix/**：修复分支，如 `fix/config-type-error`
+
+### 合并策略
+```bash
+# 功能完成后合并到 develop
+git checkout develop
+git merge --no-ff feature/feature-name
+
+# 发布时合并到 main  
+git checkout main
+git merge --no-ff develop
+```
+
+## 工具集成
+
+### 提交模板
+可以设置 git 提交模板：
+```bash
+git config commit.template .gitmessage
+```
+
+### 自动化检查
+推荐使用 husky + lint-staged 进行提交前自动检查：
+- ESLint 代码检查
+- Prettier 格式化
+- TypeScript 类型检查
+- Markdown 链接验证
