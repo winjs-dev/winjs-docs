@@ -1,0 +1,43 @@
+/**
+ * Component: Markdown Copy Buttons
+ * -------------------------------------------------------------------------- */
+
+/* 重置 markdown-copy-buttons 的 hover 样式，使用主题色 */
+.markdown-copy-buttons button {
+  padding: 8px 16px;
+  border: 1px solid var(--vp-c-divider);
+  background-color: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font-weight: 500;
+}
+
+.markdown-copy-buttons button:hover {
+  border-color: var(--vp-c-brand);
+  background-color: var(--vp-c-brand);
+  color: var(--vp-c-white);
+}
+
+.markdown-copy-buttons button:active {
+  border-color: var(--vp-c-brand-dark);
+  background-color: var(--vp-c-brand-dark);
+  color: var(--vp-c-white);
+}
+
+/* 深色模式下的样式调整 */
+.dark .markdown-copy-buttons button {
+  border-color: var(--vp-c-divider);
+  background-color: var(--vp-c-bg-alt);
+  color: var(--vp-c-text-1);
+}
+
+.dark .markdown-copy-buttons button:hover {
+  border-color: var(--vp-c-brand-light);
+  background-color: var(--vp-c-brand-light);
+  color: var(--vp-c-white);
+}
+
+.dark .markdown-copy-buttons button:active {
+  border-color: var(--vp-c-brand);
+  background-color: var(--vp-c-brand);
+  color: var(--vp-c-white);
+}

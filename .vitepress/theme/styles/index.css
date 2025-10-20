@@ -4,6 +4,7 @@
 @import "./inline-demo.css";
 @import "./utilities.css";
 @import "./style-guide.css";
+@import "./markdown-buttons.css";
 
 .VPHero .main {
   padding: 60px 0;
