@@ -18,16 +18,16 @@ Among these, the ESLint configuration has the following characteristics:
 
 Let's see how to integrate it.
 
-### 使用方式
-第一次执行 `win lint`时，会检测当前工程中是否存在 [f2elint](f2elint.md) 的配置文件，如果没有，会引导安装。根据命令行里的提示进行安装即可。
+### Usage
+When running `win lint` for the first time, it will detect whether the [f2elint](f2elint.md) configuration file exists in the current project. If not, it will guide you through the installation. Simply follow the prompts in the command line to complete the installation.
 
-在配置文件创建完毕后，我们其实已经可以通过 `eslint`、`stylelint` 命令来执行 lint 了，但我们仍然推荐使用 `win lint` 命令，以获得更便捷的体验。
+After the configuration file is created, you can actually execute lint using `eslint` and `stylelint` commands, but we still recommend using the `win lint` command for a more convenient experience.
 
-提示：有关 `f2elint`的具体用法，可以参考[这里](f2elint.md)。
+Tip: For specific usage of `f2elint`, please refer to [here](f2elint.md).
 
 #### CLI
 
-`win lint` 命令的用法如下：
+Usage of the `win lint` command:
 
 ```bash
 $ win lint [--include dir] [--fix] [--quiet] [--report]

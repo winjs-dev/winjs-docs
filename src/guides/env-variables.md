@@ -62,16 +62,16 @@ $ win dev
 
 WinJS will start the dev server on port 3000 and disable babel caching.
 
-如果你有部分环境变量的配置在本地要做特殊配置，可以配置在 `.env.local` 文件中去覆盖 `.env` 的配置。比如在之前的 `.env` 的基础上, 你想本地开发覆盖之前 3000 端口, 而使用 4000 端口，可以做如下定义。
+If you have environment variables that need special configuration locally, you can configure them in the `.env.local` file to override the `.env` configuration. For example, based on the previous `.env` configuration, if you want to override the previous port 3000 and use port 4000 for local development, you can define it as follows:
 
 ```text
 # file .env.local
 PORT=4000
 ```
 
-WinJS 会以 4000 端口启动 dev server，同时保持禁用 babel 的缓存。
+WinJS will start the dev server on port 4000 while keeping babel cache disabled.
 
-此外 WinJS 中的 `.env` 文件中还支持变量的方式来配置环境变量。例如：
+Additionally, the `.env` file in WinJS also supports variable interpolation for configuring environment variables. For example:
 
 ```
 # file .env.local
@@ -81,21 +81,21 @@ BAR=bar
 CONCAT=$FOO$BAR # CONCAT=foobar
 ```
 
-WinJS 不支持 .env.development / .env.production 的环境变量配置文件，如需在不同的环境下有不同的变量值，请使用 cross-env 在不同的启动命令上区分，或定义在各个 WIN_ENV 对应的 WinJS 配置文件内。 
+WinJS does not support `.env.development` / `.env.production` environment variable configuration files. If you need different variable values in different environments, please use cross-env to distinguish between different startup commands, or define them in the corresponding WinJS configuration files for each WIN_ENV.
 
-注意：
+Note:
 
-* 不建议将 `.env.local` 加入版本管理中。
+* It is not recommended to include `.env.local` in version control.
  
-::: tip 说明
+::: tip Note
 
-定义在 `.env` 文件中的变量，只能在 node 环境中使用，比如在 `.winrc.ts` 中，在项目中是用不了的。
+Variables defined in the `.env` file can only be used in the Node.js environment, such as in `.winrc.ts`, and cannot be used in the project client code.
  
 :::
 
-### 在浏览器中使用环境变量
+### Using Environment Variables in Browser
 
-所有通过 `.env` 环境变量文件 或 命令行注入 的环境变量均默认只在 WinJS 配置文件 (Node.js 环境) 内生效，在浏览器中无法直接通过 `process.env.VAR_NAME` 方式使用，通过进一步配置 [`define`](../config/config.md#define) 来注入到浏览器环境中：
+All environment variables injected through the `.env` environment variable file or command line are only effective in the WinJS configuration file (Node.js environment) by default. They cannot be directly used in the browser through `process.env.VAR_NAME`. You need to further configure [`define`](../config/config.md#define) to inject them into the browser environment:
 
 ```bash
 # .env
@@ -109,23 +109,23 @@ MY_TOKEN="xxxxx"
 define: { 'process.env.MY_TOKEN': process.env.MY_TOKEN }
 ```
 
-注：我们约定所有以 `WIN_APP_` 开头的环境变量会默认注入到浏览器中，无需配置 `define` 手动注入。
+Note: By convention, all environment variables starting with `WIN_APP_` will be automatically injected into the browser without the need to manually configure `define`.
 
-::: tip 说明
-`WIN_APP_` 开头的变量会被自动加载到你的项目（client）里，其他的变量需要通过 define 声明才能注入到你的项目（client）里。请避免在 `WIN_APP` 开头的变量中包含敏感信息。
+::: tip Note
+Variables starting with `WIN_APP_` will be automatically loaded into your project (client). Other variables need to be declared through `define` to be injected into your project (client). Avoid including sensitive information in variables starting with `WIN_APP_`.
 
-`WIN_APP_` 开头的变量替换 client 代码中的标识符的范围包含：
-- JavaScript 文件，以及能转换为 JavaScript 代码的文件，比如 `.js`，`.jsx`，`.ts`，`.tsx`，`.vue` 等。
+The scope of identifier replacement for `WIN_APP_` prefixed variables in client code includes:
+- JavaScript files, and files that can be transformed into JavaScript code, such as `.js`, `.jsx`, `.ts`, `.tsx`, `.vue`, etc.
 
-注意，但不会替换以下文件中的标识符：
+Note that identifiers in the following files will not be replaced:
 
-- CSS 文件，比如 `.css`, `.scss`, `.less` 等。
+- CSS files, such as `.css`, `.scss`, `.less`, etc.
   :::
 
-## 使用环境变量
-在 WinJS 中，环境变量的使用场景分构建时与运行时两种类型。
+## Using Environment Variables
+In WinJS, environment variable usage scenarios are divided into two types: build time and runtime.
 
-特别注意：环境变量在使用时的类型都是 `string`，特别是设置为 `true` 或 `false` 时需要注意判断为字符串类型：
+Important note: The type of environment variables when used is always `string`. Especially when set to `true` or `false`, you need to check them as string types:
 
 ```js
 // WIN_DISABLE_FOO=false
@@ -134,25 +134,25 @@ if (process.env.WIN_DISABLE_FOO === 'false') {
 }
 ```
 
-### 构建时
+### Build Time
 
-默认情况下，所有设置的环境变量都会被注入到构建环境，你可以在 `winrc` 文件或其它构建插件中通过 `process.env` 变量访问。
+By default, all set environment variables will be injected into the build environment. You can access them through the `process.env` variable in `winrc` files or other build plugins.
 
 ```js
 const port = process.env.PORT;
 // ...
 ```
 
-### 运行时
+### Runtime
 
-默认情况下环境变量是不能在运行时访问的，如若需要在浏览器环境中访问，可以在设置环境变量时增加前缀：`WIN_ENV_`，如：
+By default, environment variables cannot be accessed at runtime. If you need to access them in the browser environment, you can add the prefix `WIN_ENV_` when setting environment variables, for example:
 
 ```shell
 # File .env
 WIN_ENV_APP_ID=123456
 ```
 
-在运行时代码中访问：
+Access in runtime code:
 
 ```js
 
@@ -161,19 +161,19 @@ export default function AppID() {
 }
 ```  
 
-## 多运行环境管理
+## Multi-Environment Management
 
-在开发中经常会有一些需求，根据应用运行的不同环境进行不同的逻辑处理。
+During development, there are often requirements to perform different logic processing based on the different environments in which the application runs.
 
-比如，`dev` 环境使用 `dev` 的对应的 Url，而线上则使用 `prod` 对应的 Url。 或者，在某些特定的环境需要打开只有在该环境下才会生效的功能。
+For example, the `dev` environment uses the corresponding URL for `dev`, while production uses the corresponding URL for `prod`. Or, in certain specific environments, you need to enable features that only work in that environment.
 
-### 获取当前运行环境名称
+### Getting Current Environment Name
 
-WinJS 提供了一个环境变量 `WIN_APP_ENV`，该变量代表当前应用所处环境的具体名称。如 development、test、uat、production 等。
+WinJS provides an environment variable `WIN_APP_ENV`, which represents the specific name of the environment where the current application is located, such as development, test, uat, production, etc.
 
-如若需要在 `config` 外的非 node 环境文件中使用该环境变量，则需要在 `config` 导出默认 `defineConfig()` 时配置 `define{}`。
+If you need to use this environment variable in non-Node.js environment files outside of `config`, you need to configure `define{}` when exporting the default `defineConfig()` in `config`.
 
-示例代码如下：
+Example code:
 
 ```tsx 
 // config/config.ts
@@ -186,7 +186,7 @@ export default defineConfig({
 });
 ```
 
-使用该变量，示例代码如下：
+To use this variable, example code:
 
 ```vue
 <script lang="ts" setup>
@@ -194,11 +194,11 @@ export default defineConfig({
 </script>
 ```
 
-### 多环境多份配置文件
+### Multiple Configuration Files for Different Environments
 
-在 WinJS 内可通过指定 `WIN_ENV` 环境变量来区分不同环境的配置文件，`WIN_ENV` 需要在 `package.json` 内配置。
+In WinJS, you can use the `WIN_ENV` environment variable to distinguish configuration files for different environments. `WIN_ENV` needs to be configured in `package.json`.
 
-示例配置如下：
+Example configuration:
 
 ```json
 {
@@ -219,76 +219,76 @@ export default defineConfig({
 }
 ```
 
-WinJS 配置文件中的 `appConfig` 属性添加对应的配置即可：
+You can add the corresponding configuration in the `appConfig` property of the WinJS configuration file:
 
 ```js
 import { defineConfig } from 'win';
 
 export default defineConfig({
   appConfig: {
-    // WIN_APP_ENV 就是 development, test, uat, production
+    // WIN_APP_ENV can be development, test, uat, production
     development: {
       API_HOME: 'https://api.github.com/',
       API_UPLOAD: 'https://api.github.com/upload',
-      // vconsole 开关
+      // vconsole switch
       IS_OPEN_VCONSOLE: true
     },
     test: {
       API_HOME: 'https://test.github.com/',
       API_UPLOAD: 'https://test.github.com/upload',
-      // vconsole 开关
+      // vconsole switch
       IS_OPEN_VCONSOLE: true
     },
     uat: {
       API_HOME: 'https://uat.github.com/',
       API_UPLOAD: 'https://uat.github.com/upload',
-      // vconsole 开关
+      // vconsole switch
       IS_OPEN_VCONSOLE: true
     },
     production: {
       API_HOME: 'https://production.github.com/',
       API_UPLOAD: 'https://production.github.com/upload',
-      // vconsole 开关
+      // vconsole switch
       IS_OPEN_VCONSOLE: true
     }
   },
 })
 ```
 
-当 `WIN_ENV` 为 `test` 时，则可以在 config 目录下配置 `config.test.ts` 文件来管理 `test` 环境下的不同变量，WinJS 框架会在 deep merge 后形成最终配置。
+When `WIN_ENV` is `test`, you can configure a `config.test.ts` file in the config directory to manage different variables under the `test` environment. The WinJS framework will form the final configuration after deep merge.
 
-示例代码如下：
+Example code:
 
 ```tsx | pure
-// config/config.test.ts test环境对应的配置文件
+// config/config.test.ts - configuration file for test environment
 import { defineConfig } from 'win';
 
 /**
- * 导出的多环境变量命名约定：一律大写且采用下划线分割单词
- * 注意：在添加变量后，需要在src/typing.d.ts内添加该变量的声明，否则在使用变量时IDE会报错。
+ * Multi-environment variable naming convention: all uppercase with underscores separating words
+ * Note: After adding variables, you need to add the variable declaration in src/typing.d.ts, otherwise the IDE will report an error when using the variable.
  */
 export default defineConfig({
   define: {
-    API_URL: 'https://api-test.xxx.com', // API地址
-    API_SECRET_KEY: 'XXXXXXXXXXXXXXXX', // API调用密钥
+    API_URL: 'https://api-test.xxx.com', // API address
+    API_SECRET_KEY: 'XXXXXXXXXXXXXXXX', // API call secret key
   },
 });
 ```
 
-变量使用示例：
+Variable usage example:
 
 ```tsx
 import { request } from 'winjs';
 
 export async function query() {
-  // 使用API密钥调用用户接口
+  // Call user interface using API secret key
   return request('${API_URL}/api/users', {
     API_SECRET_KEY,
   });
 }
 ```
 
-配置文件夹 config 下的结构：
+Config folder structure:
 
 ```bash
 ├── config
@@ -303,11 +303,11 @@ export async function query() {
 ...
 ```
 
-### 报错的处理方式
+### Handling Errors
 
-由于环境变量是直接使用，不会通过 window 对象的方式来使用，在 eslint 和 TypeScript 中都会报错。
+Since environment variables are used directly and not through the window object, errors will occur in both eslint and TypeScript.
 
-eslint 中可以通过增加 [`globals`](https://eslint.org/docs/user-guide/configuring#specifying-globals) 的配置来处理报错。代码看起来是这样的
+In eslint, you can handle errors by adding [`globals`](https://eslint.org/docs/user-guide/configuring#specifying-globals) configuration. The code looks like this:
 
 ```tsx
 {
@@ -317,21 +317,21 @@ eslint 中可以通过增加 [`globals`](https://eslint.org/docs/user-guide/conf
 }
 ```
 
-在 TypeScript 可以在项目中的声明文件，如 `typings.d.ts` 中进行定义：
+In TypeScript, you can define them in a declaration file in the project, such as `typings.d.ts`:
 
-示例代码如下：
+Example code:
 
 ```tsx
 // src/typings.d.ts
 declare const WIN_APP_ENV: 'test' | 'development' | 'uat' | 'production' | undefined;
-// 以下变量声明对应config.[env].ts文件内define的变量
+// The following variable declarations correspond to variables defined in config.[env].ts files
 declare const API_URL: string;
 declare const API_SECRET_KEY: string;
 ```
 
-## process.env 替换方式
+## process.env Replacement Approach
 
-在使用属性配置 `define` 时，请避免替换整个 `process.env` 对象，比如下面的用法是不推荐的：
+When using the `define` property configuration, please avoid replacing the entire `process.env` object. For example, the following usage is not recommended:
 
 ```js
 export default {
@@ -341,18 +341,18 @@ export default {
 };
 ```
 
-如果你采用了上述用法，将会导致如下问题：
+If you adopt the above usage, it will cause the following issues:
 
-1. 额外注入了一些未使用的环境变量，导致开发环境的环境变量被泄露到前端代码中。
-2. 由于每一处 `process.env` 代码都会被替换为完整的环境变量对象，导致前端代码的包体积增加，性能降低。
+1. Additional unused environment variables are injected, causing development environment variables to be leaked into the frontend code.
+2. Since every occurrence of `process.env` code will be replaced with the complete environment variable object, it leads to an increase in the frontend code bundle size and performance degradation.
 
-因此，请按照实际需求来注入 `process.env` 上的环境变量，避免全量替换。  
+Therefore, please inject environment variables on `process.env` according to actual needs and avoid full replacement.
 
 ## Tree Shaking
 
-`define` 还可以用于标记死代码以协助 WinJS 进行 tree shaking 优化。
+`define` can also be used to mark dead code to assist WinJS in tree shaking optimization.
 
-例如通过将 `process.env.LANGUAGE` 替换为具体值来实现针对不同语言的产物进行差异化构建：
+For example, by replacing `process.env.LANGUAGE` with a specific value, you can achieve differentiated builds for different languages:
 
 ```ts 
 export default {
@@ -362,7 +362,7 @@ export default {
 };
 ```
 
-对于一段国际化代码：
+For an internationalization code:
 
 ```js
 const App = () => {
@@ -374,7 +374,7 @@ const App = () => {
 };
 ```
 
-指定环境变量 `LANGUAGE=zh` 并执行构建，得到的产物会移除多余的代码：
+Specify the environment variable `LANGUAGE=zh` and execute the build. The resulting output will remove unnecessary code:
 
 ```js
 const App = () => {
@@ -385,71 +385,71 @@ const App = () => {
 };
 ```
 
-未用到的组件不会被打包，它们的外部依赖也会对应地被移除，最终可以得到体积更小的构建产物。     
+Unused components will not be bundled, and their external dependencies will also be removed accordingly, ultimately resulting in a smaller build output.
 
-## 内置环境变量列表
+## Built-in Environment Variables List
 
-按字母顺序排列。
+Listed in alphabetical order.
 
 ### APP_ROOT
 
-指定项目根目录。
+Specifies the project root directory.
 
-注意：
+Note:
 
-* APP_ROOT 不能配在 .env 中，只能在命令行里添加
+* APP_ROOT cannot be configured in .env, it can only be added in the command line
 
 
 ### ANALYZE
 
-用于分析 bundle 构成，默认关闭。
+Used for analyzing bundle composition, disabled by default.
 
-比如：
+For example:
 
 ```bash
 $ ANALYZE=1 win dev
-# 或者
+# or
 $ ANALYZE=1 win build
 ```
 
-可以通过 `ANALYZE_PORT` 环境变量自定义端口或 [`analyze`](../config/config#analyze) 选项自定义配置。
+You can customize the port through the `ANALYZE_PORT` environment variable or customize the configuration through the [`analyze`](../config/config#analyze) option.
 
 ### BABEL_POLYFILL
 
-默认会根据 targets 配置打目标浏览器的全量补丁，设置为 `none` 禁用内置的补丁方案。
+By default, full polyfills for the target browser are bundled based on the targets configuration. Set to `none` to disable the built-in polyfill solution.
 
 ### COMPRESS
 
-默认压缩 CSS 和 JS，值为 none 时不压缩，build 时有效。
+CSS and JS are compressed by default. When the value is none, compression is disabled, effective during build.
 
 ### DID_YOU_KNOW
 
 
-设置为 `none` 会禁用「你知道吗」提示。
+Setting to `none` disables the "Did You Know" tips.
 
 ### ERROR_OVERLAY
 
-设置为 `none` 会禁用「Error Overlay」，在调试 Error Boundary 时会有用。
+Setting to `none` disables the "Error Overlay", which is useful when debugging Error Boundary.
 
 ### WIN_LOGGER
 
-默认会开启保存物理日志，值为 none 时不保存，同时针对 webcontainer 场景（比如 stackbliz）暂不保存。
+Physical logging is enabled by default. When the value is none, logging is not saved. Also, logging is temporarily not saved for webcontainer scenarios (such as stackbliz).
 
 ### HMR
 
-默认开启 HMR 功能，值为 none 时关闭。
+HMR functionality is enabled by default. Set to none to disable.
 
 ### HOST
 
-默认是 `0.0.0.0`。
+Default is `0.0.0.0`.
 
 ### PORT
 
-指定端口号，默认是 `8000`。
+Specifies the port number, default is `8000`.
 
 ### STRICT_PORT
 
-如果设置，当端口被占用时，会提示用户使用其他端口，并退出进程。
+If set, when the port is occupied, it will prompt the user to use another port and exit the process.
 
 ```bash
 $ STRICT_PORT=8000 win dev
@@ -457,7 +457,7 @@ $ STRICT_PORT=8000 win dev
 
 ### SOCKET_SERVER
 
-指定用于 HMR 的 socket 服务器。比如：
+Specifies the socket server for HMR. For example:
 
 ```bash
 $ SOCKET_SERVER=http://localhost:8000/ win dev
@@ -465,7 +465,7 @@ $ SOCKET_SERVER=http://localhost:8000/ win dev
 
 ### SPEED_MEASURE
 
-分析 Webpack 编译时间，支持 `CONSOLE` 和 `JSON` 两种格式，默认是 `CONSOLE`。
+Analyzes Webpack compilation time, supports `CONSOLE` and `JSON` formats, default is `CONSOLE`.
 
 ```bash
 $ SPEED_MEASURE=JSON win dev
@@ -473,7 +473,7 @@ $ SPEED_MEASURE=JSON win dev
 
 ### WIN_ENV
 
-当指定 `WIN_ENV` 时，会额外加载指定值的配置文件，优先级为：
+When `WIN_ENV` is specified, configuration files with the specified value will be additionally loaded. The priority order is:
 
  - `config.ts`
 
@@ -485,17 +485,17 @@ $ SPEED_MEASURE=JSON win dev
 
  - `config.local.ts`
 
-若不指定 `WIN_ENV` ，则只会加载当前环境对应的配置文件，越向下的越具体，优先级更高，高优的配置可以往下移动。
+If `WIN_ENV` is not specified, only the configuration file corresponding to the current environment will be loaded. The further down the list, the more specific it is, the higher the priority. Higher priority configurations can be moved down.
 
-注：根据当前环境的不同，`dev`, `prod`, `test` 配置文件会自动加载，不能将 `WIN_ENV` 的值设定成他们。
+Note: Depending on the current environment, `dev`, `prod`, `test` configuration files are automatically loaded, so you cannot set the value of `WIN_ENV` to them.
 
 ### WIN_APP_ENV
 
-主要是用来区分当前不同的运行环境来加载不同的配置（如运行时的 proxy, config.local.js 配置等），取值可以自定义。如 'test'、'development'、'uat'、'production'。
+Mainly used to distinguish different runtime environments to load different configurations (such as runtime proxy, config.local.js configuration, etc.). The value can be customized, such as 'test', 'development', 'uat', 'production'.
 
 ### WIN_PLUGINS
 
-指定 `win` 命令执行时额外加载的插件的路径，使用 `,` 隔开。
+Specifies the path of additional plugins to be loaded when the `win` command is executed, separated by `,`.
 
 ```bash
 $ WIN_PLUGINS=./path/to/plugin1,./path/to/plugin2 win dev
@@ -503,7 +503,7 @@ $ WIN_PLUGINS=./path/to/plugin1,./path/to/plugin2 win dev
 
 ### WIN_PRESETS
 
-指定 `win` 命令执行时额外加载插件集的路径，使用 `,` 隔开。
+Specifies the path of additional plugin sets to be loaded when the `win` command is executed, separated by `,`.
 
 ```bash
 $ WIN_PRESETS=./path/to/preset1,./path/to/preset2 win dev
@@ -511,7 +511,7 @@ $ WIN_PRESETS=./path/to/preset1,./path/to/preset2 win dev
 
 ### WEBPACK_FS_CACHE_DEBUG
 
-开启 webpack 的物理缓存 debug 日志。
+Enables webpack filesystem cache debug logging.
 
 ```bash
 $ WEBPACK_FS_CACHE_DEBUG=1 win dev

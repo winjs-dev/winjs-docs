@@ -96,19 +96,19 @@ Here, p__users_index.js is the path where the route component is located: src/pa
 
 <img src="/images/guide/less-error.png" />
 
-解法：新版 less 中 `/` 默认被识别为属性简写，通过配置 `lessLoader: { math: 'always' }` 恢复旧版行为（默认将 `/` 用作计算符号）。
+Solution: In the new version of Less, `/` is recognized as a property shorthand by default. Configure `lessLoader: { math: 'always' }` to restore the old behavior (defaulting to use `/` as a calculation operator).
 
-## routes 里的 layout 配置选项不生效
+## The layout configuration option in routes is not working
 
-layout 配置被移动到了 `app.ts` ，详见 [config/runtime-config > layout](../config/runtime-config#layout)
+The layout configuration has been moved to `app.ts`. For details, see [config/runtime-config > layout](../config/runtime-config#layout)
 
-## index.html 去哪了，如何自定义 HTML 模板
+## Where did index.html go, how to customize HTML template
 
-我们废弃了 `index.html`，提供了 Meta, Links, Scripts 等接口用于拼装 html。
-除了可以通过配置项注入外部 [script](https://winjs-dev.github.io/winjs-docs/config/config#scripts) 、[css](https://winjs-dev.github.io/winjs-docs/config/config#styles) 外，还可以使用项目级插件更灵活的修改 HTML 产物，参见如下：
+We have deprecated `index.html` and provided interfaces like Meta, Links, Scripts for assembling HTML.
+In addition to injecting external [script](https://winjs-dev.github.io/winjs-docs/config/config#scripts) and [css](https://winjs-dev.github.io/winjs-docs/config/config#styles) through configuration items, you can also use project-level plugins to modify HTML output more flexibly. See below:
 
 ```
-目前提供了大量的 html 快捷操作 api 来拼成最终 html 。
+Currently provides a large number of HTML shortcut operation APIs to assemble the final HTML.
 
 // ${projectRoot}/plugin.ts
 
@@ -123,25 +123,25 @@ export default (api: IApi) => {
     return $;
   });
 };
-将提供 jquery like 的 api ，详见 cheerio
+Will provide jQuery-like API, see cheerio for details
 
-通过如上例子中的 api 可以将你的所有逻辑抽象到 项目级插件 ${projectRoot}/plugin.ts 中（该文件会被自动注册为插件）
+Through the API in the above example, you can abstract all your logic into the project-level plugin ${projectRoot}/plugin.ts (this file will be automatically registered as a plugin)
 
 ```
 
-## config.local.js 哪去了，如何自定义前端工程运行的配置文件
-我们再项目初始化的流程显示移除了此配置文件，主要是为了避免有些安全测试软件检测构建后的前端静态资源的时候，此文件由于开发者的不注意，会出现因为一些敏感信息，比如本地开发调试的代码，注释信息等，因此将 `config.local.js` 的文件的生成交给了 WinJS 来处理，打包的时候会自动生成，以此来避免人为的修改。
-开发者可以使用[appConfig](../config/config#appconfig)来自定义 `config.local.js` 里的内容。
+## Where did config.local.js go, how to customize the frontend project runtime configuration file
+We explicitly removed this configuration file in the project initialization process, mainly to prevent security testing software from detecting sensitive information in the built frontend static assets when developers are not careful, such as local development debugging code, comments, etc. Therefore, the generation of the `config.local.js` file is handed over to WinJS to handle, and it will be automatically generated during packaging to avoid manual modifications.
+Developers can use [appConfig](../config/config#appconfig) to customize the content in `config.local.js`.
  
-在本地开发调试的时候，会读取 `appConfig`，赋值给 `window.LOCAL_CONFIG`，然后在 index.html 文件的`<head>`元素里添加这段 Script 脚本。
+During local development and debugging, `appConfig` will be read and assigned to `window.LOCAL_CONFIG`, and then this script will be added to the `<head>` element in the index.html file.
 
-构建包的时候，会读取 `appConfig`，自动在 `dist` 目录中生成 `config.local.js`。
+When building the package, `appConfig` will be read and `config.local.js` will be automatically generated in the `dist` directory.
 
-## scripts 里配置的外部 js 文件为什么默认插入到 win.js 的后面
+## Why are external js files configured in scripts inserted after win.js by default
 
-vue 只有在页面加载完毕后才会开始运行，所以插到 `win.js` 后面不会影响项目。
+Vue only starts running after the page is fully loaded, so inserting after `win.js` will not affect the project.
 
-若需要插到 `win.js` 前面，可参见 
+If you need to insert before `win.js`, see below 
 
 ```
 // ${projectRoot}/plugin.ts
@@ -165,20 +165,20 @@ output:
   </body>
 ```
 
-## WinJS 我怎么分包
+## How to do code splitting in WinJS
 
-WinJS 默认按页拆包，只有符合一定 size 大小的包才会被单独拆分，如果使用次数较多，则会被分配到公用 win.js 产物中，可以使用 [ANALYZE](https://winjs-dev.github.io/winjs-docs/guides/env-variables.html#analyze) 进行产物分析。如果你觉得还需要优化（尤其对于特别大的组件和依赖部分），可以使用分包策略或手动拆包，详见：[代码拆分指南](./code-splitting)
+WinJS splits bundles by page by default. Only packages that meet a certain size will be separately split. If used frequently, they will be allocated to the common win.js output. You can use [ANALYZE](https://winjs-dev.github.io/winjs-docs/guides/env-variables.html#analyze) for output analysis. If you think further optimization is needed (especially for particularly large components and dependencies), you can use splitting strategies or manual splitting. See: [Code Splitting Guide](./code-splitting)
 
-如果你有将所有 js 产物打包成单 `win.js` 文件的需求，请关闭 [dynamicImport](#可以关闭-dynamicimport-吗) 。
+If you need to bundle all js output into a single `win.js` file, please disable [dynamicImport](#can-dynamicimport-be-disabled).
 
 
-## 怎么用 GraphQL
+## How to use GraphQL
 
-配置 `graph-ql` loader 的方式可参见： [discussions/8218](https://github.com/umijs/umi/discussions/8218)
+For configuring `graph-ql` loader, see: [discussions/8218](https://github.com/umijs/umi/discussions/8218)
 
-## 怎么用 WebAssembly
+## How to use WebAssembly
 
-配置如下：
+Configuration as follows:
 
 ```ts
 // .winrc.ts
@@ -205,17 +205,17 @@ export default {
 }
 ```
 
-一个实际例子可参见：[discussions/8541](https://github.com/umijs/umi/discussions/8541)
+For a practical example, see: [discussions/8541](https://github.com/umijs/umi/discussions/8541)
 
-## 怎么自定义 loader
+## How to customize loaders
 
-根据场景不同，你可能要先从 静态资源规则 中排除你需要加载的文件类型，再添加你自己的 loader / 或修改，可参考如下实例：
+Depending on the scenario, you may need to first exclude the file types you need to load from the static asset rules, and then add your own loader / or modify. Refer to the following examples:
 
  - [discussions/8218](https://github.com/umijs/umi/discussions/8218)
 
  - [discussions/8452](https://github.com/umijs/umi/discussions/8452)
 
-举个例子，比如 svg 我希望不走 base64，而是使用雪碧图的方式，可以这样配置：
+For example, if you want SVG not to use base64 but instead use sprite sheets, you can configure it as follows:
 
 ```js
 import path from 'path';
@@ -244,11 +244,11 @@ export default {
 }
 ```
 
-## 第三方包里如何使用 css modules
+## How to use CSS Modules in third-party packages
 
-1. 直接将第三方包的 `jsx` / `ts` / `tsx` 源码发布到 npm ，无需转译为 `js` WinJS 支持直接使用。
+1. Publish the third-party package's `jsx` / `ts` / `tsx` source code directly to npm without transpiling to `js`. WinJS supports direct usage.
 
-2. 若第三方包产物是 `js` 的情况，需要将其纳入 babel 额外处理，才可以支持 css modules：
+2. If the third-party package output is `js`, you need to include it in babel for additional processing to support CSS modules:
 
 ```ts
 // .winrc.ts
@@ -257,9 +257,9 @@ export default {
 }
 ```
 
-## npm link 的包不热更新怎么解决
+## How to solve hot module replacement not working for npm linked packages
 
-WinJS 默认开启 `mfsu` ，默认忽略 `node_modules` 的变化，配置从 `mfsu` 排除该包即可：
+WinJS enables `mfsu` by default, which ignores changes in `node_modules` by default. Configure to exclude the package from `mfsu`:
 
 ```ts
 // .winrc.ts
@@ -271,21 +271,21 @@ export default {
 }
 ```
 
-## 我的环境很多，多环境 config 文件的优先级是怎样的
+## I have many environments, what is the priority of multi-environment config files
 
-加载优先级详见 [WIN_ENV](./env-variables#win-env) ，无论是 `config/config.ts` 还是 `.winrc.ts` 同理。
+For loading priority, see [WIN_ENV](./env-variables#win-env). The same applies to both `config/config.ts` and `.winrc.ts`.
 
-## IE 兼容性问题
+## IE Compatibility Issues
 
-现代浏览器主流背景下，WinJS 默认不兼容 IE 。
+In the context of mainstream modern browsers, WinJS does not support IE by default.
 
-若你有调整构建兼容目标、兼容非现代浏览器、兼容 IE 浏览器的需求，请参考 [非现代浏览器兼容](./legacy-browser) 。
+If you need to adjust build compatibility targets, support non-modern browsers, or support IE browsers, please refer to [Legacy Browser Compatibility](./legacy-browser).
 
-## 调整产物的压缩编码格式
+## Adjusting the output compression encoding format
 
-默认 js / css 的压缩器 `esbuild` 会采用 `ascii` 格式编码压缩，这可能导致中文字符被转码，增大产物体积。
+By default, the `esbuild` compressor for js / css uses `ascii` format encoding compression, which may cause Chinese characters to be transcoded and increase the output size.
 
-可通过配置调整到 `utf8` 编码，防止字符被转换：
+You can configure to adjust to `utf8` encoding to prevent character conversion:
 
 ```ts
 // .winrc.ts
@@ -295,7 +295,7 @@ export default {
 }
 ```
 
-或通过切换压缩器来解决：
+Or solve it by switching compressors:
 
 ```ts
 // .winrc.ts
@@ -305,11 +305,11 @@ export default {
 }
 ```
 
-## devServer 选项怎么配置
+## How to configure devServer options
 
-WinJS 不支持配置 `devServer` 选项，但你可以通过以下方式找到替代：
+WinJS does not support configuring `devServer` options, but you can find alternatives through the following methods:
 
-1. [`proxy`](../config/config#proxy) 选项配置代理，可通过 `onProxyReq` 修改请求头信息，可参考如下：
+1. Configure proxy using the [`proxy`](../config/config#proxy) option. You can modify request headers through `onProxyReq`. See the following example:
 
 ```ts
 // .winrc.ts
@@ -327,14 +327,14 @@ export default {
 }
 ```
 
-2. 编写 [项目级插件](./use-plugins#项目级插件) ，插入 express 中间件以实现对请求的修改，可参考如下：
+2. Write a [project-level plugin](./use-plugins#project-level-plugins) to insert express middleware to modify requests. See the following example:
 ```ts
-// 可以通过在根目录创建 plugin.ts，内容如下:
+// You can create plugin.ts in the root directory with the following content:
 
 import type { IApi } from 'win';
 
 export default (api: IApi) => {
-  // 中间件支持 cors
+  // Middleware supports cors
   api.addMiddlewares(()=>{
     return function cors(
       req,
@@ -349,42 +349,42 @@ export default (api: IApi) => {
 };
 ```
 
-## 为什么代码提示不生效？
+## Why is code completion not working?
 
-1. 需要先运行一次 `win dev`
-2. 检查 tsconfig.json，include 包含当前编辑的文件，`compilerOptions.path` 包含
+1. You need to run `win dev` at least once
+2. Check tsconfig.json to ensure include contains the currently edited file, and `compilerOptions.path` contains
 ```json
 "@/*": ["./src/*"],
 "@@/*": ["./src/.fes/*"]
 ```
         
-## 运行时和编译时分别是什么
+## What are runtime and compile time
 
-WinJS 与 webpack 相比增加了运行时相关的能力，我们在开发中有时候可能难以区分。
+Compared to webpack, WinJS adds runtime-related capabilities, which can sometimes be difficult to distinguish during development.
 
-编译时指的是代码在编译的时候做的事情，这个阶段的环境一般是 node 环境，可以使用 fs，path 等功能。但是同时因为没有使用 webpack ，所以 jsx，引入图片等非 node 的能力是无法使用的。
-运行时是指代码已经编译完成开始运行的阶段，这个阶段一般是浏览器环境，不能使用 fs，path 等功能，访问 url 也会有跨域的问题，但是这个环境被 webpack 编译过，所以可以写 jsx，导入图片等功能。
-以上两个环境用起来容易混淆，这里有一个简单的版本，src 文件夹中都是运行时的代码，都会经过 webpack 编译。其他目录的都可以认为是编译时，可以使用 node 能力。这也是为什么我们不能在 config.ts 里面写 JSX 的原因。
+Compile time refers to what the code does during compilation. The environment at this stage is generally a Node.js environment, where you can use fs, path, and other features. However, because webpack is not used, capabilities that are not Node.js-related, such as JSX and importing images, cannot be used.
+Runtime refers to the stage when the code has been compiled and starts running. The environment at this stage is generally a browser environment, where you cannot use fs, path, and other features, and accessing URLs will have cross-origin issues. However, this environment has been compiled by webpack, so you can write JSX, import images, and other features.
+These two environments can be easily confused. Here is a simple version: the src folder contains runtime code that will be compiled by webpack. Other directories can be considered compile time and can use Node.js capabilities. This is why we cannot write JSX in config.ts.
 
-## 通过什么方法能获取 defineConfig （即 winrc）的配置
+## How to get defineConfig (i.e., winrc) configuration
 
-1. 因为「配置」是供 Node.js 使用的，它不会包含在浏览器端。
-当在浏览器端使用 import from "win" 时会出现报错，主要原因是在浏览器端，WinJS 是通过别名 win: "@@/exports" 提供的。因此，在浏览器端使用 import from "win" 实际上是导入了 "src/.win/exports.ts" 文件。
-而在 config/config（或类似的 Node.js 端）中使用 import from "win"，实际上是导入了 "node_modules/win/dist/index.js" 文件。
-由于 defineConfig 不在 exports 中，所以无法使用。
+1. Because "configuration" is for Node.js use, it will not be included in the browser side.
+When using import from "win" on the browser side, an error will occur. The main reason is that on the browser side, WinJS is provided through the alias win: "@@/exports". Therefore, using import from "win" on the browser side actually imports the "src/.win/exports.ts" file.
+When using import from "win" in config/config (or similar Node.js side), it actually imports the "node_modules/win/dist/index.js" file.
+Since defineConfig is not in exports, it cannot be used.
 
-2. 若要复用配置，可以将需要复用的配置提取出来，确保该文件是“纯净”的，没有任何依赖。这样就可以在客户端（项目中）和 Node.js 端（配置文件）中同时进行导入和使用。
+2. If you want to reuse configuration, you can extract the configuration that needs to be reused and ensure that the file is "clean" without any dependencies. This way, it can be imported and used on both the client side (in the project) and the Node.js side (configuration file).
 
-## 热更新较慢的原因
+## Reasons for slow hot module replacement
 
-目前已知的信息：
+Currently known information:
 
-1. 尝试关闭 mfsu: false 看看热更新时间是否会减少。
-2. 尝试手动分包，分包方式见：[code-splitting](https://winjs-dev.github.io/winjs-docs/guides/code-splitting.html)，特别是对需要加载重依赖的组件部分拆分，比如编辑器等。
-3. 若没有使用额外的 babel 插件，尝试使用 srcTranspiler: 'swc' 提升编译速度（ srcTranspiler ）。
-4. 升级 WinJS 版本到最新。
+1. Try disabling mfsu: false to see if hot update time decreases.
+2. Try manual code splitting. For splitting methods, see: [code-splitting](https://winjs-dev.github.io/winjs-docs/guides/code-splitting.html), especially for components that need to load heavy dependencies, such as editors.
+3. If no additional babel plugins are used, try using srcTranspiler: 'swc' to improve compilation speed (srcTranspiler).
+4. Upgrade WinJS to the latest version.
 
-## 如何查看 webpack 的配置
+## How to view webpack configuration
 
 ```ts
 // winrc
@@ -401,15 +401,15 @@ export default defineConfig({
 });
 ```
 
-注意这个方法只能查看 webpack 配置而不能修改，修改需要通过 `webpack chain` 的方式对相应的规则修改，但通常你不需要修改 `webpack chain` ，因为绝大部分配置已经有[独立的配置项](https://winjs-dev.github.io/winjs-docs/config/config.html)了。
+Note that this method can only view webpack configuration but cannot modify it. Modifications need to be made through the `webpack chain` method to modify the corresponding rules. However, usually you don't need to modify `webpack chain` because most configurations already have [separate configuration items](https://winjs-dev.github.io/winjs-docs/config/config.html).
 
-## 打包时出现 `JavaScript heap out of memory`?
+## Getting `JavaScript heap out of memory` during build?
 
-该报错表示打包过程中出现了内存溢出问题，大多数情况下是由于打包的内容较多，超出了 Node.js 默认的内存上限。
+This error indicates a memory overflow issue during the build process. In most cases, this is because there is too much content to build, exceeding Node.js's default memory limit.
 
-如果出现 OOM 问题，最简单的方法是通过增加内存上限来解决，Node.js 提供了 `--max-old-space-size` 选项来对此进行设置。你可以在 CLI 命令前添加 [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) 来设置此参数。
+If you encounter an OOM issue, the simplest solution is to increase the memory limit. Node.js provides the `--max-old-space-size` option for this. You can set this parameter by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before the CLI command.
 
-比如，在 `win build` 命令前添加参数：
+For example, add parameters before the `win build` command:
 
 ```diff title="package.json"
 {
@@ -420,28 +420,28 @@ export default defineConfig({
 }
 ```
 
-如果你执行的是其他命令，比如 `win dev`，请在对应的命令前添加参数。
+If you are executing other commands, such as `win dev`, please add parameters before the corresponding command.
 
-`max_old_space_size` 参数的值代表内存上限大小（MB），一般情况下设置为 `16384`（16GB）即可。
+The value of the `max_old_space_size` parameter represents the memory limit size (MB). Generally, setting it to `16384` (16GB) is sufficient.
 
-Node.js 官方文档中有对以下参数更详细的解释：
+The Node.js official documentation has more detailed explanations of the following parameters:
 
 - [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions)
 - [--max-old-space-size](https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes)
 
-除了增加内存上限，通过开启一些编译策略来提升构建效率也是一个解决方案，请参考 [提升构建性能](/guide/optimization/build-performance)。
+In addition to increasing the memory limit, enabling some compilation strategies to improve build efficiency is also a solution. Please refer to [Improving Build Performance](/guide/optimization/build-performance).
 
-如果以上方式无法解决你的问题，可能是项目中某些异常逻辑导致了内存非正常溢出。你可以排查近期的代码变更，定位问题的根因。
+If the above methods cannot solve your problem, it may be that some abnormal logic in the project has caused abnormal memory overflow. You can investigate recent code changes to locate the root cause of the problem.
 
-## 代码中出现的 `winjs` 和 `win` 分别是什么？
-这两个其实都是别名。但使用的场景会有所不同。在 `src/.win/tsconfig.json` 中定义了别名：
+## What are `winjs` and `win` in the code?
+Both are actually aliases, but they are used in different scenarios. Aliases are defined in `src/.win/tsconfig.json`:
 
 ```json
 {
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      // 这里会根据具体项目路径自动生成
+      // This will be automatically generated based on the specific project path
       "win": [
         "/Volumes/liwb-ssd/xxx/winjs"
       ],
@@ -453,10 +453,10 @@ Node.js 官方文档中有对以下参数更详细的解释：
 }
 ```
 
-- `winjs` 会在浏览器运行时被替换为 `@@/exports`，其实映射的也是 `src/.win/exports.ts`，定义是在构建工具的 `alias` 中定义的，在项目运行后，打开 `localhost:8000/__win/`，切换到 `Config` 里可以看到。
-- `win` 会在 Node.js 环境中被替换为 `node_modules/@winner-fed/winjs/dist/index.js`。在项目中等同于 `@winner-fed/winjs`。 
+- `winjs` will be replaced with `@@/exports` at browser runtime, which actually also maps to `src/.win/exports.ts`. The definition is in the build tool's `alias`. After the project runs, open `localhost:8000/__win/` and switch to `Config` to see it.
+- `win` will be replaced with `node_modules/@winner-fed/winjs/dist/index.js` in the Node.js environment. It is equivalent to `@winner-fed/winjs` in the project.
              
-## 可以自定义打包输出目录吗？
-可以跟 `vue-cli` 一样，将产物内部目录结构，按照自己的需求调整吗？如js文件统一放到js文件夹，css文件统一放到css文件夹，image文件统一放到image文件夹。
+## Can I customize the build output directory?
+Can I adjust the internal directory structure of the build output according to my own needs, just like `vue-cli`? For example, put all js files in the js folder, all css files in the css folder, and all image files in the image folder.
 
-目前不会支持自定义产物内部目录结构，目前存在的各种自定义 hack 解法来修改输出目录，不保证 100% 没有问题，为保证不会发生线上事故，不要继续使用 hack 修改产物的方法了，可以只把产物 index.html 保留下来通过 nginx 提供，其他的 js 、css 都发到 cdn 上按目录管理，然后通过 publicPath 来引入。
+Currently, customizing the internal directory structure of the build output is not supported. There are various custom hack solutions to modify the output directory, but they are not guaranteed to be 100% problem-free. To ensure no production incidents occur, do not continue using hack methods to modify the output. You can keep only the build output index.html and serve it through nginx, while deploying all js and css files to a CDN managed by directories, and then reference them through publicPath.

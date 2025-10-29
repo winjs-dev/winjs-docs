@@ -239,8 +239,8 @@ export default {
 
 * Type: `string[]`
 
-配置路由组件的包装组件，通过包装组件可以为当前的路由组件组合进更多的功能。
-比如，可以用于路由级别的权限校验：
+Configure wrapper components for route components. Wrapper components can combine more functionality into the current route component.
+For example, it can be used for route-level permission verification:
 
 ```js
 export default {
@@ -256,7 +256,7 @@ export default {
 }
 ```
 
-然后在 `src/wrappers/auth` 中，
+Then in `src/wrappers/auth`,
 
 ```jsx
 export default (props) => {
@@ -269,14 +269,13 @@ export default (props) => {
 }
 ```
 
-这样，访问 `/user`，就通过 `auth` 组件做权限校验，如果通过，渲染 `src/pages/user`，否则跳转到 `/login`。
+This way, when accessing `/user`, permission verification is performed through the `auth` component. If passed, `src/pages/user` is rendered, otherwise it redirects to `/login`.
 
-::: tip 说明
-`wrappers` 中的每个组件会给当前的路由组件增加一层嵌套路由，如果你希望路由结构不发生变化，推荐使用高阶组件。先在高阶组件中实现
-wrapper 中的逻辑，然后使用该高阶组件装饰对应的路由组件。
+::: tip Note
+Each component in `wrappers` will add a nested route layer to the current route component. If you want the route structure to remain unchanged, it's recommended to use Higher-Order Components (HOC). First implement the wrapper logic in the HOC, then use the HOC to decorate the corresponding route component.
 :::
 
-举例：
+Example:
 
 ```jsx
 // src/hocs/withAuth.tsx
@@ -301,16 +300,15 @@ const TheOldPage = () => {
 export default withAuth(TheOldPage)
 ```
 
-## 约定式路由
+## Conventional Routing
 
-> 使用约定式路由时，约定 `src/pages` 下所有的 `(j|t)sx?`
-> 文件即路由。如果你需要修改默认规则，可以使用 [conventionRoutes](../config/config#conventionroutes) 配置。
+> When using conventional routing, all `(j|t)sx?` files under `src/pages` are treated as routes. If you need to modify the default rules, you can use the [conventionRoutes](../config/config#conventionroutes) configuration.
 
-除配置式路由外，WinJS 也支持约定式路由。约定式路由也叫文件路由，就是不需要手写配置，文件系统即路由，通过目录和文件及其命名分析出路由配置，最终生成对应的路由结构。
+In addition to configured routing, WinJS also supports conventional routing. Conventional routing, also known as file-based routing, means you don't need to write configuration manually. The file system becomes the routes, and route configuration is analyzed from directory and file structure and naming, ultimately generating the corresponding route structure.
 
-**如果没有 routes 配置，WinJS 会进入约定式路由模式**，然后分析 `src/pages` 目录拿到路由配置。
+**If there is no routes configuration, WinJS will enter conventional routing mode**, then analyze the `src/pages` directory to get the route configuration.
 
-比如以下文件结构：
+For example, the following file structure:
 
 ```bash
 .
@@ -319,7 +317,7 @@ export default withAuth(TheOldPage)
     └── users.tsx
 ```
 
-会得到以下路由配置，
+Will generate the following route configuration:
 
 ```js
 [
@@ -328,10 +326,10 @@ export default withAuth(TheOldPage)
 ]
 ```
 
-### 配置扩展属性
+### Configuring Extended Properties
 
-我们可以通过两种方式给页面设置扩展的一些属性，这样`约定式路由`就可以读取页面自定义的一些属性，如 `meta`。
--  通过 `definePageMeta` 方法 （**推荐使用**）
+We can set extended properties for pages in two ways, allowing `conventional routing` to read custom page properties such as `meta`.
+-  Using the `definePageMeta` method (**Recommended**)
 
 ```ts
 definePageMeta(meta: PageMeta) => meta
@@ -342,9 +340,9 @@ interface PageMeta {
   [key: string]: unknown
 }
 ```
--  通过 `routeProps` 属性
+-  Using the `routeProps` property
 
-举个例子：
+Example:
 
 ```vue{3,5,7-12,14-17} twoslash
 
@@ -352,9 +350,9 @@ interface PageMeta {
   import { ref } from 'vue';
   import { definePageMeta } from 'winjs';
 
-  // 可以在路由拦截器里(router.beforeEach)获取当前设置的 meta 字段
+  // You can get the currently set meta field in the route interceptor (router.beforeEach)
   
-  // 1. 推荐使用 definePageMeta()
+  // 1. Recommended: use definePageMeta()
   definePageMeta({
     meta: {
       title: 'pageMeta'
@@ -372,27 +370,27 @@ interface PageMeta {
 <template>
   <div class="page page-hello">
     <div class="page-content">
-      <!-- 静态资源路径写法事例 -->
+      <!-- Example of static asset path -->
       <img class="logo" src="@/assets/img/logo.png" alt="logo" />
     </div>
   </div>
 </template>
 ```
 
-::: warning 注意
-上述方案只在**约定式路由**的模式起作用。也即当检测出 WinJS 的配置文件 `.winrc` 里不含有 `routes` 属性时，此功能会自动开启。
+::: warning Note
+The above solution only works in **conventional routing** mode. That is, when it is detected that the WinJS configuration file `.winrc` does not contain the `routes` property, this feature will be automatically enabled.
 :::
 
-### 动态路由
+### Dynamic Routes
 
-约定，带 `$` 前缀的目录或文件为动态路由。若 `$` 后不指定参数名，则代表 `*` 通配，比如以下目录结构：
+By convention, directories or files with the `$` prefix are dynamic routes. If no parameter name is specified after `$`, it represents `*` wildcard. For example, the following directory structure:
 
-比如：
+For example:
 
-* `src/pages/users/$id.tsx` 会成为 `/users/:id`
-* `src/pages/users/$id/settings.tsx` 会成为 `/users/:id/settings`
+* `src/pages/users/$id.tsx` will become `/users/:id`
+* `src/pages/users/$id/settings.tsx` will become `/users/:id/settings`
 
-举个完整的例子，比如以下文件结构，
+A complete example, with the following file structure:
 
 ```
 + pages/
@@ -403,7 +401,7 @@ interface PageMeta {
   - index.tsx
 ```
 
-会生成路由配置如下：
+Will generate the following route configuration:
 
 ```javascript
 [
@@ -413,23 +411,23 @@ interface PageMeta {
 ];
 ```
 
-### 全局 layout
+### Global Layout
 
-约定 `src/layouts/index.tsx` 为全局路由。返回一个 Vue 组件，并通过 `<router-view />` 渲染嵌套路由。
+By convention, `src/layouts/index.tsx` is the global layout. It returns a Vue component and renders nested routes through `<router-view />`.
 
-如以下目录结构：
+With the following directory structure:
 
 ```bash
 .
 └── src
     ├── layouts
-    │   └── index.tsx
+    │   └── index.tsx
     └── pages
         ├── index.tsx
         └── users.tsx
 ```
 
-会生成如下路由：
+Will generate the following routes:
 
 ```js
 [
@@ -444,7 +442,7 @@ interface PageMeta {
 ]
 ```
 
-可以通过 `layout: false` 来细粒度关闭某个路由的 **全局布局** 显示，该选项只在一级生效：
+You can use `layout: false` to fine-tune and disable the **global layout** display for a specific route. This option only takes effect at the first level:
 
 ```ts
   routes: [
@@ -452,21 +450,21 @@ interface PageMeta {
     path: '/',
     name: 'index',
     component: './index',
-    // 🟢 
+    // 🟢 Works
     layout: false
   },
   {
     path: '/users',
     name: 'users',
     routes: [
-      // 🔴 不生效，此时该路由的 layout 并不是全局布局，而是 `/users`
+      // 🔴 Does not work, at this point the layout of this route is not the global layout, but `/users`
       { layout: false }
     ]
   }
 ]
 ```
 
-一个自定义的全局 `layout` 格式如下：
+A custom global `layout` format looks like this:
 
 ```tsx
 
@@ -475,12 +473,11 @@ export default function Layout() {
 }
 ```
 
-### 不同的全局 layout
+### Different Global Layouts
 
-你可能需要针对不同路由输出不同的全局 layout，WinJS 不支持这样的配置，但你仍可以在 `src/layouts/index.tsx`
-中对 `location.path` 做区分，渲染不同的 layout 。
+You may need to output different global layouts for different routes. WinJS does not support such configuration, but you can still differentiate `location.path` in `src/layouts/index.tsx` and render different layouts.
 
-比如想要针对 `/login` 输出简单布局，
+For example, if you want to output a simple layout for `/login`:
 
 ```jsx
 export default defineComponent(() => {
@@ -488,7 +485,7 @@ export default defineComponent(() => {
   {
     const route = useRoute();
 
-    // 使用 `useAppData` 可以获得更多路由信息
+    // Use `useAppData` to get more route information
     // const { clientRoutes } = useAppData()
 
     if (route.path === '/login') {
@@ -512,25 +509,25 @@ export default defineComponent(() => {
 });
 ```
 
-### 嵌套路由
+### Nested Routes
 
-虽然在 WinJS 里，约定式路由不支持配置不同的全局 layout，但我们可以通过下面的「目录约定」产生一个嵌套路由，那么当前目录和子目录均为子路由。
+Although in WinJS, conventional routing does not support configuring different global layouts, we can create nested routes through the "directory convention" below, where both the current directory and subdirectories are child routes.
 
-假设 src/pages 的目录结构如下：
+Assuming the directory structure of src/pages is as follows:
 
 ```bash
 .
 ├── docs.vue
 ├── hello
-│   ├── child.vue
-│   └── style.less
+│   ├── child.vue
+│   └── style.less
 ├── hello.vue
 └── index.vue
 
 ```
 
-::: tip 说明
-文件夹和当级路由的名字一样即可。
+::: tip Note
+The folder and current-level route should have the same name.
 
 ```bash
 ./src/pages
@@ -540,7 +537,7 @@ export default defineComponent(() => {
 ```
 :::
 
-其中，`hello.vue` 里的示例代码为：
+Among them, the example code in `hello.vue` is:
 
 ```vue
 <template>
@@ -551,7 +548,7 @@ export default defineComponent(() => {
 </template>
 ```
 
-那么，WinJS 自动生成的路由配置如下：
+Then, the route configuration automatically generated by WinJS is as follows:
 
 ```json
 {
@@ -588,11 +585,11 @@ export default defineComponent(() => {
 
 ```
 
-### 404 路由
+### 404 Route
 
-约定 `src/pages/404.tsx` 为 404 页面，需返回 Vue 组件。`name` 的值默认为 `NotFound`。
+By convention, `src/pages/404.tsx` is the 404 page and must return a Vue component. The default value of `name` is `NotFound`.
 
-比如以下目录结构，
+For example, the following directory structure:
 
 ```bash
 .
@@ -602,7 +599,7 @@ export default defineComponent(() => {
     └── users.tsx
 ```
 
-会生成路由，
+Will generate routes:
 
 ```js
 [
@@ -612,17 +609,14 @@ export default defineComponent(() => {
 ]
 ```
 
-这样，如果访问 `/foo`，`/` 和 `/users` 都不能匹配，会 fallback 到 404 路由，通过 `src/pages/404.tsx` 进行渲染。
+In this way, if you access `/foo`, neither `/` nor `/users` can match, it will fallback to the 404 route and be rendered through `src/pages/404.tsx`.
 
-**404 只有约定式路由会自动生效，如果使用配置式路由，需要自行配置 404 的通配路由。**
+**404 only takes effect automatically with conventional routing. If using configured routing, you need to configure the 404 wildcard route yourself.**
 
-::: tip 提示
-vue-router 不同的版本，4.x 与 3.x 生成的 404 相关代码会有区别。4.x
-可以参考 [404 路由](https://router.vuejs.org/zh/guide/essentials/dynamic-matching.html#%E6%8D%95%E8%8E%B7%E6%89%80%E6%9C%89%E8%B7%AF%E7%94%B1%E6%88%96-404-not-found-%E8%B7%AF%E7%94%B1)
-。3.x
-可以参考 [404 路由](https://v3.router.vuejs.org/zh/guide/essentials/dynamic-matching.html#%E6%8D%95%E8%8E%B7%E6%89%80%E6%9C%89%E8%B7%AF%E7%94%B1%E6%88%96-404-not-found-%E8%B7%AF%E7%94%B1)。
+::: tip Tip
+Different versions of vue-router, 4.x and 3.x will have differences in the generated 404-related code. For 4.x, refer to [404 Route](https://router.vuejs.org/zh/guide/essentials/dynamic-matching.html#%E6%8D%95%E8%8E%B7%E6%89%80%E6%9C%89%E8%B7%AF%E7%94%B1%E6%88%96-404-not-found-%E8%B7%AF%E7%94%B1). For 3.x, refer to [404 Route](https://v3.router.vuejs.org/zh/guide/essentials/dynamic-matching.html#%E6%8D%95%E8%8E%B7%E6%89%80%E6%9C%89%E8%B7%AF%E7%94%B1%E6%88%96-404-not-found-%E8%B7%AF%E7%94%B1).
 
-4.x 对应的也就是 Vue3，生成的代码如下：
+4.x corresponds to Vue3, and the generated code is as follows:
 
 ```js
 [
@@ -632,22 +626,22 @@ vue-router 不同的版本，4.x 与 3.x 生成的 404 相关代码会有区别�
 ]
 ```
 
-2.x 对应的也就是 Vue2，生成的代码如下：
+2.x corresponds to Vue2, and the generated code is as follows:
 
 ```js
 [
   { path: '/', name: 'index', component: '@/pages/index' },
   { path: '/users', name: 'users', component: '@/pages/users' },
-  // 必须放到路由表里的最后一个位置，不然访问任何路由都会进入 404
+  // Must be placed at the last position in the route table, otherwise any route access will enter 404
   { path: '/*', name: 'NotFound', component: '@/pages/404' },
 ]
 ```
 
 :::
 
-## 页面跳转
+## Page Navigation
 
-命令式跳转或者组件内请使用 [`useRouter`](../api/api#userouter) API
+For programmatic navigation or within components, please use the [`useRouter`](../api/api#userouter) API
 
 ```html
 
@@ -666,43 +660,43 @@ vue-router 不同的版本，4.x 与 3.x 生成的 404 相关代码会有区别�
     })
   }
 
-  // 这三种形式是等价的
+  // These three forms are equivalent
   router.push('/users/posva#bio');
   router.push({ path: '/users/posva', hash: '#bio' });
   router.push({ name: 'users', params: { username: 'posva' }, hash: '#bio' });
-  // 只改变 hash
+  // Only change hash
   router.push({ hash: '#bio' });
-  // 只改变 query
+  // Only change query
   router.push({ query: { page: '2' } });
-  // 只改变 param
+  // Only change param
   router.push({ params: { username: 'jolyne' } });
 
-  // 跳转到上一个路由
+  // Navigate to the previous route
   router.back();
 
-  // 跳转到前一个历史记录
+  // Navigate to the forward history record
   router.go(1);
 
-  // 替换历史堆栈中的记录
+  // Replace the record in the history stack
   router.replace('/new');
 </script>
 ```
 
-更多[详见](https://router.vuejs.org/guide/advanced/composition-api.html#accessing-the-router-and-current-route-inside-setup)
+For more details, [see here](https://router.vuejs.org/guide/advanced/composition-api.html#accessing-the-router-and-current-route-inside-setup)
 
 ## router-link
 
-[详见](../api/api#routerlink)
+[See details](../api/api#routerlink)
 
 ## router-view
 
-[详见](../api/api#routerview)
+[See details](../api/api#routerview)
 
-## RouterLink 组件
+## RouterLink Component
 
-[详见](../api/api#routerlink)
+[See details](../api/api#routerlink)
 
-比如：
+For example:
 
 ```jsx
 export default function Page () {
@@ -714,19 +708,19 @@ export default function Page () {
 }
 ```
 
-然后点击 `Users Page` 就会跳转到 `/users` 地址。
+Then clicking `Users Page` will navigate to the `/users` address.
 
-注意：
+Note:
 
-* `RouterLink` 只用于单页应用的内部跳转，如果是外部地址跳转请使用 `a` 标签
+* `RouterLink` is only used for internal navigation within a single-page application. For external URL navigation, please use the `a` tag
 
-## 运行时配置
+## Runtime Configuration
 
-可以通过在约定的 `src/app.tsx` 通过 export 配置来控制 vue vue-router 相关的配置
+You can control vue and vue-router related configuration through export in the conventional `src/app.tsx`
 
 ### router
 
-配置路由配置
+Configure router configuration
 
 ```ts
 // src/app.tsx
@@ -740,7 +734,7 @@ export const router: RouterConfig = {
 
 ### onMounted(\{app, router\})
 
-Vue app mount 成功回调, 这里可以拿到 app 的实例及 router 的实例, 可以进行全局组件注册, 路由拦截器等。
+Vue app mount success callback. Here you can get the app instance and router instance, and can register global components, route interceptors, etc.
 
 ```ts
 export function onMounted({ app, router }: any) {
@@ -754,9 +748,9 @@ export function onMounted({ app, router }: any) {
 
 ### rootContainer(container)
 
-修改交给 vue-router 渲染时的根组件。
+Modify the root component when handing over to vue-router for rendering.
 
-比如用于在外面包一个父组件
+For example, to wrap an outer parent component
 
 ```ts
 import { h } from 'vue'
