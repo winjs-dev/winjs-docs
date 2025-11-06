@@ -15,8 +15,8 @@ export default (api: IApi) => {
   api.describe({
     key: 'changeFavicon',
     config: {
-      schema(joi) {
-        return joi.string();
+      schema({ zod }) {
+        return zod.string();
       },
     },
     enableBy: api.EnableBy.config
@@ -53,6 +53,94 @@ export default (api: IApi) => {
 id 是插件所在路径的简写，作为插件的唯一标识；而 key 则是用于插件配置的键名。 
 
 比如插件 `node_modules/@winner-fed/plugin-foo/index.js` ，通常来说，它的 id 是 `@winner-fed/plugin-foo` , key 是 `foo`。此时就允许开发者在配置中来配置键名为 `foo` 的项，用来对插件进行配置。
+
+## 快速开始
+
+WinJS 提供了官方插件模板，帮助你快速创建和开发自己的插件。
+
+### 使用插件模板
+
+访问 [winjs-plugin-template](https://github.com/winjs-dev/winjs-plugin-template) 仓库，点击 "Use this template" 按钮创建你自己的插件项目。
+
+### 开发步骤
+
+#### 1. 修改包名
+
+在 `package.json` 中修改以下字段：
+
+```json
+{
+  "name": "your-plugin-name",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/your-plugin-name.git"
+  }
+}
+```
+
+#### 2. 更新文档
+
+在 `README.md` 中更新所有包名引用，将 `winjs-plugin-example` 替换为你的新包名。
+
+#### 3. 修改插件配置
+
+在 `src/index.ts` 中修改 `key` 值（默认为 `example`）为你的插件配置键名：
+
+```ts
+api.describe({
+  key: 'yourPluginKey', // 修改为你的插件 key
+  config: {
+    schema({ zod }) {
+      // 定义配置的校验规则
+    },
+  },
+  enableBy: api.EnableBy.config
+});
+```
+
+#### 4. 开发与测试
+
+安装依赖：
+
+```shell
+pnpm install
+```
+
+开发模式（监听文件变化自动构建）：
+
+```shell
+pnpm run dev
+```
+
+在 `playground` 目录中测试插件：
+
+```shell
+cd playground
+pnpm install
+pnpm run dev
+```
+
+#### 5. 构建与发布
+
+构建项目：
+
+```shell
+pnpm run build
+```
+
+代码格式检查：
+
+```shell
+pnpm run lint
+```
+
+运行测试：
+
+```shell
+pnpm run test
+```
+
+更多详细信息请访问 [winjs-plugin-template](https://github.com/winjs-dev/winjs-plugin-template)。
 
 ## 启用插件
 插件有两种启用方式： 环境变量中启用和配置中启用。

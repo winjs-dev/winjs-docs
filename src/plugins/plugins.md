@@ -15,8 +15,8 @@ export default (api: IApi) => {
   api.describe({
     key: 'changeFavicon',
     config: {
-      schema(joi) {
-        return joi.string();
+      schema({ zod }) {
+        return zod.string();
       },
     },
     enableBy: api.EnableBy.config
@@ -53,6 +53,94 @@ Each plugin corresponds to an id and a key.
 The id is a shorthand for the plugin's path, serving as the plugin's unique identifier; while the key is the key name used for plugin configuration.
 
 For example, for plugin `node_modules/@winner-fed/plugin-foo/index.js`, typically its id is `@winner-fed/plugin-foo` and its key is `foo`. This allows developers to configure an item with key name `foo` in the configuration to configure the plugin.
+
+## Quick Start
+
+WinJS provides an official plugin template to help you quickly create and develop your own plugins.
+
+### Using the Plugin Template
+
+Visit the [winjs-plugin-template](https://github.com/winjs-dev/winjs-plugin-template) repository and click the "Use this template" button to create your own plugin project.
+
+### Development Steps
+
+#### 1. Modify Package Name
+
+Modify the following fields in `package.json`:
+
+```json
+{
+  "name": "your-plugin-name",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/your-plugin-name.git"
+  }
+}
+```
+
+#### 2. Update Documentation
+
+Update all package name references in `README.md`, replacing `winjs-plugin-example` with your new package name.
+
+#### 3. Modify Plugin Configuration
+
+Modify the `key` value (default is `example`) in `src/index.ts` to your plugin configuration key:
+
+```ts
+api.describe({
+  key: 'yourPluginKey', // Change to your plugin key
+  config: {
+    schema({ zod }) {
+      // Define configuration validation rules
+    },
+  },
+  enableBy: api.EnableBy.config
+});
+```
+
+#### 4. Development and Testing
+
+Install dependencies:
+
+```shell
+pnpm install
+```
+
+Development mode (watch files and auto-rebuild):
+
+```shell
+pnpm run dev
+```
+
+Test the plugin in the `playground` directory:
+
+```shell
+cd playground
+pnpm install
+pnpm run dev
+```
+
+#### 5. Build and Publish
+
+Build the project:
+
+```shell
+pnpm run build
+```
+
+Code format check:
+
+```shell
+pnpm run lint
+```
+
+Run tests:
+
+```shell
+pnpm run test
+```
+
+For more details, visit [winjs-plugin-template](https://github.com/winjs-dev/winjs-plugin-template).
 
 ## Enabling Plugins
 There are two ways to enable plugins: through environment variables and through configuration.

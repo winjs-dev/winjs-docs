@@ -50,4 +50,6 @@ To draw an analogy, plugin presets are similar to Babel presets and ESLint confi
 | [@winner-fed/plugin-unicons](./unicons.md)                               | Unified icon solution                                                                                      | 
 | [@winner-fed/plugin-viewport](./viewport.md)                             | Viewport unit adaptation solution                                                                                        | 
 | [@winner-fed/plugin-security](./security.md)                             | Subresource Integrity (SRI) solution                                                             |
-| [@winner-fed/plugin-check-syntax](./checksyntax.md)                      | Analyze build artifact syntax compatibility to detect advanced syntax that may cause compatibility issues                                                             | 
+| [@winner-fed/plugin-check-syntax](./checksyntax.md)                      | Analyze build artifact syntax compatibility to detect advanced syntax that may cause compatibility issues                                                             |
+
+For more plugins, visit [https://github.com/winjs-dev](https://github.com/winjs-dev) 

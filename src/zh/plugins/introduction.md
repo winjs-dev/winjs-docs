@@ -52,4 +52,6 @@ vue2，我们可以有 @winner-fed/preset-vue2，包含 vue 2.x 相关的构建�
 | [@winner-fed/plugin-unicons](./unicons.md)                               | icons 的统一解决方案                                                                                      | 
 | [@winner-fed/plugin-viewport](./viewport.md)                             | 视窗单位适配的解决方案                                                                                        | 
 | [@winner-fed/plugin-security](./security.md)                             | 子资源完整性 Subresource Integrity（SRI）的解决方案                                                             |
-| [@winner-fed/plugin-check-syntax](./checksyntax.md)                      | 用于分析产物的语法兼容性，判断是否存在导致兼容性问题的高级语法                                                             | 
+| [@winner-fed/plugin-check-syntax](./checksyntax.md)                      | 用于分析产物的语法兼容性，判断是否存在导致兼容性问题的高级语法                                                             |
+
+更多插件可见 [https://github.com/winjs-dev](https://github.com/winjs-dev) 
