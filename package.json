@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@types/markdown-it": "^14.0.0",
-    "@types/node": "^22.16.5",
+    "@types/node": "^24.0.0",
     "@winner-fed/prettier-config-win": "^1.0.0",
     "glob": "^11.0.1",
     "vitepress-plugin-group-icons": "^1.6.1",
