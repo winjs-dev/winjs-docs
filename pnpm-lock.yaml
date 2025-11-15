@@ -47,7 +47,7 @@ importers:
         version: 1.8.0
       vitepress-plugin-pagefind:
         specifier: ^0.4.14
-        version: 0.4.15(pagefind@1.3.0)
+        version: 0.4.16(pagefind@1.3.0)
       zhlint:
         specifier: ^0.8.0
         version: 0.8.2
@@ -1564,8 +1564,8 @@ packages:
   vitepress-plugin-llms@1.8.0:
     resolution: {integrity: sha512-JQR2j+4OpB0GlmXSJCdTHYIx4AcOZ0LVLRwQVId1wvNRRRGTVs17S5YkBNV0oj8t0zTgJ+TE61f58CJC8CTe4w==}
 
-  vitepress-plugin-pagefind@0.4.15:
-    resolution: {integrity: sha512-z1b7O/LTUKl+nteqTFEvER0/toHiVheqRtuzXWWznT7L438VKyQwEwKq7z8BMebQqYeMPmg6L6B7NF9cu+iFvw==}
+  vitepress-plugin-pagefind@0.4.16:
+    resolution: {integrity: sha512-P2rI06L9FepHnc/ANfZ2xir9I7mESgTdxsBLqR+Ni4FrWI/Ns6ybRmeqG/B5SDHLhelf7tQon01Ye7lYpwOV5g==}
     peerDependencies:
       pagefind: ^1.1.0
 
@@ -3394,7 +3394,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vitepress-plugin-pagefind@0.4.15(pagefind@1.3.0):
+  vitepress-plugin-pagefind@0.4.16(pagefind@1.3.0):
     dependencies:
       '@sugarat/theme-shared': 0.0.6
       '@vueuse/core': 9.13.0(vue@3.5.18)
