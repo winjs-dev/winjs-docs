@@ -47,7 +47,7 @@ importers:
         version: 1.8.0
       vitepress-plugin-pagefind:
         specifier: ^0.4.14
-        version: 0.4.15(pagefind@1.3.0)
+        version: 0.4.17(pagefind@1.3.0)(vitepress@2.0.0-alpha.12(@types/node@22.18.11)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1))
       zhlint:
         specifier: ^0.8.0
         version: 0.8.2
@@ -467,8 +467,8 @@ packages:
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
 
-  '@sugarat/theme-shared@0.0.6':
-    resolution: {integrity: sha512-858llnOYVBkzXy9/WICD/xNeGI3V+FDzfRaF8JACN/WIhyADB4crpjjgMgy04MgnE3QLUYiIH0ZvgFps1XOqSA==}
+  '@sugarat/theme-shared@0.0.7':
+    resolution: {integrity: sha512-rFK+NF5ORXjxmisVjVKI1A2WWu/J2NMw367n9Dxy7rF4jJE8CaHqryu3vOLwp96RUBDbaN95ABT3E4wyaGzGKA==}
 
   '@sxzz/popperjs-es@2.11.7':
     resolution: {integrity: sha512-Ccy0NlLkzr0Ex2FKvh2X+OyERHXJ88XJ1MXtsI9y9fGexlaXaVTPzBCRBwIxFkORuOb+uBqeu+RqnpgYTEZRUQ==}
@@ -1564,10 +1564,11 @@ packages:
   vitepress-plugin-llms@1.8.0:
     resolution: {integrity: sha512-JQR2j+4OpB0GlmXSJCdTHYIx4AcOZ0LVLRwQVId1wvNRRRGTVs17S5YkBNV0oj8t0zTgJ+TE61f58CJC8CTe4w==}
 
-  vitepress-plugin-pagefind@0.4.15:
-    resolution: {integrity: sha512-z1b7O/LTUKl+nteqTFEvER0/toHiVheqRtuzXWWznT7L438VKyQwEwKq7z8BMebQqYeMPmg6L6B7NF9cu+iFvw==}
+  vitepress-plugin-pagefind@0.4.17:
+    resolution: {integrity: sha512-cEiZbZJozW3jZki5Q407CFgMfrAH4zHN/uO9MDvIj3s9iJwZvhPznI6iihOfRqWFr2EzhhdjUrc7XDaeRHsThA==}
     peerDependencies:
       pagefind: ^1.1.0
+      vitepress: ^1 || ^2
 
   vitepress@2.0.0-alpha.12:
     resolution: {integrity: sha512-yZwCwRRepcpN5QeAhwSnEJxS3I6zJcVixqL1dnm6km4cnriLpQyy2sXQDsE5Ti3pxGPbhU51nTMwI+XC1KNnJg==}
@@ -1938,7 +1939,7 @@ snapshots:
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
-  '@sugarat/theme-shared@0.0.6':
+  '@sugarat/theme-shared@0.0.7':
     dependencies:
       cross-spawn: 7.0.6
       gray-matter: 4.0.3
@@ -3394,12 +3395,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vitepress-plugin-pagefind@0.4.15(pagefind@1.3.0):
+  vitepress-plugin-pagefind@0.4.17(pagefind@1.3.0)(vitepress@2.0.0-alpha.12(@types/node@22.18.11)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1)):
     dependencies:
-      '@sugarat/theme-shared': 0.0.6
+      '@sugarat/theme-shared': 0.0.7
       '@vueuse/core': 9.13.0(vue@3.5.18)
       javascript-stringify: 2.1.0
       pagefind: 1.3.0
+      vitepress: 2.0.0-alpha.12(@types/node@22.18.11)(async-validator@4.2.5)(postcss@8.5.6)(terser@5.43.1)
       vue: 3.5.18
       vue-command-palette: 0.1.4
     transitivePeerDependencies:
