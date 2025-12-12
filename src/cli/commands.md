@@ -337,11 +337,28 @@ You can configure the service port using the `--port` parameter.
 
 ```bash
 $ win preview --port 9527
+
+# specify hostname
+win preview --host [host]
+
+# specify port
+win preview --port [port]
+
+# specify build directory
+win preview --dir [dir]
+
+# specify url prefix
+win preview --prefix [prefix]
+
+# access path: http://localhost:4172/boilerplate
 ```
 
 Now the `preview` command will run the server at http://127.0.0.1:9527.
 
 Use the `--host` parameter to specify the hostname for the service.
+Use the `--port` parameter to specify the port for the service.
+Use the `--dir` parameter to specify the build output directory, defaults to dist.
+Use the `--prefix` parameter to allow custom URL prefix, defaults to `base` in the configuration file.
 
 The following user configurations will also take effect during `preview`:
 

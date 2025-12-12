@@ -337,11 +337,28 @@ $ win plugin list
 
 ```bash
 $ win preview --port 9527
+
+# specify hostname
+win preview --host [host]
+
+# specify port
+win preview --port [port]
+
+# specify build directory
+win preview --dir [dir]
+
+# specify url prefix
+win preview --prefix [prefix]
+
+# access path：http://localhost:4172/boilerplate
 ```
 
 现在 `preview` 命令会将服务器运行在 http://127.0.0.1:9527.
 
 通过 `--host` 参数来指定 配置服务运行的 hostname。
+通过 `--port` 参数来指定 配置服务运行的 port。
+通过 `--dir` 参数来指定构建后的输出目录，默认为 dist。
+通过 `--prefix` 参数来允许自定义 URL 前缀，默认为配置文件里的 `base`。
 
 以下用户配置在 `preview` 时也会生效
 
