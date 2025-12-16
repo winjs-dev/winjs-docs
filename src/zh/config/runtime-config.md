@@ -18,7 +18,7 @@ import { defineApp } from 'win';
 export default defineApp({
   layout: () => {
     return {
-      title: 'win',
+      title: 'winjs 应用',
     };
   },
 });
@@ -27,7 +27,7 @@ export default defineApp({
 import { RuntimeConfig } from 'winjs';
 export const layout: RuntimeConfig['layout'] = () => {
   return {
-    title: 'win',
+    title: 'winjs 应用',
   };
 };
 ```
@@ -35,14 +35,188 @@ export const layout: RuntimeConfig['layout'] = () => {
 ## 配置项
 
 > 以下配置项按字母排序。
-        
-### modifyClientRenderOpts(opts)
 
-修改 `clientRender` 参数。
+### modifyClientRenderOpts
 
-- routes，路由配置信息
-- rootElement， 渲染的根节点，默认是 #root，可通过配置 mountElementId 修改。
-- callback，回调函数
+`modifyClientRenderOpts` 是 WinJS 提供的运行时插件钩子，用于在客户端渲染前修改渲染选项。通过这个钩子，使用 `Vue2` 时，可以自定义 router、store、pinia 等核心实例，实现高度定制化的应用初始化。
+
+#### 基本用法
+
+在 `src/app.js` 中导出 `modifyClientRenderOpts` 函数：
+
+```javascript
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    // 在这里添加或修改渲染选项
+  };
+}
+```  
+#### 参数： memo 对象
+
+`memo` 是传入的渲染选项对象，包含以下属性：
+
+| 属性                  | 类型 | 说明                                        |
+|---------------------|------|-------------------------------------------|
+| `routes`            | `IRoutesById` | WinJS 路由配置对象（key-value 格式）                |
+| `routeComponents`   | `IRouteComponents` | 路由组件映射表                                   |
+| `pluginManager`     | `PluginManager` | 插件管理器实例                                   |
+| `rootElement`       | `HTMLElement` | 挂载根元素                                     |
+| `history`           | `History` | 路由历史对象（Vue Router 3.x 为 `{ base, mode }`） |
+| `basename`          | `string` | 路由基础路径                                    |
+| `publicPath`        | `string` | 公共资源路径                                    |
+| `runtimePublicPath` | `boolean` | 是否使用运行时公共路径                               |
+| `router` <Badge type="tip" text=">=0.16.6" />           | `Router` | 自定义 Vue Router 实例。提供更高的灵活性和自定义能力。这样可以不用遵循 WinJS 的路由规范，而采用原有的开发模式，更方便和快速的迁移项目到 WinJS                        |
+
+#### 返回值
+
+返回一个修改后的渲染选项对象，必须包含 `memo` 的所有原有属性。
+
+#### 使用场景
+
+##### 场景 1：传入自定义 Router 实例
+
+**适用场景**：需要完全控制路由实例、微前端场景、使用第三方路由库(Vue Router 3.x、Vue 2.x)
+
+```javascript
+import customRouter from './router/index';
+
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    router: customRouter
+  };
+}
+```
+
+**创建自定义 router**：
+
+```javascript
+// src/router/index.js
+import Vue from 'vue';
+import Router from 'vue-router';
+import { routes } from './routes';
+
+// 必须先注册插件
+Vue.use(Router);
+
+const router = new Router({ 
+  mode: 'hash', 
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return savedPosition || { x: 0, y: 0 };
+  }
+});
+
+// 添加全局路由守卫
+router.beforeEach((to, from, next) => {
+  // 权限验证逻辑
+  next();
+});
+
+export default router;
+```
+
+##### 场景 2：传入 Vuex Store
+
+**适用场景**：使用 Vuex 进行状态管理(Vue 2.x)
+
+```javascript
+import store from './stores';
+
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    store: store
+  };
+}
+```
+
+**创建 Vuex store**：
+
+```javascript
+// src/stores/index.js
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    user: null,
+    token: ''
+  },
+  mutations: {
+    SET_USER(state, user) {
+      state.user = user;
+    },
+    SET_TOKEN(state, token) {
+      state.token = token;
+    }
+  },
+  actions: {
+    login({ commit }, { username, password }) {
+      // 登录逻辑
+      return api.login({ username, password }).then(res => {
+        commit('SET_USER', res.user);
+        commit('SET_TOKEN', res.token);
+      });
+    }
+  }
+});
+```
+
+##### 场景 3：传入 Pinia
+
+**适用场景**：使用 Pinia 进行状态管理（Vue 2.7+）
+
+```javascript
+import { createPinia } from 'pinia';
+
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    pinia: createPinia()
+  };
+}
+```
+
+##### 场景 4：同时传入多个实例
+
+**适用场景**：需要自定义 router 和 store
+
+```javascript
+import customRouter from './router/index';
+import store from './stores';
+
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    router: customRouter,
+    store: store
+  };
+}
+```
+
+##### 场景 5：修改其他渲染选项
+
+**适用场景**：自定义根元素、修改基础路径等
+
+```javascript
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    // 自定义根元素
+    rootElement: document.getElementById('app'),
+    
+    // 修改基础路径
+    basename: '/my-app/',
+    
+    // 添加自定义属性
+    customOption: 'custom-value'
+  };
+}
+```
 
 比如在微前端里动态修改渲染根节点：
 
@@ -55,6 +229,42 @@ export function modifyClientRenderOpts(opts) {
   };
 }
 
+```
+
+#### 推荐方式（直接传入）
+
+```javascript
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    router: customRouter,
+    store: store,
+    pinia: createPinia()
+  };
+}
+```
+
+**优势**：
+- 代码简洁清晰
+- 类型提示完整
+- 易于理解和维护
+
+#### 兼容方式（通过 callback）
+
+```javascript
+export function modifyClientRenderOpts(memo) {
+  const callback = () => {
+    return {
+      store: store,
+      pinia: createPinia()
+    };
+  };
+  return {
+    ...memo,
+    router: customRouter,
+    callback
+  };
+}
 ```
 
 ### onMounted(\{app, router\})

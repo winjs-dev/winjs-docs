@@ -35,16 +35,191 @@ export const layout: RuntimeConfig['layout'] = () => {
 ## Configuration Options
 
 > The following configuration options are sorted alphabetically.
-        
-### modifyClientRenderOpts(opts)
 
-Modifies the `clientRender` parameters.
+### modifyClientRenderOpts
 
-- routes: Route configuration information
-- rootElement: The root node for rendering, defaults to #root, can be modified through mountElementId configuration.
-- callback: Callback function
+`modifyClientRenderOpts` is a runtime plugin hook provided by WinJS for modifying render options before client-side rendering. Through this hook, when using `Vue2`, you can customize core instances such as router, store, pinia, etc., to achieve highly customized application initialization.
 
-For example, dynamically modifying the render root node in a micro-frontend:
+#### Basic Usage
+
+Export the `modifyClientRenderOpts` function in `src/app.js`:
+
+```javascript
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    // Add or modify render options here
+  };
+}
+```
+
+#### Parameters: memo Object
+
+`memo` is the passed render options object, containing the following properties:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `routes` | `IRoutesById` | WinJS route configuration object (key-value format) |
+| `routeComponents` | `IRouteComponents` | Route component mapping table |
+| `pluginManager` | `PluginManager` | Plugin manager instance |
+| `rootElement` | `HTMLElement` | Mount root element |
+| `history` | `History` | Route history object (Vue Router 3.x is `{ base, mode }`) |
+| `basename` | `string` | Route base path |
+| `publicPath` | `string` | Public resource path |
+| `runtimePublicPath` | `boolean` | Whether to use runtime public path |
+| `router` <Badge type="tip" text=">=0.16.6" /> | `Router` | Custom Vue Router instance. Provides higher flexibility and customization capabilities. This allows you to not follow WinJS routing conventions and adopt your original development mode, making it more convenient and faster to migrate projects to WinJS |
+
+#### Return Value
+
+Returns a modified render options object that must include all original properties of `memo`.
+
+#### Usage Scenarios
+
+##### Scenario 1: Pass Custom Router Instance
+
+**Use Case**: Need complete control over router instance, micro-frontend scenarios, using third-party routing libraries (Vue Router 3.x, Vue 2.x)
+
+```javascript
+import customRouter from './router/index';
+
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    router: customRouter
+  };
+}
+```
+
+**Create custom router**:
+
+```javascript
+// src/router/index.js
+import Vue from 'vue';
+import Router from 'vue-router';
+import { routes } from './routes';
+
+// Must register plugin first
+Vue.use(Router);
+
+const router = new Router({ 
+  mode: 'hash', 
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return savedPosition || { x: 0, y: 0 };
+  }
+});
+
+// Add global route guards
+router.beforeEach((to, from, next) => {
+  // Permission verification logic
+  next();
+});
+
+export default router;
+```
+
+##### Scenario 2: Pass Vuex Store
+
+**Use Case**: Using Vuex for state management (Vue 2.x)
+
+```javascript
+import store from './stores';
+
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    store: store
+  };
+}
+```
+
+**Create Vuex store**:
+
+```javascript
+// src/stores/index.js
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    user: null,
+    token: ''
+  },
+  mutations: {
+    SET_USER(state, user) {
+      state.user = user;
+    },
+    SET_TOKEN(state, token) {
+      state.token = token;
+    }
+  },
+  actions: {
+    login({ commit }, { username, password }) {
+      // Login logic
+      return api.login({ username, password }).then(res => {
+        commit('SET_USER', res.user);
+        commit('SET_TOKEN', res.token);
+      });
+    }
+  }
+});
+```
+
+##### Scenario 3: Pass Pinia
+
+**Use Case**: Using Pinia for state management (Vue 2.7+)
+
+```javascript
+import { createPinia } from 'pinia';
+
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    pinia: createPinia()
+  };
+}
+```
+
+##### Scenario 4: Pass Multiple Instances Simultaneously
+
+**Use Case**: Need to customize both router and store
+
+```javascript
+import customRouter from './router/index';
+import store from './stores';
+
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    router: customRouter,
+    store: store
+  };
+}
+```
+
+##### Scenario 5: Modify Other Render Options
+
+**Use Case**: Customize root element, modify base path, etc.
+
+```javascript
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    // Customize root element
+    rootElement: document.getElementById('app'),
+    
+    // Modify base path
+    basename: '/my-app/',
+    
+    // Add custom properties
+    customOption: 'custom-value'
+  };
+}
+```
+
+For example, dynamically modifying the render root node in micro-frontend:
 
 ```js
 let isSubApp = false;
@@ -54,7 +229,42 @@ export function modifyClientRenderOpts(opts) {
     rootElement: isSubApp ? 'sub-root' : opts.rootElement,    
   };
 }
+```
 
+#### Recommended Approach (Direct Pass)
+
+```javascript
+export function modifyClientRenderOpts(memo) {
+  return {
+    ...memo,
+    router: customRouter,
+    store: store,
+    pinia: createPinia()
+  };
+}
+```
+
+**Advantages**:
+- Clean and clear code
+- Complete type hints
+- Easy to understand and maintain
+
+#### Compatible Approach (Via Callback)
+
+```javascript
+export function modifyClientRenderOpts(memo) {
+  const callback = () => {
+    return {
+      store: store,
+      pinia: createPinia()
+    };
+  };
+  return {
+    ...memo,
+    router: customRouter,
+    callback
+  };
+}
 ```
 
 ### onMounted(\{app, router\})
