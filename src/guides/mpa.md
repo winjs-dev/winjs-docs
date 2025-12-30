@@ -139,7 +139,7 @@ The default rendering method is Vue. Entry files only need to export Vue compone
       <h1>{{ title }}</h1>
       <p>
         For custom configuration guidance, please visit
-        <a href="https://cloud-templates.github.io/create-project/" target="_blank" rel="noopener"
+        <a href="https://winjs-dev.github.io/create-project/" target="_blank" rel="noopener"
         >create-project documentation</a
         >.
       </p>

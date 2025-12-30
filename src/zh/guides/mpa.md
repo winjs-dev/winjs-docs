@@ -139,7 +139,7 @@ MPA_FILTER=bar,foo
       <h1>{{ title }}</h1>
       <p>
         有关自定义配置指引， 请前往
-        <a href="https://cloud-templates.github.io/create-project/" target="_blank" rel="noopener"
+        <a href="https://winjs-dev.github.io/create-project/" target="_blank" rel="noopener"
         >create-project 文档</a
         >.
       </p>

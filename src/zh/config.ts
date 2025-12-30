@@ -18,7 +18,7 @@ const nav = [
       {
         text: 'CreateProject',
         link:
-          'https://cloud-templates.github.io/create-project/'
+          'https://winjs-dev.github.io/create-project/'
       }
     ]
   }
