@@ -44,7 +44,7 @@ importers:
         version: 1.6.4(markdown-it@14.1.0)(vite@7.1.5(@types/node@22.18.11)(terser@5.43.1))
       vitepress-plugin-llms:
         specifier: ^1.8.0
-        version: 1.8.0
+        version: 1.10.0
       vitepress-plugin-pagefind:
         specifier: ^0.4.14
         version: 0.4.15(pagefind@1.3.0)
@@ -918,8 +918,8 @@ packages:
   javascript-stringify@2.1.0:
     resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
 
-  js-yaml@3.14.1:
-    resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==}
+  js-yaml@3.14.2:
+    resolution: {integrity: sha512-PMSmkqxr106Xa156c2M265Z+FTrPl+oxd/rgOQy2tijQeK5TxQ43psO1ZCwhVOSdnn+RzkzlRz/eY4BgJBYVpg==}
     hasBin: true
 
   kind-of@6.0.3:
@@ -1201,6 +1201,10 @@ packages:
     resolution: {integrity: sha512-IPZ167aShDZZUMdRk66cyQAW3qr0WzbHkPdMYa8bzZhlHhO3jALbKdxcaak7W9FfT2rZNpQuUu4Od7ILEpXSaw==}
     engines: {node: 20 || >=22}
 
+  minimatch@10.1.1:
+    resolution: {integrity: sha512-enIvLvRAFZYXJzkCYG5RKmPfrFArdLv+R+lbQ53BmIMLIry74bjKzX6iHAm8WYamJkhSSEabrWN5D97XnKObjQ==}
+    engines: {node: 20 || >=22}
+
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -1269,8 +1273,8 @@ packages:
     resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
     engines: {node: 20 || >=22}
 
-  path-to-regexp@8.3.0:
-    resolution: {integrity: sha512-7jdwVIRtsP8MYpdXSwOS0YdD0Du+qOoF/AEPIt88PcCFrZCzx41oxku1jD88hZBwbNUIEfpqvuhjFaMAqMTWnA==}
+  path-to-regexp@6.3.0:
+    resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
   pathe@2.0.3:
     resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
@@ -1444,8 +1448,8 @@ packages:
     resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
     engines: {node: '>=12.0.0'}
 
-  tokenx@1.2.0:
-    resolution: {integrity: sha512-x4bRrL23b22H+EqW2pbhIkkt3ouj27ZGmAS1QoIqpocEO4m0sAl2H1M4L1UzKqleikY4U9lz/TbEw4jeG8tm2A==}
+  tokenx@1.2.1:
+    resolution: {integrity: sha512-lVhFIhR2qh3uUyUA8Ype+HGzcokUJbHmRSN1TJKOe4Y26HkawQuLiGkUCkR5LD9dx+Rtp+njrwzPL8AHHYQSYA==}
 
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
@@ -1471,8 +1475,8 @@ packages:
   unist-util-is@5.2.1:
     resolution: {integrity: sha512-u9njyyfEh43npf1M+yGKDGVPbY/JWEemg5nH05ncKPfi+kBbKBJoTdsogMu33uhytuLlv9y0O7GH7fEdwLdLQw==}
 
-  unist-util-is@6.0.0:
-    resolution: {integrity: sha512-2qCTHimwdxLfz+YzdGfkqNlH0tLi9xjTnHddPmJwtIG9MGsdbutfTc4P+haPD7l7Cjxf/WZj+we5qfVPvvxfYw==}
+  unist-util-is@6.0.1:
+    resolution: {integrity: sha512-LsiILbtBETkDz8I9p1dQ0uyRUWuaQzd/cuEeS1hoRSyW5E5XGmTzlwY1OrNzzakGowI9Dr/I8HVaw4hTtnxy8g==}
 
   unist-util-position@5.0.0:
     resolution: {integrity: sha512-fucsC7HjXvkB5R3kTCO7kUjRdrS0BJt3M/FPxmHMBOm8JQi2BsHAHFsy27E0EolP8rp0NzXsJ+jNPyDWvOJZPA==}
@@ -1489,8 +1493,8 @@ packages:
   unist-util-visit-parents@5.1.3:
     resolution: {integrity: sha512-x6+y8g7wWMyQhL1iZfhIPhDAs7Xwbn9nRosDXl7qoPTSCy0yNxnKc+hWokFifWQIDGi154rdUqKvbCa4+1kLhg==}
 
-  unist-util-visit-parents@6.0.1:
-    resolution: {integrity: sha512-L/PqWzfTP9lzzEa6CKs0k2nARxTdZduw3zyh8d2NVBnsyvHjSX4TWse388YrrQKbvI8w20fGjGlhgT96WwKykw==}
+  unist-util-visit-parents@6.0.2:
+    resolution: {integrity: sha512-goh1s1TBrqSqukSc8wrjwWhL0hiJxgA8m4kFxGlQ+8FYQ3C/m11FcTs4YYem7V664AhHVvgoQLk890Ssdsr2IQ==}
 
   unist-util-visit@4.1.2:
     resolution: {integrity: sha512-MSd8OUGISqHdVvfY9TPhyK2VdUrPgxkUtWSuMHF6XAAFuL4LokseigBnZtPnJMu+FbynTkFNnFlyjxpVKujMRg==}
@@ -1506,8 +1510,8 @@ packages:
   vfile-message@3.1.4:
     resolution: {integrity: sha512-fa0Z6P8HUrQN4BZaX05SIVXic+7kE3b05PWAtPuYP9QLHsLKYR7/AlLW3NtOrpXRLeawpDLMsVkmk5DG0NXgWw==}
 
-  vfile-message@4.0.2:
-    resolution: {integrity: sha512-jRDZ1IMLttGj41KcZvlrYAaI3CfqpLpfpf+Mfig13viT6NKvRzWZ+lXz0Y5D60w6uJIBAOGq9mSHf0gktF0duw==}
+  vfile-message@4.0.3:
+    resolution: {integrity: sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==}
 
   vfile@5.3.7:
     resolution: {integrity: sha512-r7qlzkgErKjobAmyNIkkSpizsFPYiUPuJb5pNW1RB4JcYVZhs4lIbVqk8XPk033CV/1z8ss5pkax8SuhGpcG8g==}
@@ -1561,8 +1565,8 @@ packages:
       markdown-it: '>=14'
       vite: '>=3'
 
-  vitepress-plugin-llms@1.8.0:
-    resolution: {integrity: sha512-JQR2j+4OpB0GlmXSJCdTHYIx4AcOZ0LVLRwQVId1wvNRRRGTVs17S5YkBNV0oj8t0zTgJ+TE61f58CJC8CTe4w==}
+  vitepress-plugin-llms@1.10.0:
+    resolution: {integrity: sha512-dgD5KV8D9vXlQtAf/KUjSgr3QymH1fHT7XkQ/UuIqvIjnKdzZI+0gT3puGxUBuqgvlFjYWA6f8k80tXl6gwWkw==}
 
   vitepress-plugin-pagefind@0.4.15:
     resolution: {integrity: sha512-z1b7O/LTUKl+nteqTFEvER0/toHiVheqRtuzXWWznT7L438VKyQwEwKq7z8BMebQqYeMPmg6L6B7NF9cu+iFvw==}
@@ -2333,7 +2337,7 @@ snapshots:
 
   gray-matter@4.0.3:
     dependencies:
-      js-yaml: 3.14.1
+      js-yaml: 3.14.2
       kind-of: 6.0.3
       section-matter: 1.0.0
       strip-bom-string: 1.0.0
@@ -2390,7 +2394,7 @@ snapshots:
 
   javascript-stringify@2.1.0: {}
 
-  js-yaml@3.14.1:
+  js-yaml@3.14.2:
     dependencies:
       argparse: 1.0.10
       esprima: 4.0.1
@@ -2556,7 +2560,7 @@ snapshots:
   mdast-util-phrasing@4.1.0:
     dependencies:
       '@types/mdast': 4.0.4
-      unist-util-is: 6.0.0
+      unist-util-is: 6.0.1
 
   mdast-util-to-hast@13.2.0:
     dependencies:
@@ -2951,6 +2955,10 @@ snapshots:
     dependencies:
       '@isaacs/brace-expansion': 5.0.0
 
+  minimatch@10.1.1:
+    dependencies:
+      '@isaacs/brace-expansion': 5.0.0
+
   minimatch@9.0.5:
     dependencies:
       brace-expansion: 2.0.2
@@ -3012,7 +3020,7 @@ snapshots:
       lru-cache: 11.1.0
       minipass: 7.1.2
 
-  path-to-regexp@8.3.0: {}
+  path-to-regexp@6.3.0: {}
 
   pathe@2.0.3: {}
 
@@ -3243,7 +3251,7 @@ snapshots:
       fdir: 6.5.0(picomatch@4.0.3)
       picomatch: 4.0.3
 
-  tokenx@1.2.0: {}
+  tokenx@1.2.1: {}
 
   trim-lines@3.0.1: {}
 
@@ -3279,7 +3287,7 @@ snapshots:
     dependencies:
       '@types/unist': 2.0.11
 
-  unist-util-is@6.0.0:
+  unist-util-is@6.0.1:
     dependencies:
       '@types/unist': 3.0.3
 
@@ -3290,8 +3298,8 @@ snapshots:
   unist-util-remove@4.0.0:
     dependencies:
       '@types/unist': 3.0.3
-      unist-util-is: 6.0.0
-      unist-util-visit-parents: 6.0.1
+      unist-util-is: 6.0.1
+      unist-util-visit-parents: 6.0.2
 
   unist-util-stringify-position@3.0.3:
     dependencies:
@@ -3306,10 +3314,10 @@ snapshots:
       '@types/unist': 2.0.11
       unist-util-is: 5.2.1
 
-  unist-util-visit-parents@6.0.1:
+  unist-util-visit-parents@6.0.2:
     dependencies:
       '@types/unist': 3.0.3
-      unist-util-is: 6.0.0
+      unist-util-is: 6.0.1
 
   unist-util-visit@4.1.2:
     dependencies:
@@ -3320,8 +3328,8 @@ snapshots:
   unist-util-visit@5.0.0:
     dependencies:
       '@types/unist': 3.0.3
-      unist-util-is: 6.0.0
-      unist-util-visit-parents: 6.0.1
+      unist-util-is: 6.0.1
+      unist-util-visit-parents: 6.0.2
 
   uvu@0.5.6:
     dependencies:
@@ -3335,7 +3343,7 @@ snapshots:
       '@types/unist': 2.0.11
       unist-util-stringify-position: 3.0.3
 
-  vfile-message@4.0.2:
+  vfile-message@4.0.3:
     dependencies:
       '@types/unist': 3.0.3
       unist-util-stringify-position: 4.0.0
@@ -3350,7 +3358,7 @@ snapshots:
   vfile@6.0.3:
     dependencies:
       '@types/unist': 3.0.3
-      vfile-message: 4.0.2
+      vfile-message: 4.0.3
 
   vite@7.1.5(@types/node@22.18.11)(terser@5.43.1):
     dependencies:
@@ -3375,20 +3383,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vitepress-plugin-llms@1.8.0:
+  vitepress-plugin-llms@1.10.0:
     dependencies:
       gray-matter: 4.0.3
       markdown-it: 14.1.0
       markdown-title: 1.0.2
       mdast-util-from-markdown: 2.0.2
       millify: 6.1.0
-      minimatch: 10.0.3
-      path-to-regexp: 8.3.0
+      minimatch: 10.1.1
+      path-to-regexp: 6.3.0
       picocolors: 1.1.1
       pretty-bytes: 7.1.0
       remark: 15.0.1
       remark-frontmatter: 5.0.0
-      tokenx: 1.2.0
+      tokenx: 1.2.1
       unist-util-remove: 4.0.0
       unist-util-visit: 5.0.0
     transitivePeerDependencies:
