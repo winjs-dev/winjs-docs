@@ -1,6 +1,6 @@
 {
   "name": "winjs-docs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "WinJS 开发说明文档",
   "packageManager": "pnpm@10.18.3",
