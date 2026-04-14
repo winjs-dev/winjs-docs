@@ -103,8 +103,20 @@ When using `vite` as the `bundler`, in addition to customizing the [rollup-plugi
 
 ## appConfig
 
-- **Type**: `object`
-- **Default**: `{ globalName: 'LOCAL_CONFIG' }`
+- **类型**：`object`
+- **默认值**：`{ globalName: 'LOCAL_CONFIG', obfuscator: false }`
+
+### obfuscator
+
+- **类型**：`boolean`
+- **默认值**：`false`
+
+Whether to obfuscate `config.local.js`. When set to `true`, the generated config file is processed with [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).
+
+### globalName
+
+- **类型**：`string`
+- **默认值**：`LOCAL_CONFIG`
 
 Supports custom global variable names, allowing users to customize the name of the configuration object on the `window`, with the default value being `LOCAL_CONFIG`.
 

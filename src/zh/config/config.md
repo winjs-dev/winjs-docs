@@ -112,7 +112,19 @@ export default {
 ## appConfig
 
 - **类型**：`object`
-- **默认值**：`{ globalName: 'LOCAL_CONFIG' }`
+- **默认值**：`{ globalName: 'LOCAL_CONFIG', obfuscator: false }`
+
+### obfuscator
+
+- **类型**：`boolean`
+- **默认值**：`false`
+
+是否开启 `config.local.js` 混淆。当设置为 `true` 时，会对生成的配置文件进行混淆处理，借助了 [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator) 实现此功能。
+
+### globalName
+
+- **类型**：`string`
+- **默认值**：`LOCAL_CONFIG`
 
 支持自定义全局变量名称，允许用户自定义配置对象在 `window` 上的名称，默认值为 `LOCAL_CONFIG`。
 
