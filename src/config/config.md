@@ -88,7 +88,7 @@ export default {
 
 Used to parse CSS and add vendor prefixes to CSS rules using values from Can I Use. For example, automatically adding `-webkit-` prefix to CSS.
 
-**Note**: Starting from version `1.0.1-beta.7`, `rsbuild` enables Lightning CSS (also known as `parcelCSS`) by default and removes `autoprefixer`. However, WinJS can disable Lightning CSS by setting `rsbuild.lightningcssLoader` to `false`, which will then enable the autoprefixer configuration.
+**Note**: Starting from version `1.0.1-beta.7`, `rsbuild` enables Lightning CSS (also known as `parcelCSS`) by default and removes `autoprefixer`. However, WinJS can disable Lightning CSS by setting `rsbuild.lightningcssLoader` to `false`, which will then enable the autoprefixer configuration. The `rsbuild2` mode behaves the same, controlled via `rsbuild2.lightningcssLoader`.
 
 For more configuration options, please refer to [autoprefixer options](https://github.com/postcss/autoprefixer#options).
 
@@ -98,6 +98,8 @@ For more configuration options, please refer to [autoprefixer options](https://g
 - **Default**: `{}`
 
 When using `webpack` or `rsbuild` as the `bundler`, and analyzing bundle composition by specifying the [`ANALYZE`](../guides/env-variables#analyze) environment variable, this configuration specifies the options for the analyzer plugin. See [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin) for details.
+
+**Note**: the `rsbuild2` mode does not support `analyze` (Rsbuild 2.x removed `performance.bundleAnalyze`); a warning is printed and [Rsdoctor](https://rsdoctor.dev/) is recommended for build analysis.
 
 When using `vite` as the `bundler`, in addition to customizing the [rollup-plugin-visualizer](https://github.com/btd/rollup-plugin-visualizer) configuration, options like `excludeAssets`, `generateStatsFile`, `openAnalyzer`, `reportFilename`, and `reportTitle` will be automatically adapted.
 
@@ -607,11 +609,11 @@ Then the output HTML will have these changes:
 
 - **Type**: `string` Optional values: `esbuild`, `cssnano`, `parcelCSS`, `none`
 - **Default**: `esbuild`
-- **bundler**: `webpack`, `rsbuild`
+- **bundler**: `webpack`, `rsbuild`, `rsbuild2`
 
 Configure the CSS compression tool used during build; `none` means no compression.
 
-**Note**: When using rsbuild, cssMinifier defaults to `parcelCSS`, with optional value `none`, and does not support switching to other compressors.
+**Note**: When using rsbuild, cssMinifier defaults to `parcelCSS`, with optional value `none`, and does not support switching to other compressors. The `rsbuild2` mode behaves the same.
 
 Example:
 

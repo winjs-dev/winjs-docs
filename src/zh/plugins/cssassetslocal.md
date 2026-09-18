@@ -1,5 +1,6 @@
 # CSS 资源本地化
 
+> **bundler 支持**：底层依赖 extract-css-assets-webpack-plugin，仅 `webpack` 模式生效，`vite` / `rsbuild` / `rsbuild2` 模式下不生效。
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-css-assets-local?style=flat-square&colorB=646cff)
 
 组件代码里有可能会依赖一些远程 CDN 的字体文件等，某些情况下网站运行时可能访问不了。该插件提供在构建部署时将 CSS 中的网络资源本地化能力，例如字体文件等。

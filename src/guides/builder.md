@@ -2,7 +2,7 @@
 
 **WinJS's build capabilities are provided by WinJS Builder.**
 
-WinJS Builder is one of the core components of the WinJS ecosystem. It is a Web build tool based on Webpack that can be used independently without WinJS. WinJS Builder supports Webpack, Vite, and Rsbuild bundling tools simultaneously, using the most mature Webpack for bundling by default.
+WinJS Builder is one of the core components of the WinJS ecosystem. It is a Web build tool based on Webpack that can be used independently without WinJS. WinJS Builder supports Webpack, Vite, and Rsbuild bundling tools simultaneously, using the most mature Webpack for bundling by default. In addition, by installing the external bundler `@winner-fed/bundler-rsbuild2`, you can also use the [Rsbuild2 mode](./rsbuild2.md) based on Rsbuild 2.x.
 
 ## Build Architecture
 
@@ -10,7 +10,7 @@ From a build perspective, WinJS is divided into a three-layer architecture, from
 
 - Upper development framework: WinJS.
 - Universal build tool: WinJS Builder.
-- Underlying bundling tools: Webpack, Vite, Rsbuild.
+- Underlying bundling tools: Webpack, Vite, Rsbuild (built-in), Rsbuild 2 (external).
 
 ![builder](/images/guide/builder-layers.jpg)
 

@@ -1,5 +1,6 @@
 # unIcons 
 
+> **bundler 支持**：`webpack` / `rsbuild` / `rsbuild2` / `vite`（unplugin 的 rspack 集成链路已验证兼容 Rspack 2.x）。
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-unicons?style=flat-square&colorB=646cff)
 
 WinJS 提供的有关 icons 统一解决方案，以 [unplugin-icons](https://github.com/unplugin/unplugin-icons) 作为底层解析工具。适配多种构建工具，如 webpack, rspack, vite 等和前端框架，如 vue2，vue等。插件本身也内置了 [Resolver](https://github.com/unplugin/unplugin-icons/tree/main?tab=readme-ov-file#use-with-resolver) 功能，可自动引入所需的 svg 图标。

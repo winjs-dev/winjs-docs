@@ -1,5 +1,6 @@
 # 页面开发提效工具
 
+> **bundler 支持**：`webpack` / `rsbuild` / `rsbuild2` / `vite`（rspack 适配层已验证兼容 Rspack 2.x）。
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-code-inspector?style=flat-square&colorB=646cff)
 
 点击页面上的 DOM，它能够自动打开你的 IDE 并将光标定位到 DOM 对应的源代码位置。

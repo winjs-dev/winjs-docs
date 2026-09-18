@@ -1,5 +1,6 @@
 # unIcons 
 
+> **Bundler support**: `webpack` / `rsbuild` / `rsbuild2` / `vite` (the unplugin rspack integration chain is verified compatible with Rspack 2.x).
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-unicons?style=flat-square&colorB=646cff)
 
 A unified icon solution provided by WinJS, using [unplugin-icons](https://github.com/unplugin/unplugin-icons) as the underlying parsing tool. Compatible with multiple build tools such as webpack, rspack, vite, etc., and frontend frameworks such as Vue 2, Vue, etc. The plugin also has built-in [Resolver](https://github.com/unplugin/unplugin-icons/tree/main?tab=readme-ov-file#use-with-resolver) functionality that can automatically import required SVG icons.

@@ -93,7 +93,7 @@ export default {
 用于解析 CSS 并使用来自 Can I Use 的值将供应商前缀添加到 CSS 规则。如自动给 CSS 添加 `-webkit-` 前缀。
 
 **注意**：`rsbuild` 从 `1.0.1-beta.7` 版本开始默认启用 Lightning CSS，也就是 `parcelCSS`。移除了 `autoprefixer`。不过，WinJS
-可以通过设置 `rsbuild.lightningcssLoader` 为 `false` 禁用 Lightning CSS。这样 autoprefixer 配置就会启用。
+可以通过设置 `rsbuild.lightningcssLoader` 为 `false` 禁用 Lightning CSS。这样 autoprefixer 配置就会启用。`rsbuild2` 模式行为相同，通过 `rsbuild2.lightningcssLoader` 控制。
 
 更多配置，请查阅 [autoprefixer 的配置项](https://github.com/postcss/autoprefixer#options)。
 
@@ -104,6 +104,8 @@ export default {
 
 使用 `webpack` 或 `rsbuild` 作为 `bundler` 时，通过指定 [`ANALYZE`](../guides/env-variables#analyze) 环境变量分析产物构成时，analyzer
 插件的具体配置项，见 [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin)
+
+**注意**：`rsbuild2` 模式不支持 `analyze`（Rsbuild 2.x 已移除 `performance.bundleAnalyze`），会输出警告，建议使用 [Rsdoctor](https://rsdoctor.dev/) 进行构建分析。
 
 使用 `vite`  作为 `bundler`
 时，除了可以自定义 [rollup-plugin-visualizer](https://github.com/btd/rollup-plugin-visualizer)
@@ -618,11 +620,11 @@ export default {
 
 - **类型**：`string` 可选的值：`esbuild`, `cssnano`, `parcelCSS`, `none`
 - **默认值**：`esbuild`
-- **bundler**：`webpack`、`rsbuild`
+- **bundler**：`webpack`、`rsbuild`、`rsbuild2`
 
 配置构建时使用的 CSS 压缩工具; `none` 表示不压缩。
 
-**注意**：使用 rsbuild 时，cssMinifier 默认为 `parcelCSS`，可选值为 `none`，且不支持切换其他的压缩器。
+**注意**：使用 rsbuild 时，cssMinifier 默认为 `parcelCSS`，可选值为 `none`，且不支持切换其他的压缩器。`rsbuild2` 模式行为相同。
 
 示例：
 

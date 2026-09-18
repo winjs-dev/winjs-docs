@@ -1,5 +1,6 @@
 # Micro-Frontend Integration - Qiankun
 
+> **Bundler support**: main-app integration is bundler-agnostic; child-app integration relies on webpack chains (chainWebpack / Module Federation) and only takes effect in `webpack` mode, not in `vite` / `rsbuild` / `rsbuild2` modes.
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-qiankun?style=flat-square&colorB=646cff)
 
 Build artifacts are adapted for Qiankun micro-frontend framework.

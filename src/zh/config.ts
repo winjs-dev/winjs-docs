@@ -99,6 +99,10 @@ export const sidebar = {
           {
             text: 'Rsbuild 模式',
             link: 'rsbuild'
+          },
+          {
+            text: 'Rsbuild2 模式',
+            link: 'rsbuild2'
           }
         ]
       },

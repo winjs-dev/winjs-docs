@@ -12,7 +12,7 @@ WinJS 是以路由为基础的，同时支持配置式路由和约定式路由�
 WinJS 有很多非常有意思的特性，比如。
 
 1、**插件化体系**，啥都能改，WinJS 本身也是由插件构成<br />
-2、**多 bundler**，同时支持 Vite、Webpack、Rsbuild 打包方案<br />
+2、**多 bundler**，同时支持 Vite、Webpack、Rsbuild 打包方案，并可外置接入基于 Rsbuild 2.x 的 Rsbuild2 模式<br />
 3、基于 Vue Router 的完备路由<br />
 4、Vue3 的框架级接入<br />
 5、Monorepo 最佳实践<br />

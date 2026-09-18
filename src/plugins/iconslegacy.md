@@ -1,5 +1,6 @@
 # Icons Legacy Solution
 
+> **Bundler support**: relies on svg-sprite-loader; only usable in `webpack` mode. `vite` is unsupported; in `rsbuild` / `rsbuild2` modes, svg asset processing fails due to an incompatibility between svg-sprite-loader and rspack's ModuleGraph timing (rsbuild 1.x / 2.x behave identically; a pre-existing limitation).
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-icons-legacy?style=flat-square&colorB=646cff)
 
 Legacy solution for icons, primarily provided for Vue 2 usage. Uses the SvgIcon component. SVG files in the src/icons directory use this solution by default. This solution relies on svg-sprite-loader implementation, so the bundler does not support Vite.

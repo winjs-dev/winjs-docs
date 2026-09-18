@@ -12,7 +12,7 @@ WinJS is route-based, supporting both configuration-based routing and convention
 WinJS has many very interesting features, such as:
 
 1. **Plugin-based architecture** - everything can be modified, WinJS itself is also composed of plugins<br />
-2. **Multi-bundler support** - supports Vite, Webpack, and Rsbuild bundling solutions simultaneously<br />
+2. **Multi-bundler support** - supports Vite, Webpack, and Rsbuild bundling solutions simultaneously, with the Rsbuild2 mode based on Rsbuild 2.x available as an external bundler<br />
 3. Complete routing based on Vue Router<br />
 4. Framework-level integration with Vue 3<br />
 5. Monorepo best practices<br />

@@ -97,6 +97,10 @@ export const sidebar = {
         {
           text: 'Rsbuild mode',
           link: '/guides/rsbuild'
+        },
+        {
+          text: 'Rsbuild2 mode',
+          link: '/guides/rsbuild2'
         }
       ]
     },

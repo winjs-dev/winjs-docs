@@ -1,5 +1,6 @@
 # 移除 console
 
+> **bundler 支持**：`webpack` / `vite` 模式生效。`rsbuild` / `rsbuild2` 模式下请改用原生配置 `rsbuild.removeConsole` / `rsbuild2.removeConsole`。
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-remove-console?style=flat-square&colorB=646cff)
 
 在 **生产模式(production mode)** 下自动移除构建产物的`[log|warn|error|info|debug]` 和 `debugger`。

@@ -1,5 +1,6 @@
 # Page Development Efficiency Tool
 
+> **Bundler support**: `webpack` / `rsbuild` / `rsbuild2` / `vite` (the rspack adapter is verified compatible with Rspack 2.x).
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-code-inspector?style=flat-square&colorB=646cff)
 
 Click on any DOM element on the page, and it will automatically open your IDE and position the cursor to the source code location corresponding to that DOM element.

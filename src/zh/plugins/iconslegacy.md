@@ -1,5 +1,6 @@
 # icons 遗留方案
 
+> **bundler 支持**：底层依赖 svg-sprite-loader，仅 `webpack` 模式可用。`vite` 不支持；`rsbuild` / `rsbuild2` 模式下 svg 资源处理会因 svg-sprite-loader 与 rspack 的 ModuleGraph 时序不兼容而失败（rsbuild 1.x / 2.x 行为一致，为存量限制）。
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-icons-legacy?style=flat-square&colorB=646cff)
 
 icons 的遗留方案，主要提供 Vue2 使用。使用 SvgIcon 组件。默认 src/icons 目录的 svg 文件采用此方案。该方案底层依赖了 svg-sprite-loader 实现，所以 bundler 不支持 vite。

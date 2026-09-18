@@ -1,5 +1,6 @@
 # Remove Console
 
+> **Bundler support**: effective in `webpack` / `vite` modes. In `rsbuild` / `rsbuild2` modes, use the native `rsbuild.removeConsole` / `rsbuild2.removeConsole` configuration instead.
 ![NPM Version](https://img.shields.io/npm/v/%40winner-fed%2Fplugin-remove-console?style=flat-square&colorB=646cff)
 
 Automatically removes `[log|warn|error|info|debug]` and `debugger` statements from build artifacts in **production mode**.
