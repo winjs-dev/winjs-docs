@@ -109,7 +109,3 @@ Rsbuild2 复用全局的 `modifyRsbuildConfig`、`modifyRspackConfig`、`modifyB
 | plugin-qiankun / plugin-hui-micro-app（子应用） | ➖ 不生效 | 依赖 webpack Module Federation 链路（rsbuild 1.x 现状相同） |
 | plugin-css-assets-local | ➖ 不生效 | 依赖 extract-css-assets-webpack-plugin（rsbuild 1.x 现状相同） |
 | plugin-icons-legacy | ❌ 不可用 | svg-sprite-loader 与 rspack 的 ModuleGraph 时序不兼容，rsbuild 1.x / 2.x 行为一致（存量限制） |
-
-## 示例工程
-
-可参考 WinJS 仓库 `winjs-examples` 目录下的 `with-bundler-rsbuild2` 示例：Vue2 + preset-vue2，走 `win dev` / `win build` 完整链路。

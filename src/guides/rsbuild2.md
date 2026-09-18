@@ -110,6 +110,3 @@ Vue support requirements on the framework side (since `0.18.22`):
 | plugin-css-assets-local | ➖ Not effective | Relies on extract-css-assets-webpack-plugin (same status as rsbuild 1.x) |
 | plugin-icons-legacy | ❌ Unavailable | svg-sprite-loader is incompatible with rspack's ModuleGraph timing; rsbuild 1.x / 2.x behave identically (pre-existing limitation) |
 
-## Example Project
-
-See the `with-bundler-rsbuild2` example in the `winjs-examples` directory of the WinJS monorepo: a Vue2 + preset-vue2 project running the full `win dev` / `win build` workflow.
