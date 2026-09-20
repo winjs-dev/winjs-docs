@@ -20,24 +20,16 @@ In summary, these changes are quite extensive and require thorough testing. Not 
                      
 ## [Vue warn]: Missing ref owner context. ref cannot be used on hoisted vnodes. A vnode with ref must be created inside the render function. {#vue-warn-missing-ref}
 
-When encountering the above issue, it may be caused by duplicate Vue imports. This can be resolved with the following configuration:
+When encountering the above issue, it may be caused by duplicate Vue imports, resulting in multiple Vue instances at runtime.
 
-```ts
-// .winrc
-import { defineConfig } from 'win';
+::: warning Note
+Previously this could be resolved with the `shared` configuration of `mfsu`. However, MFSU was removed from WinJS in `0.19.1`, so that solution is no longer available.
+:::
 
-export default defineConfig({
-  mfsu: {
-    shared: {
-      vue: {
-        singleton: true,
-        eager: true,
-      },
-    },
-  }
-})
+Please investigate and eliminate duplicate Vue instances instead, for example:
 
-```
+1. Use `pnpm why vue` (or `npm ls vue`) to check whether multiple Vue versions exist in the project;
+2. Pin Vue to a single version via your package manager's version override capability (such as `pnpm.overrides` for pnpm).
 
 ## Can dynamicImport be disabled?
 
@@ -259,17 +251,11 @@ export default {
 
 ## How to solve hot module replacement not working for npm linked packages
 
-WinJS enables `mfsu` by default, which ignores changes in `node_modules` by default. Configure to exclude the package from `mfsu`:
+::: warning Note
+In older versions this issue was usually solved by excluding the package from `mfsu`. MFSU was removed from WinJS in `0.19.1`, so that solution is no longer available.
+:::
 
-```ts
-// .winrc.ts
-
-export default {
-  mfsu: {
-    exclude: ['package-name']
-  },
-}
-```
+If the imported package is source code from another local directory or a monorepo sub-package, it is recommended to enable [`monorepoRedirect`](../config/config#monoreporedirect) to redirect imports of these dependencies to their source code location for hot update support.
 
 ## I have many environments, what is the priority of multi-environment config files
 
@@ -379,10 +365,9 @@ Since defineConfig is not in exports, it cannot be used.
 
 Currently known information:
 
-1. Try disabling mfsu: false to see if hot update time decreases.
-2. Try manual code splitting. For splitting methods, see: [code-splitting](https://winjs-dev.github.io/winjs-docs/guides/code-splitting.html), especially for components that need to load heavy dependencies, such as editors.
-3. If no additional babel plugins are used, try using srcTranspiler: 'swc' to improve compilation speed (srcTranspiler).
-4. Upgrade WinJS to the latest version.
+1. Try manual code splitting. For splitting methods, see: [code-splitting](https://winjs-dev.github.io/winjs-docs/guides/code-splitting.html), especially for components that need to load heavy dependencies, such as editors.
+2. If no additional babel plugins are used, try using srcTranspiler: 'swc' to improve compilation speed (srcTranspiler).
+3. Upgrade WinJS to the latest version.
 
 ## How to view webpack configuration
 

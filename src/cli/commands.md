@@ -61,7 +61,7 @@ $ win config list
  - [key: polyfill] false
  - [key: externals] { esbuild: true }
 
-$ win config get mfsu
+$ win config get externals
  - [key: externals] { esbuild: true }
 ```
 
@@ -94,9 +94,7 @@ win cache ls [--depth]
 info  - [win cache] dir info
 └─ [40.71 MB] node_modules/.cache
    ├─ [16.52 MB] bundler-webpack-eager
-   ├─ [166 KB] logger
-   ├─ [4.50 MB] mfsu
-   └─ [19.53 MB] mfsu-deps
+   └─ [166 KB] logger
 ```
 
 
@@ -263,50 +261,9 @@ Usage: win lint
 
 ## mfsu
 
-The `win mfsu` command can view MFSU dependency information, rebuild MFSU dependencies, and clear MFSU dependencies.
-
-
-Get MFSU command help
-
-```bash
-$ win mfsu
-```
-
-Get MFSU dependency list
-```bash
-$ win mfsu ls
-warning@0.0.3
-regenerator-runtime/runtime.js@0.13.11
-react/jsx-dev-runtime@18.1.0
-react-intl@3.12.1
-react-error-overlay/lib/index.js@6.0.9
-react@18.1.0
-qiankun@2.8.4
-lodash/noop@4.17.21
-lodash/mergeWith@4.17.21
-lodash/concat@4.17.21
-...
-```
-
-Rebuild MFSU dependencies
-
-```bash
-$ win mfsu build
-info  - Preparing...
-info  - MFSU eager strategy enabled
-warn  - Invalidate webpack cache since mfsu cache is missing
-info  - [MFSU] buildDeps since cacheDependency has changed
-...
-info  - [plugin: @winner-fed/preset-win/dist/commands/mfsu/mfsu] [MFSU][eager] build success
-```
-
-Clear MFSU dependencies
-```bash
-$ # Delete dependency information list
-$ win mfsu remove
-$ # Delete dependency information list and build artifacts
-$ win mfsu remove --all
-```
+::: danger Removed
+The `win mfsu` command (including the `ls` / `build` / `remove` subcommands) was removed from WinJS in `0.19.1` along with the MFSU feature. Executing it will fail with an unknown command error.
+:::
 
 ## plugin
 

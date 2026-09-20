@@ -57,9 +57,7 @@ export default defineConfig({
    * @name 路由状态保持插件
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/keepalive.html
    */
-  keepalive: ['/hello', '/docs'],
-  // 需关闭 mfsu
-  mfsu: false
+  keepalive: ['/hello', '/docs']
 });
 ```
 

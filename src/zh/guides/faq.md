@@ -19,24 +19,16 @@ Vite 没有为传统模块系统设计，默认输出 `<script type=module>`，�
                      
 ## [Vue warn]: Missing ref owner context. ref cannot be used on hoisted vnodes. A vnode with ref must be created inside the render function. {#vue-warn-missing-ref}
 
-遇到上述问题，有可能是 Vue 重复导入所致。可以通过以下配置来解决：
+遇到上述问题，有可能是 Vue 重复导入、运行时出现多个 Vue 实例所致。
 
-```ts
-// .winrc
-import { defineConfig } from 'win';
+::: warning 注意
+此前可以通过 `mfsu` 的 `shared` 配置解决该问题，但 MFSU 已从 WinJS `0.19.1` 起移除，该方案不再可用。
+:::
 
-export default defineConfig({
-  mfsu: {
-    shared: {
-      vue: {
-        singleton: true,
-        eager: true,
-      },
-    },
-  }
-})
+请改为排查并消除重复的 Vue 实例，例如：
 
-```
+1. 使用 `pnpm why vue`（或 `npm ls vue`）检查项目中是否存在多个 Vue 版本；
+2. 通过包管理器的版本覆写能力（如 pnpm 的 `pnpm.overrides`）将 Vue 固定为单一版本。
 
 ## 可以关闭 dynamicImport 吗？
 
@@ -258,17 +250,11 @@ export default {
 
 ## npm link 的包不热更新怎么解决
 
-WinJS 默认开启 `mfsu` ，默认忽略 `node_modules` 的变化，配置从 `mfsu` 排除该包即可：
+::: warning 注意
+旧版本中该问题通常通过把包从 `mfsu` 中排除来解决；MFSU 已从 WinJS `0.19.1` 起移除，该方案不再可用。
+:::
 
-```ts
-// .winrc.ts
-
-export default {
-  mfsu: {
-    exclude: ['package-name']
-  },
-}
-```
+若引入的是本机其他目录或 monorepo 子包的源码，推荐开启 [`monorepoRedirect`](../config/config#monoreporedirect) ，将这些依赖的导入重定向到其源码位置，即可获得热更新支持。
 
 ## 我的环境很多，多环境 config 文件的优先级是怎样的
 
@@ -378,10 +364,9 @@ WinJS 与 webpack 相比增加了运行时相关的能力，我们在开发中�
 
 目前已知的信息：
 
-1. 尝试关闭 mfsu: false 看看热更新时间是否会减少。
-2. 尝试手动分包，分包方式见：[code-splitting](https://winjs-dev.github.io/winjs-docs/guides/code-splitting.html)，特别是对需要加载重依赖的组件部分拆分，比如编辑器等。
-3. 若没有使用额外的 babel 插件，尝试使用 srcTranspiler: 'swc' 提升编译速度（ srcTranspiler ）。
-4. 升级 WinJS 版本到最新。
+1. 尝试手动分包，分包方式见：[code-splitting](https://winjs-dev.github.io/winjs-docs/guides/code-splitting.html)，特别是对需要加载重依赖的组件部分拆分，比如编辑器等。
+2. 若没有使用额外的 babel 插件，尝试使用 srcTranspiler: 'swc' 提升编译速度（ srcTranspiler ）。
+3. 升级 WinJS 版本到最新。
 
 ## 如何查看 webpack 的配置
 

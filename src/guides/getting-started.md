@@ -179,9 +179,6 @@ Execute the `pnpm dev` command:
 ```bash
 $ pnpm dev
 
-info  - MFSU eager strategy enabled
-event - [MFSU][eager] start build deps
-info  - [MFSU] buildDeps since cacheDependency has changed
         ╔════════════════════════════════════════════════════╗
         ║ App listening at:                                  ║
         ║  >   Local: http://localhost:8000                  ║

@@ -61,7 +61,7 @@ $ win config list
  - [key: polyfill] false
  - [key: externals] { esbuild: true }
 
-$ win config get mfsu
+$ win config get externals
  - [key: externals] { esbuild: true }
 ```
 
@@ -94,9 +94,7 @@ win cache ls [--depth]
 info  - [win cache] dir info
 └─ [40.71 MB] node_modules/.cache
    ├─ [16.52 MB] bundler-webpack-eager
-   ├─ [166 KB] logger
-   ├─ [4.50 MB] mfsu
-   └─ [19.53 MB] mfsu-deps
+   └─ [166 KB] logger
 ```
 
 
@@ -263,50 +261,9 @@ Usage: win lint
 
 ## mfsu
 
-`win mfsu` 命令可以查看 MFSU 依赖信息、重新构建 MFSU 依赖和清除 MFSU 依赖。
-
-
-获取 MFSU 命令帮忙
-
-```bash
-$ win mfsu
-```
-
-获取 MFSU 依赖列表
-```bash
-$ win mfsu ls
-warning@0.0.3
-regenerator-runtime/runtime.js@0.13.11
-react/jsx-dev-runtime@18.1.0
-react-intl@3.12.1
-react-error-overlay/lib/index.js@6.0.9
-react@18.1.0
-qiankun@2.8.4
-lodash/noop@4.17.21
-lodash/mergeWith@4.17.21
-lodash/concat@4.17.21
-...
-```
-
-重新构建 MFSU 依赖
-
-```bash
-$ win mfsu build
-info  - Preparing...
-info  - MFSU eager strategy enabled
-warn  - Invalidate webpack cache since mfsu cache is missing
-info  - [MFSU] buildDeps since cacheDependency has changed
-...
-info  - [plugin: @winner-fed/preset-win/dist/commands/mfsu/mfsu] [MFSU][eager] build success
-```
-
-清除 MFSU 依赖
-```bash
-$ # 删除依赖信息列表
-$ win mfsu remove
-$ # 删除依赖信息列表和产物文件
-$ win mfsu remove --all
-```
+::: danger 已移除
+`win mfsu` 命令（含 `ls` / `build` / `remove` 子命令）已从 WinJS `0.19.1` 起随 MFSU 功能一并移除，执行会报未知命令。
+:::
 
 ## plugin
 

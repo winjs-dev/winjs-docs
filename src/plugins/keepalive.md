@@ -57,9 +57,7 @@ export default defineConfig({
    * @name Route state persistence plugin
    * @doc https://winjs-dev.github.io/winjs-docs/plugins/keepalive.html
    */
-  keepalive: ['/hello', '/docs'],
-  // Need to disable mfsu
-  mfsu: false
+  keepalive: ['/hello', '/docs']
 });
 ```
 

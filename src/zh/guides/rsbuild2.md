@@ -36,7 +36,7 @@ export default {
 **注意**：
 
 - `rsbuild2` 与 `vite`、`rsbuild` 互斥，不可同时开启；
-- 启用后 `mfsu`、`hmrGuardian` 会自动关闭（与 Rsbuild 模式行为一致）；
+- 启用后 `hmrGuardian` 会自动关闭（与 Rsbuild 模式行为一致）；
 - 暂不支持 `mpa` 多页应用与 `mdx`。
 
 ## 配置选项

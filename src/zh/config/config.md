@@ -343,7 +343,7 @@ Vite（不支持 `position: 'footer'`）。如果在 Vite 中设置 `position: '
 - **默认值**：`node_modules/.cache`
 - **bundler**：`webpack`
 
-默认情况下 WinJS 会将构建中的一些缓存文件存放在 `node_modules/.cache` 目录下，比如 logger 日志，webpack 缓存，mfsu
+默认情况下 WinJS 会将构建中的一些缓存文件存放在 `node_modules/.cache` 目录下，比如 logger 日志，webpack
 缓存等。你可以通过使用 `cacheDirectoryPath` 配置来修改 Win 的缓存文件目录。
 
 示例，
@@ -1447,63 +1447,9 @@ export default {
 
 ## mfsu
 
-- **类型**：
-  `{ esbuild: boolean; mfName: string; cacheDirectory: string; strategy: 'normal' | 'eager'; include?: string[]; chainWebpack: (memo, args) => void; exclude?: Array<string | RegExp> }`
-- **默认值**：`{ mfName: 'mf', strategy: 'normal' }`
-- **bundler**: `webpack`
-
-配置基于 [Module Federation](https://module-federation.github.io/) 的提速功能。
-
-关于参数
-
-- `esbuild` 配为 `true` 后会让依赖的预编译走 esbuild，从而让首次启动更快，缺点是二次编译不会有物理缓存，稍慢一些；推荐项目依赖比较稳定的项目使用。
-- `mfName` 是此方案的 remote 库的全局变量，默认是 mf，通常在微前端中为了让主应用和子应用不冲突才会进行配置
-- `cacheDirectory` 可以自定义缓存目录，默认是 `node_modules/.cache/mfsu`
-- `chainWebpack` 用链式编程的方式修改 依赖的 webpack 配置，基于 webpack-chain，具体 API
-  可参考 [webpack-api 的文档](https://github.com/sorrycc/webpack-chain)；
-- `runtimePublicPath` 会让修改 mf 加载文件的 publicPath 为 `window.publicPath`
-- `strategy` 指定 mfsu 编译依赖的时机; `normal` 模式下，采用 babel 编译分析后，构建 Module Federation 远端包；`eager`
-  模式下采用静态分析的方式，和项目代码同时发起构建。
-- `include` 仅在 `strategy: 'eager' ` 模式下生效， 用于补偿在 eager 模式下，静态分析无法分析到的依赖，例如 `react` 未进入
-  Module Federation 远端模块可以这样配置 `{ include: [ 'react' ] }`
-- `exclude` 手动排除某些不需要被 MFSU 处理的依赖, 字符串或者正则的形式，比如 `vant` 不希望走 MFSU
-  处理，可以配置 `{ exclude: [ 'vant' ] }` 匹配逻辑为全词匹配，也可以配置 `{ exclude: [ /vant/ ] }` 只要 `import`
-  路径中匹配该正则的依赖都不走 MFSU 处理
-- `remoteHash` 默认情况下，当用户开启 `hash: true` 时， MF 产物中入口文件将自动携带 hash ，如 `remote.123abc.js`
-  ，可通过设定 `remoteHash: false` 关闭（将得到 `remote.js` ），此时你可能需要修改 nginx / CDN / 网关
-  的响应头配置来去除该 `remote.js` 文件的缓存，否则新构建将无法生效。
-
-示例，
-
-```js
-export default {
-  // 用 esbuild 做依赖预编译
-  mfsu: {
-    esbuild: true,
-  }
-}
-
-export default {
-  // 关闭 mfsu 功能
-  mfsu: false
-}
-```
-
-```js
-export default {
-  // webpack 配置修改
-  mfsu: {
-    chainWebpack(memo, args) {
-      // 添加额外插件
-      memo.plugin('hello').use(Plugin, [...args]);
-      return memo;
-    }
-  }
-}
-
-```
-
-注意：此功能默关闭。配置 `mfsu: {}` 开启。
+::: danger 已移除
+`mfsu` 配置项已从 WinJS `0.19.1` 起随 MFSU 功能一并移除，配置后不再生效。升级后请从配置文件中移除 `mfsu` 相关配置。
+:::
 
 ## mock
 
@@ -1547,7 +1493,7 @@ mountElementId: 'container'
 
 在 monorepo 中使用 WinJS
 时，你可能需要引入其他子包的组件、工具方法等，通过开启此选项来重定向这些子包的导入到他们的源码位置（默认为 `src`
-文件夹），这也可以解决 `MFSU` 场景改动子包不热更新的问题。
+文件夹）。
 
 这种重定向的好处是：支持热更新，无需预构建其他子包即可进行开发。
 

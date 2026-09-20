@@ -340,7 +340,7 @@ Vite does not support `position: 'footer'`. If you set `position: 'footer'` in V
 - **Default**: `node_modules/.cache`
 - **bundler**: `webpack`
 
-By default, WinJS stores some cache files from the build process in the `node_modules/.cache` directory, such as logger logs, webpack cache, mfsu cache, etc. You can use the `cacheDirectoryPath` configuration to modify WinJS's cache file directory.
+By default, WinJS stores some cache files from the build process in the `node_modules/.cache` directory, such as logger logs, webpack cache, etc. You can use the `cacheDirectoryPath` configuration to modify WinJS's cache file directory.
 
 Example:
 
@@ -1411,56 +1411,9 @@ Will generate the following HTML:
 
 ## mfsu
 
-- **Type**:
-  `{ esbuild: boolean; mfName: string; cacheDirectory: string; strategy: 'normal' | 'eager'; include?: string[]; chainWebpack: (memo, args) => void; exclude?: Array<string | RegExp> }`
-- **Default**: `{ mfName: 'mf', strategy: 'normal' }`
-- **bundler**: `webpack`
-
-Configure speed-up functionality based on [Module Federation](https://module-federation.github.io/).
-
-About parameters:
-
-- `esbuild`: When set to `true`, dependency pre-compilation will use esbuild, making the initial startup faster. The downside is that secondary compilation won't have physical cache, making it slightly slower. Recommended for projects with relatively stable dependencies.
-- `mfName`: The global variable for the remote library in this solution, defaults to `mf`. Usually configured in micro-frontend scenarios to prevent conflicts between main and sub-applications.
-- `cacheDirectory`: Customize cache directory, defaults to `node_modules/.cache/mfsu`.
-- `chainWebpack`: Modify dependency webpack configuration using chain programming, based on webpack-chain. For specific API reference, see [webpack-chain documentation](https://github.com/sorrycc/webpack-chain).
-- `runtimePublicPath`: Modifies the publicPath for mf loading files to `window.publicPath`.
-- `strategy`: Specifies when mfsu compiles dependencies. In `normal` mode, Module Federation remote packages are built after babel compilation analysis. In `eager` mode, static analysis is used and building is initiated simultaneously with project code.
-- `include`: Only effective in `strategy: 'eager'` mode, used to compensate for dependencies that cannot be analyzed by static analysis in eager mode. For example, if `react` doesn't enter the Module Federation remote module, configure it like `{ include: [ 'react' ] }`.
-- `exclude`: Manually exclude certain dependencies that don't need to be processed by MFSU, in string or regex form. For example, if you don't want `vant` to be processed by MFSU, configure `{ exclude: [ 'vant' ] }`. The matching logic is exact word matching, or configure `{ exclude: [ /vant/ ] }` so that any dependency whose `import` path matches this regex won't be processed by MFSU.
-- `remoteHash`: By default, when users enable `hash: true`, entry files in MF artifacts will automatically carry hash, like `remote.123abc.js`. This can be disabled by setting `remoteHash: false` (resulting in `remote.js`). In this case, you may need to modify nginx/CDN/gateway response header configuration to remove caching for this `remote.js` file, otherwise new builds won't take effect.
-
-Example:
-
-```js
-export default {
-  // Use esbuild for dependency pre-compilation
-  mfsu: {
-    esbuild: true,
-  }
-}
-
-export default {
-  // Disable mfsu functionality
-  mfsu: false
-}
-```
-
-```js
-export default {
-  // webpack configuration modification
-  mfsu: {
-    chainWebpack(memo, args) {
-      // Add additional plugins
-      memo.plugin('hello').use(Plugin, [...args]);
-      return memo;
-    }
-  }
-}
-
-```
-
-Note: This feature is disabled by default. Configure `mfsu: {}` to enable it.
+::: danger Removed
+The `mfsu` configuration option was removed from WinJS in `0.19.1` along with the MFSU feature and no longer takes effect. After upgrading, please remove any `mfsu` related configuration from your configuration files.
+:::
 
 ## mock
 
@@ -1502,7 +1455,7 @@ mountElementId: 'container'
 - **Type**: `{ srcDir?: string[], exclude?: RegExp[], peerDeps?: boolean, useRootProject?: boolean }`
 - **Default**: `false`
 
-When using WinJS in a monorepo, you may need to import components, utility methods, etc. from other sub-packages. Enable this option to redirect imports from these sub-packages to their source code location (defaults to `src` folder), which can also solve the issue of sub-package changes not hot-reloading in `MFSU` scenarios.
+When using WinJS in a monorepo, you may need to import components, utility methods, etc. from other sub-packages. Enable this option to redirect imports from these sub-packages to their source code location (defaults to `src` folder).
 
 The benefits of this redirection: support hot updates, and development can proceed without pre-building other sub-packages.
 

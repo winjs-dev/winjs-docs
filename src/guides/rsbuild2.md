@@ -1,4 +1,4 @@
-# Rsbuild2 Mode <Badge type="tip" text=">=0.18.22" />
+# Rsbuild2 Mode <Badge type="tip" text=">=0.19.0" />
 
 Rsbuild2 mode is built on [Rsbuild 2.x](https://rsbuild.rs/) (powered by [Rspack 2.x](https://rspack.rs/)) and is completely independent of the [Rsbuild mode](./rsbuild.md) (Rsbuild 1.x), with no mutual impact.
 
@@ -36,7 +36,7 @@ If `rsbuild2` is configured without installing `@winner-fed/bundler-rsbuild2`, W
 **Notes**:
 
 - `rsbuild2` is mutually exclusive with `vite` and `rsbuild`; they cannot be enabled at the same time;
-- After enabling, `mfsu` and `hmrGuardian` are automatically disabled (consistent with Rsbuild mode);
+- After enabling, `hmrGuardian` is automatically disabled (consistent with Rsbuild mode);
 - `mpa` (multi-page applications) and `mdx` are not supported yet.
 
 ## Configuration Options
@@ -91,7 +91,7 @@ Rsbuild 2.x introduces several breaking changes relative to 1.x. WinJS aligns th
 
 Rsbuild2 reuses the global `modifyRsbuildConfig`, `modifyRspackConfig`, and `modifyBundlerChain` hooks, so existing Rspack ecosystem plugins work directly.
 
-Vue support requirements on the framework side (since `0.18.22`):
+Vue support requirements on the framework side (since `0.19.0`):
 
 - Vue 2: `@winner-fed/preset-vue2` (bundles `@rsbuild/plugin-vue2@1.2.0`, compatible with both Rsbuild 1/2);
 - Vue 3: `@winner-fed/preset-vue` (bundles `@rsbuild/plugin-vue@1.2.9`, compatible with both Rsbuild 1/2).

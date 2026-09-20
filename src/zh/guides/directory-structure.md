@@ -41,10 +41,8 @@ WinJS 框架的设计原则之一是【[约定优于配置（Convention over Con
 │   ├── overrides.(css|less|sass|scss)
 │   └── favicon.(ico|gif|png|jpg|jpeg|svg|avif|webp)
 ├── node_modules
-│   └── .cache
-│       ├── bundler-webpack
-│       ├── mfsu
-│       └── mfsu-deps
+│   └── .cache
+│       └── bundler-webpack
 ├── .env
 ├── .editorconfig // 编辑器编码风格配置
 ├── .eslintignore // eslint 校验忽略文件
@@ -114,11 +112,11 @@ COMPRESS=none
 
 ### node_modules/.cache
 
-WinJS 在构建时生成的缓存文件目录，存放 `babel` 缓存，`MFSU` 缓存等
+WinJS 在构建时生成的缓存文件目录，存放 `babel` 缓存、bundler 缓存等
 
 ::: tip 提示
 
-如果 `MFSU` 构建异常，可以删除 `.cache` 目录，它将会在再次构建的时候重新生成。
+如果构建异常，可以删除 `.cache` 目录，它将会在再次构建的时候重新生成。
 也可以直接执行 `win cache clean` 进行清除。
 
 :::
