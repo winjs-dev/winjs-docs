@@ -14,6 +14,16 @@ WinJS Builder 是 WinJS 体系的核心组件之一，它是一个基于 Webpack
 
 ![builder](/images/guide/builder-layers.jpg)
 
+## 统一构建器调度 <Badge type="tip" text=">=0.19.3" />
+
+自 `0.19.3` 起，`win dev` / `win build` 命令不再直接引用任何构建器包，而是通过 [`modifyUniBundler`](../api/plugin-api.md#modifyunibundler) 钩子向插件层索要构建器实现（统一 `dev` / `build` 契约）：
+
+- **内置构建器**由各自 feature 认领：`webpack`（默认兜底）、`vite`、`rsbuild`；
+- **外置构建器** `rsbuild2` 由其 feature 从业务项目目录解析 `@winner-fed/bundler-rsbuild2` 后认领（首个外置实践，见 [Rsbuild2 模式](./rsbuild2.md)）；
+- **第三方构建器**可在插件中设置 `appData.bundler` 并实现 `modifyUniBundler` 接入，无需改动 preset-win。
+
+各构建器采用"认领式"约定：仅当构建器标识匹配时返回实现，因此注册顺序无关。新增一个构建器只需要一个 feature 文件，命令层零改动。
+
 ## 构建配置
 
 WinJS 的配置继承自 WinJS Builder，因此你可以在 WinJS 中使用 WinJS Builder 提供的所有构建配置。

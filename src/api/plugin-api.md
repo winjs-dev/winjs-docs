@@ -769,6 +769,79 @@ api.modifyTSConfig((memo) => {
 });
 ```
 
+### modifyUniBundler <Badge type="tip" text=">=0.19.3" />
+
+Unified bundler scheduling hook. The `win dev` / `win build` commands **do not directly know about any specific bundler**; instead, they ask the plugin layer for a bundler implementation through this hook, so built-in and external bundlers go through the same channel:
+
+- Built-in bundlers are claimed by their corresponding features: `webpack` (default fallback), `vite`, `rsbuild`;
+- The external bundler `rsbuild2` is claimed by its feature after resolving `@winner-fed/bundler-rsbuild2` from the business project directory.
+
+It follows a **claim-based convention**: return an implementation only when `args.bundler` matches your own bundler name, otherwise return `memo` as-is, so the order doesn't matter when multiple plugins register. If no plugin claims it in the end, the command fails directly.
+
+- **Type:**
+
+```ts
+interface IUniBundler {
+  dev: (opts: any) => Promise<any>;
+  build: (opts: any) => Promise<any>;
+  /** Optional: default output path constant (e.g. webpack's DEFAULT_OUTPUT_PATH) */
+  DEFAULT_OUTPUT_PATH?: string;
+}
+
+api.modifyUniBundler((memo, { bundler, opts }) => {
+  if (bundler === 'my-bundler') {
+    return myBundlerImpl as IUniBundler;
+  }
+  return memo;
+});
+```
+
+- **Complete example of integrating a custom bundler:**
+
+```ts
+import { createRequire } from 'module';
+import { join } from 'path';
+import { pathToFileURL } from 'url';
+
+export default (api) => {
+  // 1. Declare the config key (optional, for users to enable)
+  api.describe({
+    key: 'myBundler',
+    enableBy: api.EnableBy.config,
+  });
+
+  // 2. Set the bundler identifier (used by onBeforeCompiler's compiler param, bundle-status, etc.)
+  api.modifyAppData((memo) => {
+    memo.bundler = 'my-bundler';
+    return memo;
+  });
+
+  // 3. Claim the bundler implementation (here resolving an external package from the business project as an example)
+  api.modifyUniBundler(async (memo, { bundler }) => {
+    if (bundler === 'my-bundler') {
+      const req = createRequire(join(api.cwd, 'package.json'));
+      const entry = req.resolve('@your-scope/bundler-my');
+      const mod = await import(pathToFileURL(entry).href);
+      return mod.build || mod.dev ? mod : mod.default;
+    }
+    return memo;
+  });
+};
+```
+
+### modifyUniBundlerOpts <Badge type="tip" text=">=0.19.3" />
+
+Adjust the final `opts` passed to the bundler, per bundler. Executed before the bundler implementation consumes `opts`; can be used to add or remove fields for different bundlers.
+
+```ts
+api.modifyUniBundlerOpts((memo, { bundler }) => {
+  if (bundler === 'my-bundler') {
+    return { ...memo, customOption: true };
+  }
+  return memo;
+});
+```
+
 ### modifyViteConfig
 
 Modify the final Vite configuration. The passed `fn` receives Vite's Config object as the first parameter and returns it. Additionally, `fn` can receive `{ env }` as the second parameter to get the current environment.
@@ -796,7 +869,10 @@ api.modifyWebpackConfig((memo, { webpack, env }) => {
 
 ### onBeforeCompiler
 
-After generate, before webpack / vite / rsbuild compiler. The passed `fn` receives no parameters.
+After generate, before the bundler starts. The passed `fn` receives `{ compiler, opts }` as parameters:
+
+- `compiler`: the current bundler identifier, taken from `api.appData.bundler`, with a value of `'webpack' | 'vite' | 'rsbuild' | 'rsbuild2'` (custom bundlers use their own identifier);
+- `opts`: the final opts about to be passed to the bundler implementation (already adjusted by `modifyUniBundlerOpts`).
 
 ### onBeforeMiddleware
 

@@ -803,6 +803,79 @@ api.modifyTSConfig((memo) => {
 });
 ```
 
+### modifyUniBundler <Badge type="tip" text=">=0.19.3" />
+
+统一构建器调度钩子。`win dev` / `win build` 命令**不直接感知任何具体的构建器**，而是通过该钩子向插件层索要构建器实现，内置与外置构建器走同一条通道：
+
+- 内置构建器由对应 feature 认领：`webpack`（默认兜底）、`vite`、`rsbuild`；
+- 外置构建器 `rsbuild2` 由其 feature 从业务项目目录解析 `@winner-fed/bundler-rsbuild2` 后认领。
+
+采用**认领式约定**：仅当 `args.bundler` 与自己的构建器名匹配时返回实现，否则原样返回 `memo`，因此多个插件注册时顺序无关。若最终没有任何插件认领，命令会直接报错。
+
+- **类型：**
+
+```ts
+interface IUniBundler {
+  dev: (opts: any) => Promise<any>;
+  build: (opts: any) => Promise<any>;
+  /** 可选：默认产物目录常量（如 webpack 的 DEFAULT_OUTPUT_PATH） */
+  DEFAULT_OUTPUT_PATH?: string;
+}
+
+api.modifyUniBundler((memo, { bundler, opts }) => {
+  if (bundler === 'my-bundler') {
+    return myBundlerImpl as IUniBundler;
+  }
+  return memo;
+});
+```
+
+- **接入自定义构建器的完整示例：**
+
+```ts
+import { createRequire } from 'module';
+import { join } from 'path';
+import { pathToFileURL } from 'url';
+
+export default (api) => {
+  // 1. 声明配置开关（可选，用于用户启用）
+  api.describe({
+    key: 'myBundler',
+    enableBy: api.EnableBy.config,
+  });
+
+  // 2. 设置构建器标识（onBeforeCompiler 的 compiler 参数、bundle-status 等均使用它）
+  api.modifyAppData((memo) => {
+    memo.bundler = 'my-bundler';
+    return memo;
+  });
+
+  // 3. 认领构建器实现（此处以从业务项目解析外置包为例）
+  api.modifyUniBundler(async (memo, { bundler }) => {
+    if (bundler === 'my-bundler') {
+      const req = createRequire(join(api.cwd, 'package.json'));
+      const entry = req.resolve('@your-scope/bundler-my');
+      const mod = await import(pathToFileURL(entry).href);
+      return mod.build || mod.dev ? mod : mod.default;
+    }
+    return memo;
+  });
+};
+```
+
+### modifyUniBundlerOpts <Badge type="tip" text=">=0.19.3" />
+
+按构建器调整最终传入 bundler 的 `opts`。在构建器实现消费 `opts` 之前执行，可用于为不同构建器增删字段。
+
+```ts
+api.modifyUniBundlerOpts((memo, { bundler }) => {
+  if (bundler === 'my-bundler') {
+    return { ...memo, customOption: true };
+  }
+  return memo;
+});
+```
+
 ### modifyViteConfig
 
 修改 vite 最终配置。 传入的 fn 接收 vite 的 Config 对象作为第一个参数并且返回它。另外 fn 还可以接收 `{ env }`
@@ -832,7 +905,10 @@ api.modifyWebpackConfig((memo, { webpack, env }) => {
 
 ### onBeforeCompiler
 
-generate 之后，webpack / vite / rsbuild compiler 之前。传入的 fn 不接收任何参数。
+generate 之后、构建器启动之前。传入的 fn 接收 `{ compiler, opts }` 作为参数：
+
+- `compiler`：当前构建器标识，取自 `api.appData.bundler`，值为 `'webpack' | 'vite' | 'rsbuild' | 'rsbuild2'`（自定义构建器为对应标识）；
+- `opts`：即将传给构建器实现的最终 opts（已经过 `modifyUniBundlerOpts` 调整）。
 
 ### onBeforeMiddleware
 

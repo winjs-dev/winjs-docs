@@ -14,6 +14,16 @@ From a build perspective, WinJS is divided into a three-layer architecture, from
 
 ![builder](/images/guide/builder-layers.jpg)
 
+## Unified Bundler Scheduling <Badge type="tip" text=">=0.19.3" />
+
+Since `0.19.3`, the `win dev` / `win build` commands no longer reference any bundler package directly; instead, they ask the plugin layer for a bundler implementation through the [`modifyUniBundler`](../api/plugin-api.md#modifyunibundler) hook (a unified `dev` / `build` contract):
+
+- **Built-in bundlers** are claimed by their own features: `webpack` (default fallback), `vite`, `rsbuild`;
+- The **external bundler** `rsbuild2` is claimed by its feature after resolving `@winner-fed/bundler-rsbuild2` from the business project directory (the first external practice, see [Rsbuild2 Mode](./rsbuild2.md));
+- **Third-party bundlers** can integrate by setting `appData.bundler` and implementing `modifyUniBundler` in a plugin, without modifying preset-win.
+
+Bundlers follow a "claim-based" convention: an implementation is returned only when the bundler identifier matches, so registration order doesn't matter. Adding a new bundler only requires a single feature file, with zero changes to the command layer.
+
 ## Build Configuration
 
 WinJS configuration inherits from WinJS Builder, so you can use all build configurations provided by WinJS Builder in WinJS.

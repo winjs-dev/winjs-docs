@@ -91,6 +91,8 @@ Rsbuild 2.x 相对 1.x 有若干破坏性变更，WinJS 已在翻译层对齐默
 
 Rsbuild2 复用全局的 `modifyRsbuildConfig`、`modifyRspackConfig`、`modifyBundlerChain` 钩子，既有的 Rspack 生态插件可直接使用。
 
+在调度层面，Rsbuild2 是统一构建器调度（[`modifyUniBundler`](../api/plugin-api.md#modifyunibundler)）下的首个外置构建器实践：`win dev` / `win build` 命令不感知它的存在，由 rsbuild2 feature 在运行时从业务项目目录解析实现包并认领。第三方构建器可通过同一机制接入（自 `0.19.3` 起）。
+
 框架侧的 Vue 支持要求（自 `0.19.0` 起）：
 
 - Vue 2：`@winner-fed/preset-vue2`（内置 `@rsbuild/plugin-vue2@1.2.0`，双兼容 Rsbuild 1/2）；

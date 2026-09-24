@@ -91,6 +91,8 @@ Rsbuild 2.x introduces several breaking changes relative to 1.x. WinJS aligns th
 
 Rsbuild2 reuses the global `modifyRsbuildConfig`, `modifyRspackConfig`, and `modifyBundlerChain` hooks, so existing Rspack ecosystem plugins work directly.
 
+At the scheduling level, Rsbuild2 is the first external bundler practice under the unified bundler scheduling ([`modifyUniBundler`](../api/plugin-api.md#modifyunibundler)): the `win dev` / `win build` commands are unaware of its existence; the rsbuild2 feature resolves the implementation package from the business project directory at runtime and claims it. Third-party bundlers can integrate through the same mechanism (since `0.19.3`).
+
 Vue support requirements on the framework side (since `0.19.0`):
 
 - Vue 2: `@winner-fed/preset-vue2` (bundles `@rsbuild/plugin-vue2@1.2.0`, compatible with both Rsbuild 1/2);
