@@ -1763,6 +1763,24 @@ export default {
 }
 ```
 
+## svelte <Badge type="tip" text=">=0.19.4" />
+
+Svelte framework compiler options (effective on the webpack and rsbuild / rsbuild2 chains; the Vite chain uses the built-in vite-plugin-svelte handling).
+
+### svelteLoaderOptions
+
+Pass-through svelte-loader options such as `compilerOptions`, `emitCss`, and `preprocess`. TypeScript inside Svelte 5 components is stripped natively by the compiler, so no preprocessor is enabled by default; configure `preprocess` yourself if you need scss or other preprocessors.
+
+```ts
+export default defineConfig({
+  svelte: {
+    svelteLoaderOptions: {
+      emitCss: true,
+    },
+  },
+});
+```
+
 ## scripts
 
 - **Type**: `string[] | Script[]`

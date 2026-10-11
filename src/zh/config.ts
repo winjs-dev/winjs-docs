@@ -93,6 +93,10 @@ export const sidebar = {
             link: 'with-vue2'
           },
           {
+            text: '使用 Svelte',
+            link: 'svelte'
+          },
+          {
             text: 'Vite 模式',
             link: 'vite'
           },

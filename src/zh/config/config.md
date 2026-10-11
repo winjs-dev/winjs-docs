@@ -1806,6 +1806,24 @@ export default {
 }
 ```
 
+## svelte <Badge type="tip" text=">=0.19.4" />
+
+Svelte 框架编译选项（webpack 与 rsbuild / rsbuild2 链路生效，Vite 链路走 vite-plugin-svelte 内建处理）。
+
+### svelteLoaderOptions
+
+svelte-loader 编译选项透传，可配置 `compilerOptions`、`emitCss`、`preprocess` 等。Svelte 5 组件内的 TypeScript 由编译器原生剥离，默认未启用任何预处理器；需要 scss 等预处理器时可自行配置 `preprocess`。
+
+```ts
+export default defineConfig({
+  svelte: {
+    svelteLoaderOptions: {
+      emitCss: true,
+    },
+  },
+});
+```
+
 ## scripts
 
 - **类型**：`string[] | Script[]`

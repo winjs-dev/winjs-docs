@@ -91,6 +91,10 @@ export const sidebar = {
           link: '/guides/with-vue2'
         },
         {
+          text: 'Using Svelte',
+          link: '/guides/svelte'
+        },
+        {
           text: 'Vite mode',
           link: '/guides/vite'
         },
