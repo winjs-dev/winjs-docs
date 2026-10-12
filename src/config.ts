@@ -75,6 +75,10 @@ export const sidebar = {
           link: '/guides/data-request'
         },
         {
+          text: 'Route data loading',
+          link: '/guides/client-loader'
+        },
+        {
           text: 'Mock',
           link: '/guides/mock'
         },

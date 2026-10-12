@@ -77,6 +77,10 @@ export const sidebar = {
             link: 'data-request'
           },
           {
+            text: '路由数据加载',
+            link: 'client-loader'
+          },
+          {
             text: 'mock',
             link: 'mock'
           },

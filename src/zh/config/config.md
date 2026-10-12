@@ -397,6 +397,17 @@ export default {
 };
 ```
 
+## clientLoader
+
+- **类型**：`{}`
+- **默认值**：`undefined`
+
+开启路由数据加载能力。开启后，页面文件中导出的 `clientLoader` 函数会在路由组件就绪后执行，返回值经 `useLoaderData()` 在组件内消费。详见[路由数据加载](../guides/client-loader.md)。
+
+```js
+clientLoader: {}
+```
+
 ## codeSplitting
 
 - **类型**：`{ jsStrategy: 'bigVendors' | 'depPerChunk' | 'granularChunks'; jsStrategyOptions: {} }`
@@ -1186,8 +1197,8 @@ export default {
 
 ## history
 
-- **类型**：`{ type: 'browser' | 'hash' | 'memory' }`
-- **默认值**：`{ type: 'browser' }`
+- **类型**：`{ type: 'browser' | 'hash' | 'memory'; strict?: boolean; sensitive?: boolean }`
+- **默认值**：`{ type: 'browser', strict: false, sensitive: false }`
 
 设置路由 history 类型。
 
@@ -1198,6 +1209,11 @@ export default {
   `memory` 在 Vue Router 3.x 则对应的是 [abstract](https://v3.router.vuejs.org/zh/api/#mode)
   。可以参考 [从 Vue2 迁移](https://router.vuejs.org/zh/guide/migration/#%E6%96%B0%E7%9A%84-history-%E9%85%8D%E7%BD%AE%E5%8F%96%E4%BB%A3-mode)
   :::
+
+路由匹配语义（Vue 3 / Svelte 链生效，三链默认值对齐为宽容匹配；Vue 2 链 vue-router 3 无此能力，透传忽略）：
+
+- `strict`，是否区分路径尾部斜杠（默认 `false`，`/about` 与 `/about/` 视为同一路由）
+- `sensitive`，是否区分大小写（默认 `false`，`/Users` 与 `/users` 视为同一路由）
 
 ## https
 

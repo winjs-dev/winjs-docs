@@ -391,6 +391,17 @@ export default {
 };
 ```
 
+## clientLoader
+
+- **Type**: `{}`
+- **Default**: `undefined`
+
+Enable route data loading. When enabled, the `clientLoader` function exported from a page file runs after the route component is ready, and its return value is consumed via `useLoaderData()`. See [Route Data Loading](../guides/client-loader.md).
+
+```js
+clientLoader: {}
+```
+
 ## codeSplitting
 
 - **Type**: `{ jsStrategy: 'bigVendors' | 'depPerChunk' | 'granularChunks'; jsStrategyOptions: {} }`
@@ -1167,8 +1178,8 @@ Will generate HTML:
 
 ## history
 
-- **Type**: `{ type: 'browser' | 'hash' | 'memory' }`
-- **Default**: `{ type: 'browser' }`
+- **Type**: `{ type: 'browser' | 'hash' | 'memory'; strict?: boolean; sensitive?: boolean }`
+- **Default**: `{ type: 'browser', strict: false, sensitive: false }`
 
 Set the router history type.
 
@@ -1178,6 +1189,11 @@ Set the router history type.
   ::: tip Note
   `memory` in Vue Router 3.x corresponds to [abstract](https://v3.router.vuejs.org/api/#mode). You can refer to [migration from Vue2](https://router.vuejs.org/guide/migration/#New-history-option-to-replace-mode)
   :::
+
+Route matching semantics (effective on Vue 3 / Svelte chains, aligned to lenient matching by default; the Vue 2 chain on vue-router 3 has no such capability and ignores the options):
+
+- `strict`: whether the trailing slash matters (default `false`, `/about` and `/about/` are the same route)
+- `sensitive`: whether case matters (default `false`, `/Users` and `/users` are the same route)
 
 ## https
 

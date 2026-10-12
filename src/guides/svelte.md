@@ -89,7 +89,7 @@ Use `onRouteChange` to listen for route changes (with the `isFirst` flag for the
 
 ## Data Loading (clientLoader)
 
-Exporting `clientLoader` from a page-level module `<script>` declares route data loading (requires the `clientLoader: {}` config). While loading, the `loadingComponent` boundary (or the global loading) is rendered; once done, the component consumes the return value via `useLoaderData()`:
+Exporting `clientLoader` from a page-level module `<script>` declares route data loading (requires the `clientLoader: {}` config). While loading, the `loadingComponent` boundary (or the global loading) is rendered; once done, the component consumes the return value via `useLoaderData()`. See [Route Data Loading](./client-loader.md) for cross-framework semantics and caching behavior:
 
 ```svelte
 <script module lang="ts">

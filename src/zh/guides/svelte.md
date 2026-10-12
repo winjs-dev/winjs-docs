@@ -89,7 +89,7 @@ export function onRouterCreated({ router }: any) {
 
 ## 数据加载（clientLoader）
 
-页面 module 级 `<script>` 导出 `clientLoader` 即为路由声明数据加载（需开启 `clientLoader: {}` 配置）。加载期间渲染 `loadingComponent` 边界（或全局 loading），完成后组件经 `useLoaderData()` 消费返回值：
+页面 module 级 `<script>` 导出 `clientLoader` 即为路由声明数据加载（需开启 `clientLoader: {}` 配置，跨框架语义与缓存行为详见[路由数据加载](./client-loader.md)）。加载期间渲染 `loadingComponent` 边界（或全局 loading），完成后组件经 `useLoaderData()` 消费返回值：
 
 ```svelte
 <script module lang="ts">
