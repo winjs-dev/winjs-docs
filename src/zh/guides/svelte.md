@@ -1,6 +1,6 @@
 # 使用 Svelte
 
-WinJS 从 0.19.4 起支持 [Svelte 5](https://svelte.dev) 框架（实验性），与 Vue 2 / Vue 3 并列为一等公民框架。
+WinJS 从 1.0.0 起支持 [Svelte 5](https://svelte.dev) 框架（实验性），与 Vue 2 / Vue 3 并列为一等公民框架。
 
 ## 支持矩阵
 
@@ -11,7 +11,6 @@ WinJS 从 0.19.4 起支持 [Svelte 5](https://svelte.dev) 框架（实验性）�
 | autoImport / routeProps | ✅ | ✅ | ✅ | ✅ |
 | clientLoader 数据加载 | ✅ | ✅ | ✅ | ✅ |
 | HMR | ✅ | ✅ | ✅ | ❌（降级整页刷新） |
-| MFSU | — | — | — | ❌ |
 
 其他限制：`icons` 配置暂不支持（图标组件为 Vue 实现，启用时会显式报错）；`mpa` 的 `layout` 配置暂不支持（告警并忽略）。
 

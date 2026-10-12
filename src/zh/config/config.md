@@ -1822,7 +1822,7 @@ export default {
 }
 ```
 
-## svelte <Badge type="tip" text=">=0.19.4" />
+## svelte <Badge type="tip" text=">=1.0.0" />
 
 Svelte 框架编译选项（webpack 与 rsbuild / rsbuild2 链路生效，Vite 链路走 vite-plugin-svelte 内建处理）。
 

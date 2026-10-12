@@ -1,6 +1,6 @@
 # Using Svelte
 
-WinJS supports the [Svelte 5](https://svelte.dev) framework (experimental) as a first-class framework alongside Vue 2 / Vue 3, starting from 0.19.4.
+WinJS supports the [Svelte 5](https://svelte.dev) framework (experimental) as a first-class framework alongside Vue 2 / Vue 3, starting from 1.0.0.
 
 ## Support Matrix
 
@@ -11,7 +11,6 @@ WinJS supports the [Svelte 5](https://svelte.dev) framework (experimental) as a 
 | autoImport / routeProps | ✅ | ✅ | ✅ | ✅ |
 | clientLoader data loading | ✅ | ✅ | ✅ | ✅ |
 | HMR | ✅ | ✅ | ✅ | ❌ (full page reload) |
-| MFSU | — | — | — | ❌ |
 
 Other limitations: the `icons` config is not supported yet (the icon component is Vue-based; enabling it fails fast with an explicit error); the `layout` option of `mpa` is not supported yet (warned and ignored).
 

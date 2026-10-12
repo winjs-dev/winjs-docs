@@ -1779,7 +1779,7 @@ export default {
 }
 ```
 
-## svelte <Badge type="tip" text=">=0.19.4" />
+## svelte <Badge type="tip" text=">=1.0.0" />
 
 Svelte framework compiler options (effective on the webpack and rsbuild / rsbuild2 chains; the Vite chain uses the built-in vite-plugin-svelte handling).
 
