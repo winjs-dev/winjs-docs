@@ -2,7 +2,7 @@
 
 ## Upgrading from 0.19.x to 1.0.0
 
-> Scope: business projects upgrading from WinJS 0.19.x to 1.0.0. The `1.0.0-rc.x` pre-releases (`next` tag) already include all of the changes below, so you can validate ahead of time.
+> Scope: business projects upgrading from WinJS 0.19.x to 1.0.0 (the final `1.0.0` has been released; the `1.0.0-rc.x` pre-releases also include all of the changes below).
 >
 > One-sentence conclusion: **zero structural impact** (runtime dependencies, artifact shape and Node version requirements are all unchanged), with new Svelte 5 framework support and clientLoader route data loading. There are **6 behavior changes** to be aware of — 2 may require a self-check, the rest are fixes that need no action.
 
