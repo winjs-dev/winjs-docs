@@ -10,6 +10,7 @@ import NavbarTitle from './components/NavbarTitle.vue';
 import VersionTag from './components/VersionTag.vue';
 import SpecialRemark from './components/SpecialMark.vue';
 import ImagePreview from './components/ImagePreview.vue';
+import ReleaseBanner from './components/ReleaseBanner.vue';
 import 'virtual:group-icons.css';
 import CopyOrDownloadAsMarkdownButtons
   from 'vitepress-plugin-llms/vitepress-components/CopyOrDownloadAsMarkdownButtons.vue';
@@ -21,7 +22,8 @@ export default Object.assign({}, Theme, {
   Layout: () => {
     // @ts-ignore
     return h(Theme.Layout, null, {
-      'navbar-title': () => h(NavbarTitle)
+      'navbar-title': () => h(NavbarTitle),
+      'layout-top': () => h(ReleaseBanner)
     });
   },
   enhanceApp(ctx: EnhanceAppContext) {
