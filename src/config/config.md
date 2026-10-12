@@ -2039,7 +2039,38 @@ export default {
 - **Type**: `string`
 - **Default**: `null`
 
-Configure global page title, currently only supports static Title.
+Configure the global page title.
+
+Since 1.0.0, `title` supports the `%s` template placeholder: the template is filled at runtime with the current route's `meta.title` (consistent across the Vue 3 / Vue 2 / Svelte chains). When a route has no `meta.title`, the `title` is output as-is.
+
+```js
+export default {
+  // When a route's meta.title is "Users", the browser tab shows "Users - Admin Console"
+  title: '%s - Admin Console',
+}
+```
+
+> Without the `%s` template, the behavior is the same as in previous versions (static title).
+
+## typedRoutes <Badge type="tip" text=">=1.0.0" />
+
+- **Type**: `boolean`
+- **Default**: `false`
+
+Enable generated route types (opt-in). When enabled, `.win/core/routeTypes.d.ts` is generated at build time based on the current route table, providing TypeScript type support for route navigation and parameter usage — no need to maintain route type mappings manually.
+
+Enhancements per framework chain:
+
+- **Vue 3 chain**: enhances vue-router's route type declarations — route names and params in `router.push({ name })` / `router.push({ name, params })`, and the `params` of `useRoute<'userDetail'>()`, all get type checking and autocompletion (both vue-router 4.0 – 4.3+ type augmentation mechanisms are covered).
+- **Svelte chain**: enhances `@winner-fed/renderer-svelte`'s route type declarations — the `to` of `RouterLink` and the pathname of `router.push` get literal autocompletion of known route paths (arbitrary strings remain assignable with no false positives); `useRoute<'/users/:id'>()` narrows the `params` type by path.
+- **Vue 2 chain**: vue-router 3 has no type augmentation mechanism; only the `WinRouteMap` / `WinRoutePath` route mapping types are generated for manual use in your code.
+
+Notes:
+
+- Only **named routes** enter the type mapping: conventional routes always have a name; config-based routes must declare `name` explicitly (layouts / wrappers without a name are excluded); for duplicate names, the first one wins.
+- Route parameter types match the matcher conventions of each chain: `:id` → `string`, `:id?` → optional, `:id+` / `:pathMatch(.*)*` → `string[]`.
+- **Note**: once enabled, the route name type on the Vue chains is globally narrowed — **dynamic name variables** (e.g. `router.push({ name: someString })` where `someString` is a `string` variable) will no longer pass type checking. For scenarios that build or compute route names dynamically, annotate them explicitly with a union of route names, or keep this option disabled. This trade-off matches unplugin-vue-router's experimental typed routes.
+- When disabled, all type behavior is exactly the same as in previous versions.
 
 ## transformImport <Badge type="tip" text="^0.14.3" />
 

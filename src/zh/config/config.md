@@ -2083,7 +2083,38 @@ export default {
 - **类型**：`string`
 - **默认值**：`null`
 
-配置全局页面 title，暂时只支持静态的 Title。
+配置全局页面 title。
+
+自 1.0.0 起，`title` 支持 `%s` 模板占位符：模板会在运行时按当前路由的 `meta.title` 填充（Vue 3 / Vue 2 / Svelte 三链一致）。路由未配置 `meta.title` 时，保持 `title` 原样输出。
+
+```js
+export default {
+  // 页面路由 meta.title 为「用户列表」时，浏览器标签显示「用户列表 - 管理后台」
+  title: '%s - 管理后台',
+}
+```
+
+> 未使用 `%s` 模板时行为与历史版本一致（静态 Title）。
+
+## typedRoutes <Badge type="tip" text=">=1.0.0" />
+
+- **类型**：`boolean`
+- **默认值**：`false`
+
+开启生成式路由类型（opt-in）。开启后，构建时基于当前路由表生成 `.win/core/routeTypes.d.ts`，为路由跳转与参数使用提供 TypeScript 类型支持，无需手动维护路由类型映射。
+
+各框架链路的增强形态：
+
+- **Vue 3 链**：增强 vue-router 的路由类型声明——`router.push({ name })` / `router.push({ name, params })` 中的路由名与参数、`useRoute<'userDetail'>()` 的 `params` 均获得类型检查与自动补全（同时兼容 vue-router 4.0 – 4.3+ 两种类型增强机制）。
+- **Svelte 链**：增强 `@winner-fed/renderer-svelte` 的路由类型声明——`RouterLink` 的 `to`、`router.push` 的 pathname 获得已知路由路径的字面量自动补全（任意字符串仍可赋值，不会误报）；`useRoute<'/users/:id'>()` 按路径收窄 `params` 类型。
+- **Vue 2 链**：vue-router 3 无类型增强机制，仅生成 `WinRouteMap` / `WinRoutePath` 路由映射类型，可在代码中手动引用。
+
+说明：
+
+- 仅**命名路由**进入类型映射：约定式路由恒有 name；配置式路由需显式声明 `name`（未声明 name 的 layout / wrapper 不参与）；重名路由以第一个为准。
+- 路由参数类型与各链路匹配器口径一致：`:id` → `string`、`:id?` → 可选、`:id+` / `:pathMatch(.*)*` → `string[]`。
+- **注意**：开启后 Vue 链的路由 name 类型会全局收窄，**动态 name 变量**（如 `router.push({ name: someString })`，`someString` 为 `string` 类型变量）将不再通过类型检查——需要拼接或动态计算路由名的场景，请为其显式标注路由名联合类型，或保持该配置关闭。此取舍与 unplugin-vue-router 的实验性 typed routes 一致。
+- 未开启时所有类型行为与历史版本完全一致。
 
 ## transformImport <Badge type="tip" text="^0.14.3" />
 - **类型:**

@@ -1,5 +1,99 @@
 # Version Upgrade {#upgrade}
 
+## Upgrading from 0.19.x to 1.0.0
+
+> Scope: business projects upgrading from WinJS 0.19.x to 1.0.0. The `1.0.0-rc.x` pre-releases (`next` tag) already include all of the changes below, so you can validate ahead of time.
+>
+> One-sentence conclusion: **zero structural impact** (runtime dependencies, artifact shape and Node version requirements are all unchanged), with new Svelte 5 framework support and clientLoader route data loading. There are **6 behavior changes** to be aware of — 2 may require a self-check, the rest are fixes that need no action.
+
+### Compatibility Overview
+
+| Dimension | Change | What business projects need to do |
+|------|------|------|
+| Runtime dependencies | `dependencies` / `peerDependencies` of the existing 17 packages are **unchanged** (only 2 new Svelte packages added — not installed unless used) | Nothing |
+| Artifact shape | CommonJS + es2019 target, engines `>=20.19`, directory layout all unchanged | Nothing |
+| Node.js | `>=20.19` for business projects unchanged (`>=22.12` only constrains framework repo contributors) | Nothing |
+| TypeScript | Artifact type surface tested to support **>=4.9** (5.x recommended) | Almost nothing (projects on TS <4.9 should upgrade) |
+| MFSU | Removed in 0.19.1 (carried over in this version); residual `mfsu` config keys are silently ignored across all chains | If upgrading from before 0.19.1, delete the residual config |
+| Build toolchain | The framework repo's father → tsdown and jest → vitest migrations are **internal repo changes**; pre-bundled dependency artifacts are byte-for-byte equivalent and verified by runtime tests | Nothing |
+
+### Behavior Changes (6 items)
+
+#### 1. Vue 3 chain route matching relaxed by default (trailing slashes no longer 404) ⚠️ May require a self-check
+
+The default of [`history.strict`](../config/config#history) changed from `true` to `false` (aligned with the Vue 2 / Svelte chains). Previously `/about/` would 404; now it hits the same route as `/about`.
+
+- **Who is affected**: Vue 3 projects with trailing-slash access paths, or guard/analytics logic that relied on the "trailing slash 404" behavior
+- **What to do**: Most projects need no action (this is a fix). To restore the old behavior, configure `history: { strict: true }` in `.winrc.ts`
+
+#### 2. Vite chain build failures are no longer silently swallowed ⚠️ May require a self-check
+
+Previously, Vite chain build errors were swallowed and the process exited with code 0 (false-green CI); now it fails with a non-zero exit code as it should.
+
+- **Who is affected**: Vite chain projects with **latent build errors** (e.g. the `@vitejs/plugin-legacy` scenario, whose always-failing issue is also fixed in this version) — CI may turn red for the first time after upgrading
+- **What to do**: Fix the build error itself — this is not a regression, it is a real previously-masked problem surfacing
+
+#### 3. `extraBabel*` config now takes effect on the rsbuild / rsbuild2 chains
+
+Previously, babel plugins injected by users and plugins via `extraBabelPlugins` / `extraBabelPresets` were silently dropped on the rsbuild chains; this version completes the contract and they are now actually applied (including the runtime plugin API `api.addExtraBabelPlugins()`).
+
+- **Who is affected**: rsbuild / rsbuild2 projects that have configured extraBabel options
+- **What to do**: Verify that the artifacts behave as expected once these plugins take effect (they never took effect before)
+
+#### 4. `patchClientRoutes` / `onRouteChange` runtime hooks revived
+
+Previously these two hooks had no trigger point anywhere in the chain (registering them did nothing); this version adds the trigger to all three framework renderers. See the [routing docs](./routes#patchclientroutes-routes) for usage.
+
+- **Who is affected**: Projects that registered these hooks in runtime plugins (named hooks exported from `app.ts`) — the handlers will start actually running
+- **What to do**: Confirm the handler logic is correct (they were mostly written for this purpose; revival means they work)
+
+#### 5. Residual `mfsu` config on the rsbuild chains changed from an error to silent ignore
+
+Bundler behavior is now unified: residual `mfsu` config on the business side is silently ignored (the rsbuild chains previously asserted an error).
+
+- **What to do**: Nothing (more lenient); deleting the residual config is cleaner
+
+#### 6. Browser compatibility data (caniuse-lite) refreshed after 22 months
+
+Eliminates the stale Browserslist data warning on every dev/build; browserslist targets shifted slightly, CSS artifacts may have marginal differences.
+
+- **What to do**: Nothing (low risk; projects sensitive to artifact size can diff one build)
+
+### New Capabilities
+
+- **Svelte 5 framework support**: two new packages `@winner-fed/preset-svelte` + `@winner-fed/renderer-svelte`, with all four bundler chains (Vite / rsbuild / rsbuild2 / webpack) working. See [Using Svelte](./svelte.md). Projects not using Svelte are completely unaffected.
+- **clientLoader route data loading**: export a `clientLoader` function from a page, it runs automatically after the route component is ready, and its return value is consumed via `useLoaderData()` — unified across all three framework chains. See [Route Data Loading](./client-loader.md).
+- **Routing improvements**: unified guard API across the three chains (`onRouterCreated`), [`title`](../config/config#title) supporting the `%s` template filled from the route's `meta.title`, configurable [`history.strict` / `history.sensitive`](../config/config#history) matching semantics, [`typedRoutes`](../config/config#typedroutes) generated route types (opt-in), and a build warning when config-based routes lack a catch-all.
+
+### Upgrade Steps
+
+```bash
+# 1. Upgrade the framework (@winner-fed packages share a unified version; installing the main package is enough)
+pnpm up --latest @winner-fed/winjs
+# With npm: npm install @winner-fed/winjs@latest
+
+# 2. Self-check against the behavior change list (focus on items 1 and 2)
+
+# 3. Regression verification
+pnpm dev    # local dev smoke test: route navigation / trailing-slash paths / data requests
+pnpm build  # production build (confirm exit code and artifact diff look right)
+```
+
+::: tip Tip
+If you develop third-party plugins based on `@winner-fed/winjs`, focus on behavior changes 3 and 4 (the semantic impact of extraBabel injection and runtime hook revival on plugins); the API surface itself has no breaking changes.
+:::
+
+### FAQ
+
+**Q: Can I still use a Node 20 build environment?**
+Yes. The published artifacts target es2019 with engines declared as `>=20.19`; the requirement for business projects was not tightened this time.
+
+**Q: Do existing projects have to change code?**
+Most likely zero changes. There are no breaking changes to the structural API surface; self-check against the behavior change list — 4 of the 6 items are pure fixes requiring no action.
+
+**Q: Upgrading from 0.18.x or earlier?**
+First handle the MFSU removal (since 0.19.1) and other changes per the 0.19.x announcements, then apply this section. For 0.19 series capabilities such as the rsbuild2 external bundler, see the corresponding version's CHANGELOG.
+
 ## Official Packages
 
 All official WinJS packages currently use unified version numbers for release.

@@ -31,6 +31,10 @@ WinJS
 你可以在 Chrome Devtools > 网络 Tab 中将网络设置成低速，然后切换路由查看加载组件是否生效。
 :::
 
+::: tip 提示
+配置式路由建议在路由表末尾声明 catch-all 兜底路由（`*`、`/*` 或 `/:pathMatch(.*)*`）。自 1.0.0 起，路由表未声明任何 catch-all 路由时构建会输出告警提醒。
+:::
+
 ### path
 
 * Type: `string`
@@ -314,6 +318,8 @@ export default withAuth(TheOldPage)
 除配置式路由外，WinJS 也支持约定式路由。约定式路由也叫文件路由，就是不需要手写配置，文件系统即路由，通过目录和文件及其命名分析出路由配置，最终生成对应的路由结构。
 
 **如果没有 routes 配置，WinJS 会进入约定式路由模式**，然后分析 `src/pages` 目录拿到路由配置。
+
+自 1.0.0 起，路由扫描默认忽略 `node_modules` 目录、点目录（如 `.git`）与点文件——`src/pages` 下混入的依赖目录、隐藏文件不会被识别为路由。用户通过 [conventionRoutes.exclude](../config/config#conventionroutes) 配置的过滤规则不受影响。
 
 比如以下文件结构：
 
@@ -754,6 +760,34 @@ export function onMounted({ app, router }: any) {
     h: 'hello',
     w: 'word',
   });
+}
+```
+
+### patchClientRoutes(\{ routes \})
+
+客户端路由树初始化后触发，参数 `routes` 为最终交给渲染器的**嵌套树形**路由配置，可在此动态修改路由（与入口配置中的 `patchRoutes` 拿到的 routesById 平铺形态互补，参数对齐 umi 上游约定）。自 1.0.0 起生效（此前版本注册了该钩子不会触发）。
+
+```ts
+// src/app.tsx
+export function patchClientRoutes({ routes }: any) {
+  // 例如：动态注入一条路由
+  routes[0].children?.push({
+    path: '/dynamic',
+    component: DynamicComponent,
+  });
+}
+```
+
+### onRouteChange(\{ routes, clientRoutes, location, basename, isFirst \})
+
+路由变化时触发（Vue 链经 `router.afterEach` 实现，Svelte 链由路由器内置监听实现），适合做页面埋点、面包屑同步等与路由联动的逻辑。自 1.0.0 起生效（此前版本注册了该钩子不会触发）。
+
+```ts
+// src/app.tsx
+export function onRouteChange({ clientRoutes, location, isFirst }: any) {
+  if (!isFirst) {
+    console.log('路由切换到：', location.pathname);
+  }
 }
 ```
 

@@ -28,6 +28,10 @@ WinJS splits bundles by page by default for faster page loading speeds. Since th
 You can set the network to slow speed in Chrome Devtools > Network tab, then switch routes to check if component loading is working.
 :::
 
+::: tip Tip
+Config-based routes should declare a catch-all fallback route (`*`, `/*` or `/:pathMatch(.*)*`) at the end of the route table. Since 1.0.0, a build warning is emitted when no catch-all route is declared.
+:::
+
 ### path
 
 * Type: `string`
@@ -307,6 +311,8 @@ export default withAuth(TheOldPage)
 In addition to configured routing, WinJS also supports conventional routing. Conventional routing, also known as file-based routing, means you don't need to write configuration manually. The file system becomes the routes, and route configuration is analyzed from directory and file structure and naming, ultimately generating the corresponding route structure.
 
 **If there is no routes configuration, WinJS will enter conventional routing mode**, then analyze the `src/pages` directory to get the route configuration.
+
+Since 1.0.0, route scanning ignores `node_modules` directories, dot-directories (such as `.git`) and dot-files by default — dependency directories or hidden files mixed into `src/pages` are no longer recognized as routes. Custom filtering rules configured via [conventionRoutes.exclude](../config/config#conventionroutes) are not affected.
 
 For example, the following file structure:
 
@@ -743,6 +749,34 @@ export function onMounted({ app, router }: any) {
     h: 'hello',
     w: 'word',
   });
+}
+```
+
+### patchClientRoutes(\{ routes \})
+
+Triggered after the client route tree is initialized. The `routes` parameter is the final **nested tree-shaped** route configuration handed to the renderer, where routes can be modified dynamically (complementary to the flat routesById shape received by `patchRoutes` in the entry config, with parameters aligned with umi's upstream convention). Effective since 1.0.0 (in previous versions, registering this hook never triggered it).
+
+```ts
+// src/app.tsx
+export function patchClientRoutes({ routes }: any) {
+  // e.g. inject a route dynamically
+  routes[0].children?.push({
+    path: '/dynamic',
+    component: DynamicComponent,
+  });
+}
+```
+
+### onRouteChange(\{ routes, clientRoutes, location, basename, isFirst \})
+
+Triggered on route changes (via `router.afterEach` on the Vue chains, and via the router's built-in listener on the Svelte chain). Suitable for analytics, breadcrumb syncing and other route-linked logic. Effective since 1.0.0 (in previous versions, registering this hook never triggered it).
+
+```ts
+// src/app.tsx
+export function onRouteChange({ clientRoutes, location, isFirst }: any) {
+  if (!isFirst) {
+    console.log('Route changed to:', location.pathname);
+  }
 }
 ```
 
