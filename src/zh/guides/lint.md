@@ -4,33 +4,31 @@
   
 ## 编码规范
 
-我们通常会在项目中使用 ESLint、Stylelint 来协助我们把控编码质量，为了实现低成本、高性能、更稳定地接入上述工具，WinJS 提供了开箱即用的 Lint 能力，包含以下特性：
+我们通常会在项目中使用 Biome、Stylelint、Markdownlint 来协助我们把控编码质量，WinJS 通过 [f2elint](https://www.npmjs.com/package/@winner-fed/f2elint) 提供了开箱即用的 Lint 能力，包含以下特性：
 
-1. **推荐配置**：提供 ESLint 及 Stylelint 推荐配置，可以直接继承使用
-2. **统一的 CLI**：提供 `win lint` CLI，集成式调用 ESLint 和 Stylelint
+1. **推荐配置**：`@winner-fed/biome-config-win`、`@winner-fed/stylelint-config-win`、`@winner-fed/markdownlint-config-win` 推荐配置，可直接继承使用（Biome 同时承担代码格式化，替代 ESLint 与 Prettier）
+2. **统一的 CLI**：提供 `win lint` CLI，同进程集成调用 Biome、Stylelint 与 Markdownlint
 3. **规则稳定**：始终确保规则的稳定性，不会出现上游配置更新导致存量项目 lint 失败的情况
-
-其中，ESLint 配置具备如下特点：
-
-1. **仅质量相关**：我们从数百条规则中筛选出数十条与编码质量相关的规则进行白名单开启，回归 Lint 本质，且不会与 Prettier 的规则冲突
-2. **性能优先**：部分 TypeScript 的规则实用型低但项目全量编译的成本却很高，我们对这些规则进行禁用以提升性能
-3. **内置常用插件**：包含 vue、@typescript/eslint 等，满足日常所需
+4. **零配置兜底**：项目没有 lint 配置文件时，`win lint` 会使用 f2elint 内置缺省配置完成扫描
 
 来看看如何接入吧。
 
 ### 使用方式
-第一次执行 `win lint`时，会检测当前工程中是否存在 [f2elint](f2elint.md) 的配置文件，如果没有，会引导安装。根据命令行里的提示进行安装即可。
 
-在配置文件创建完毕后，我们其实已经可以通过 `eslint`、`stylelint` 命令来执行 lint 了，但我们仍然推荐使用 `win lint` 命令，以获得更便捷的体验。
+`win lint` 依赖工程内的 `@winner-fed/f2elint`（脚手架模板已内置）：
 
-提示：有关 `f2elint`的具体用法，可以参考[这里](f2elint.md)。
+```bash
+$ npm i @winner-fed/f2elint -D
+```
+
+项目内可以只保留 `biome.json` 一个 lint 配置文件（用于编辑器集成），Stylelint 与 Markdownlint 在没有配置文件时会使用 f2elint 内置的缺省配置。如需一键生成全套配置并接入 Git 卡点，可以运行 `npx f2elint init`，具体用法参考[f2elint 的 npm 页面](https://www.npmjs.com/package/@winner-fed/f2elint)。
 
 #### CLI
 
 `win lint` 命令的用法如下：
 
 ```bash
-$ win lint [--include dir] [--fix] [--quiet] [--report]
+$ win lint [--include dir] [--fix] [--quiet] [--report] [--staged]
 ```
 
 参数说明：
@@ -47,67 +45,46 @@ win lint --report
 
 # scan the directory
 win lint --include src
+
+# scan only the staged files (for git pre-commit hook)
+win lint --staged
 ```
 
 通常来说，直接执行 `win lint` 应该就能满足大部分情况。
 
 ::: tip 提示
 
-lint 默认检测的是 `src` 目录，也就是说当执行命令 `win lint` 时，也即执行 `win lint --include src` 是一样的效果。
+lint 默认检测的是当前工程根目录（含 `src`、根配置文件与 Markdown 文档）；只需要检查源码目录时，可以显式执行 `win lint --include src`。
+
+扫描发现 error 时命令以非零码退出（warning 不影响），可以直接用于 CI 卡点。
 
 :::
 
 ### 与 Git 工作流结合
 
-我们也推荐使用 [lint-staged](https://github.com/okonet/lint-staged#readme) 和 [Husky](https://typicode.github.io/husky/)，将 `win lint` 与 Git 工作流结合使用，以便在**提交代码时**自动 lint **本次变更**的代码。
-
-#### lint-staged
-
-lint-staged 用来驱动 `win lint` 命令，每次仅将变更的内容交给 `win lint` 进行检查。
-
-安装方式：
-
-```bash
-$ npm i lint-staged -D
-#or 
-$ pnpm add lint-staged -D
-```
-
-在 `package.json` 中配置 lint-staged：
-
-```diff
-{
-+   "lint-staged": {
-+     "*.{js,jsx,ts,tsx,css,less}": [
-+       "win lint"
-+     ]
-+   }
-}
-```
-
-此时如果执行 `git add sample.js` 后，再执行 `npx lint-staged`，就能实现仅检查 `sample.js` 本次的变更了。
+推荐使用 [Husky](https://typicode.github.io/husky/) 将 `win lint` 与 Git 工作流结合，以便在**提交代码时**自动 lint **本次变更**的代码。
 
 #### Husky
 
 Husky 用来绑定 Git Hooks、在指定时机（例如 `pre-commit`）执行我们想要的命令，安装方式请参考 Husky 文档：https://typicode.github.io/husky/#/?id=automatic-recommended
 
-初始化完成后，需要手动修改 `.husky/pre-commit` 文件的内容：
+初始化完成后，将 `.husky/pre-commit` 文件的内容修改为一行（脚手架模板已内置该配置）：
 
 ```diff
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
 - npm test
-+ npx lint-staged
++ npx --no-install win lint --staged
 ```
+
+`--staged` 模式只检查 `git diff --staged` 的变更文件，并同样应用 `src/assets`、`public` 等忽略约定。提交信息校验可使用框架内置的 `win verify-commit`（Conventional Commits 规范），配置在 `.husky/commit-msg` 中。
 
 至此大功告成，每次执行 `git commit` 命令的时候，`win lint` 就能自动对本次变更的代码进行检查，在确保编码质量的同时也能确保执行效率。
 
-### Prettier
+### 代码格式化
 
-在启用 `win lint` 的基础上，我们也建议与 [Prettier](https://prettier.io/docs/en/install.html) 一同使用，以确保团队的代码风格是基本一致的。
-
-可参考 Prettier 文档将其配置到 lint-staged 中：https://prettier.io/docs/en/install.html#git-hooks
+代码格式化由 Biome 一并承担（替代 Prettier）：编辑器安装 Biome 插件后，保存时会按照工程内 `biome.json` 的配置自动格式化；命令行场景可使用 `win lint --fix` 完成检查与修复。
    
 
 ## 其他
@@ -158,7 +135,7 @@ module.exports = {
 }
 ```
 
-目前，团队采用 [eslint-config-win](https://github.com/winjs-dev/eslint-config-win) 来检验 JavaScript/Vue 的代码。
+目前，团队采用 [eslint-config-win](https://github.com/cloud-templates/eslint-config-win) 来检验 JavaScript/Vue 的代码，具体规则可以参考这个[linter-docs/javascript](http://172.27.24.2/h5-linter-docs/?rule=base)、 [linter-docs/vue](http://172.27.24.2/h5-linter-docs/?rule=vue)。
 
 ### StyleLint
 StyleLint 是一个强大的、现代化的 CSS 检测工具, 与 ESLint 类似, 也是通过定义一系列的编码风格规则帮助我们避免在样式表中出现错误。支持最新的 CSS 语法、CSS-in-JS、以及其他类 CSS 语法(如SCSS、Less)。
@@ -196,7 +173,7 @@ module.exports = {
 };
 ```
 
-目前，团队采用 [stylelint-config-win](https://github.com/winjs-dev/stylelint-config-win) 来检验 CSS/Less 的代码。
+目前，团队采用 [stylelint-config-win](https://github.com/cloud-templates/stylelint-config-win) 来检验 CSS/Less 的代码，具体规则可以参考这个[linter-docs/style](http://172.27.24.2/h5-linter-docs/?rule=style).。
 
 ### CommitLint
 
@@ -252,7 +229,7 @@ git commit -m "xxx" --no-verify
 git commit -m "xxx" -n
 ```
 
-目前，团队采用 [@winner-fed/commitlint-config-win](https://www.npmjs.com/package/@winner-fed/commitlint-config-win) 来检验 git commit 的信息。配置文件可以参考工程模板根目录下的 `commitlint.config.js`。
+WinJS 工程内更推荐使用框架内置的 `win verify-commit` 命令完成提交信息校验（无需额外安装 commitlint 相关依赖）；基于 [@winner-fed/commitlint-config-win](https://www.npmjs.com/package/@winner-fed/commitlint-config-win) 的 commitlint 方案仍然可用，适合存量工程延续既有配置。
 
 ### Markdown
 Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。
