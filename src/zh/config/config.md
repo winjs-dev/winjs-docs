@@ -1215,6 +1215,64 @@ export default {
 - `strict`，是否区分路径尾部斜杠（默认 `false`，`/about` 与 `/about/` 视为同一路由）
 - `sensitive`，是否区分大小写（默认 `false`，`/Users` 与 `/users` 视为同一路由）
 
+## htmlTemplate <Badge type="tip" text=">=1.1.1" />
+
+- **类型**：`string`
+- **默认值**：`undefined`（使用 WinJS 内置 HTML 模板）
+
+指定 HTML 模板文件路径，支持相对路径（基于项目根目录）与绝对路径。未配置时使用 WinJS 内置 HTML 模板（由 [title](#title)、[metas](#metas)、[favicons](#favicons) 等配置片段拼装）。
+
+模板须为包含 `</head>` 与 `</body>` 的完整 HTML 文档，WinJS 以「模板骨架 + 片段注入」方式工作：
+
+- `</head>` 前注入 metas（charset / viewport 等缺省自动补齐，用户提供的优先）、favicons、links、styles、headScripts
+- 模板已有 `<title>` 时 [title](#title) 配置不注入，用户优先
+- 挂载点（默认 `#root`，见 [mountElementId](#mountelementid)）缺失时自动补齐；挂载点内已有内容视为首屏占位（如 loading 骨架），应用挂载时自动清空（三框架链行为一致），内置 preloading 动画自动退避、不再叠加
+- `</body>` 前注入入口 scripts 与 [scripts](#scripts) 配置
+
+模板内容（`<html>` / `<body>` 上的属性、注释、`<noscript>`、挂载点内占位等）原样保留，适合从 Vue CLI 等框架迁移时直接复用原有的 `index.html`。
+
+### 注入位置锚点
+
+默认注入位置固定（`</head>` 前 / `</body>` 前）。如需自定义注入位置，可在模板中放置锚点注释，WinJS 会在锚点处原位注入并消费锚点：
+
+- `<!-- win:head -->`：head 片段注入点
+- `<!-- win:scripts -->`：入口 scripts 注入点
+
+### 示例
+
+```js
+export default defineConfig({
+  htmlTemplate: 'tpl.html',
+});
+```
+
+tpl.html：
+
+```html
+<!DOCTYPE html>
+<html lang="en-US" data-theme="dark">
+<head>
+  <title>我的应用</title>
+  <!-- win:head -->
+</head>
+<body>
+  <noscript>请开启 JavaScript</noscript>
+  <!-- 挂载点：JS 就绪前先渲染占位内容，应用挂载时自动清空 -->
+  <div id="root">
+    <div style="text-align: center; padding: 40px; color: #888">Loading...</div>
+  </div>
+  <!-- win:scripts -->
+</body>
+</html>
+```
+
+::: tip 说明
+- dev 模式下模板文件改动即时生效，无需重启 dev server
+- 配置了模板但文件缺失、或非完整 HTML 文档时，构建会在启动阶段明确报错，不会静默回退内置模板
+- 与 [mpa](#mpa) 模式互斥，多页应用请使用 mpa 的 template 配置
+- 入口脚本请交给 WinJS 注入，不要在模板中手写 `<script src>` 引用构建产物（产物文件名带 hash，会失效）
+:::
+
 ## https
 
 - **类型**：`{ cert: string; key: string; hosts: string[]; http2?: boolean }`

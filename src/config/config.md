@@ -1195,6 +1195,64 @@ Route matching semantics (effective on Vue 3 / Svelte chains, aligned to lenient
 - `strict`: whether the trailing slash matters (default `false`, `/about` and `/about/` are the same route)
 - `sensitive`: whether case matters (default `false`, `/Users` and `/users` are the same route)
 
+## htmlTemplate <Badge type="tip" text=">=1.1.1" />
+
+- **Type**: `string`
+- **Default**: `undefined` (uses the WinJS built-in HTML template)
+
+Specifies the path of an HTML template file, either a relative path (resolved from the project root) or an absolute path. When not configured, WinJS uses its built-in HTML template (assembled from config fragments such as [title](#title), [metas](#metas) and [favicons](#favicons)).
+
+The template must be a complete HTML document containing `</head>` and `</body>`. WinJS works in a "template skeleton + fragment injection" manner:
+
+- metas (missing charset / viewport defaults are added, user-provided ones win), favicons, links, styles and headScripts are injected before `</head>`
+- if the template already contains a `<title>`, the [title](#title) config is not injected — the user's title wins
+- the mount element (defaults to `#root`, see [mountElementId](#mountelementid)) is added automatically when missing; existing content inside the mount element is treated as the first-screen placeholder (e.g. a loading skeleton), and is cleared automatically when the app mounts (consistent across all three framework chains) — the built-in preloading spinner backs off and is no longer stacked on top
+- entry scripts and the [scripts](#scripts) config are injected before `</body>`
+
+Template content (attributes on `<html>` / `<body>`, comments, `<noscript>`, placeholders inside the mount element, etc.) is preserved as-is, which makes it straightforward to reuse an existing `index.html` when migrating from Vue CLI and similar frameworks.
+
+### Injection anchors
+
+Default injection positions are fixed (before `</head>` / before `</body>`). To customize them, place anchor comments in the template — WinJS injects at the anchor position in place and consumes the anchor:
+
+- `<!-- win:head -->`: injection point for head fragments
+- `<!-- win:scripts -->`: injection point for entry scripts
+
+### Example
+
+```js
+export default defineConfig({
+  htmlTemplate: 'tpl.html',
+});
+```
+
+tpl.html:
+
+```html
+<!DOCTYPE html>
+<html lang="en-US" data-theme="dark">
+<head>
+  <title>My App</title>
+  <!-- win:head -->
+</head>
+<body>
+  <noscript>Please enable JavaScript</noscript>
+  <!-- Mount element: placeholder rendered before JS is ready, cleared automatically on app mount -->
+  <div id="root">
+    <div style="text-align: center; padding: 40px; color: #888">Loading...</div>
+  </div>
+  <!-- win:scripts -->
+</body>
+</html>
+```
+
+::: tip Note
+- In dev mode, changes to the template file take effect immediately — no dev server restart needed
+- If the configured template file is missing or is not a complete HTML document, the build fails with an explicit error at startup; it never silently falls back to the built-in template
+- Mutually exclusive with [mpa](#mpa) mode — use the mpa template config for multi-page apps
+- Leave entry scripts to WinJS injection; do not hand-write `<script src>` references to build artifacts in the template (artifact filenames are hashed and would break)
+:::
+
 ## https
 
 - **Type**: `{ cert: string; key: string; hosts: string[]; http2?: boolean }`
